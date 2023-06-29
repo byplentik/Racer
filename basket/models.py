@@ -1,4 +1,5 @@
 from django.db import models
+from django.urls import reverse
 
 
 class Category(models.Model):
@@ -23,9 +24,13 @@ class Motorcycle(models.Model):
 class MainPart(models.Model):
     motorcycle = models.ForeignKey(Motorcycle, on_delete=models.CASCADE, verbose_name='Мото/Двигатель')
     name = models.CharField(max_length=255, verbose_name='Основная запчасть')
+    slug = models.SlugField(max_length=300, verbose_name='URL', unique=True)
 
     def __str__(self):
         return self.name
+
+    def get_absolute_url(self):
+        return reverse('part-detail', kwargs={'slug': self.slug})
 
 
 class Part(models.Model):

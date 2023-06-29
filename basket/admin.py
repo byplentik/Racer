@@ -16,7 +16,7 @@ class AdminCategory(admin.ModelAdmin):
 @admin.register(models.MainPart)
 class AdminCategory(admin.ModelAdmin):
     list_display = ['name', 'motorcycle']
-
+    prepopulated_fields = {'slug': ['name']}
 
 @admin.register(models.Part)
 class AdminCategory(admin.ModelAdmin):

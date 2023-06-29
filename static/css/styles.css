@@ -32,3 +32,51 @@ nav ul li a {
   text-decoration: none;
 }
 
+.part-detail {
+  margin-top: 20px;
+}
+
+.part-detail h1 {
+  font-size: 24px;
+  margin-bottom: 10px;
+}
+
+.part-detail table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.part-detail th,
+.part-detail td {
+  padding: 8px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+
+.part-detail th:first-child,
+.part-detail td:first-child {
+  width: 30px;
+}
+
+.part-detail th:nth-child(2),
+.part-detail td:nth-child(2) {
+  width: 250px;
+}
+
+.part-detail th:nth-child(3),
+.part-detail td:nth-child(3) {
+  width: 80px;
+}
+
+.add-to-cart {
+  background-color: #333;
+  color: #fff;
+  border: none;
+  padding: 5px 10px;
+  cursor: pointer;
+}
+
+.add-to-cart:hover {
+  background-color: #555;
+}
+

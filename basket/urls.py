@@ -1,7 +1,8 @@
 from django.urls import path
 
-from .views import HomeTemplateView
+from . import views
 
 urlpatterns = [
-    path('', HomeTemplateView.as_view(), name='home'),
+    path('catalog/', views.CatalogListView.as_view(), name='catalog'),
+    path('catalog/<slug:slug>/', views.MainPartDetailView.as_view(), name='part-detail')
 ]

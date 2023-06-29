@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <div class="part-detail">
+    <h1>{{ mainpart.name }}</h1>
+    <table>
+      <thead>
+        <tr>
+          <th>№</th>
+          <th>Наименование</th>
+          <th>Цена</th>
+          <th>К заказу</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for part in mainpart.part_set.all %}
+          <tr>
+            <td>{{ part.number }}</td>
+            <td>{{ part.name }}</td>
+            <td>{{ part.price }}р</td>
+            <td>
+              <button class="add-to-cart">Добавить в корзину</button>
+            </td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+{% endblock content %}
