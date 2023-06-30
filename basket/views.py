@@ -1,6 +1,6 @@
 from django.views import generic
 
-from .models import Category, MainPart
+from .models import Category, MainPart, Cart, CartItem
 
 
 class CatalogListView(generic.ListView):
