@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+
+{% block content %}
+{% if cart_items %}
+<div class="part-detail">
+    <h1>Корзина</h1>
+    <table>
+      <thead>
+        <tr>
+          <th>Наименование</th>
+          <th>Цена</th>
+          <th>Количество</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for key, value in cart_items.items %}
+          <tr>
+            <td>{{ value.name }}</td>
+            <td>{{ value.price }}</td>
+            <td>{{ value.quantity }}</td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    <p>Итого: {{ total_price }}</p>
+    <p>Всего товаров в козине: {{ get_num_of_items }}</p>
+    <button class="add-to-cart">Оформить заказ</button>
+  </div>
+{% else %}
+  <h1>Корзина</h1>
+  <p>Вы не добавили товары в корзину</p>
+{% endif %}
+{% endblock content %}

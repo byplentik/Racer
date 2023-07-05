@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="part-detail">
+    <h1>Корзина: {{ cart.user }}</h1>
+    <table>
+      <thead>
+        <tr>
+          <th>Наименование</th>
+          <th>Цена</th>
+          <th>Количество</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for c in cart.cartitems.all %}
+          <tr>
+            <td>{{ c.part }}</td>
+            <td>{{ c.part.price }}</td>
+            <td>{{ c.quantity }}</td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    <p>Итого: {{ cart.get_total_price }}</p>
+    <p>Всего товаров в корзине: {{ cart.get_num_of_items}}</p>
+    <button class="add-to-cart">Оформить заказ</button>
+  </div>
+{% endblock content %}

@@ -19,11 +19,34 @@
             <td>{{ part.name }}</td>
             <td>{{ part.price }}р</td>
             <td>
-              <button class="add-to-cart">Добавить в корзину</button>
+              <button class="add-to-cart" data-part-id="{{ part.pk }}">Добавить в корзину</button>
             </td>
           </tr>
         {% endfor %}
       </tbody>
     </table>
   </div>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script>
+    $(document).ready(function() {
+      $('.add-to-cart').click(function() {
+        var partId = $(this).data('part-id');
+        var quantity = 1;  // You can modify this value as needed
+
+        $.ajax({
+          url: "{% url 'add-to-cart' part_id=0 quantity=0 %}".replace('0', partId).replace('0', quantity),
+          type: "POST",
+          beforeSend: function(xhr) {
+            xhr.setRequestHeader("X-CSRFToken", "{{ csrf_token }}");
+          },
+          success: function(response) {
+            // Handle the success response if needed
+          },
+          error: function(xhr, textStatus, errorThrown) {
+            // Handle the error if needed
+          }
+        });
+      });
+    });
+  </script>
 {% endblock content %}

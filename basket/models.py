@@ -51,6 +51,9 @@ class Cart(models.Model):
     user = models.ForeignKey(get_user_model(), on_delete=models.CASCADE)
     completed = models.BooleanField(default=False)
 
+    def get_absolute_url(self):
+        return reverse('cart-detail', kwargs={'pk': self.pk})
+
     def __str__(self):
         return str(self.id)
 
@@ -66,9 +69,6 @@ class Cart(models.Model):
         quantity = sum([item.quantity for item in cartitems])
         return quantity
 
-    def get_absolute_url(self):
-        return reverse('cart-detail', kwargs={'pk': self.pk})
-
 
 class CartItem(models.Model):
     part = models.ForeignKey(Part, on_delete=models.CASCADE, related_name='items')
@@ -78,7 +78,8 @@ class CartItem(models.Model):
     def __str__(self):
         return self.part.name
 
-    @property
-    def price(self):
-        new_price = self.part.price * self.quantity
-        return new_price
+    # @property
+    # def price(self):
+    # """Для подсчета общей цены вместе с количеством на единицу товара"""
+    #     new_price = self.part.price * self.quantity
+    #     return new_price
