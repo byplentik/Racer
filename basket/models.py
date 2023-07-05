@@ -60,7 +60,7 @@ class Cart(models.Model):
     @property
     def get_total_price(self):
         cartitems = self.cartitems.all()
-        total = sum([item.part.price for item in cartitems])
+        total = sum([item.part.price * item.quantity for item in cartitems])
         return total
 
     @property
