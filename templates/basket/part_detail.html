@@ -31,7 +31,13 @@
     $(document).ready(function() {
       $('.add-to-cart').click(function() {
         var partId = $(this).data('part-id');
-        var quantity = 1;  // You can modify this value as needed
+        var quantity = 1;
+
+        $(this).append('<span class="animation">+1</span>');
+        var animation = $(this).find('.animation');
+        animation.fadeIn(400).fadeOut(400, function() {
+          animation.remove();
+        });
 
         $.ajax({
           url: "{% url 'add-to-cart' part_id=0 quantity=0 %}".replace('0', partId).replace('0', quantity),
@@ -40,13 +46,30 @@
             xhr.setRequestHeader("X-CSRFToken", "{{ csrf_token }}");
           },
           success: function(response) {
-            // Handle the success response if needed
           },
           error: function(xhr, textStatus, errorThrown) {
-            // Handle the error if needed
           }
         });
       });
     });
   </script>
 {% endblock content %}
+
+<style>
+  /* Дополнительные стили для анимации */
+  .add-to-cart {
+    position: relative;
+  }
+
+  .add-to-cart .animation {
+    position: absolute;
+    top: -10px;
+    right: -10px;
+    background-color: green;
+    color: white;
+    padding: 3px 6px;
+    border-radius: 50%;
+    font-size: 12px;
+    display: none;
+  }
+</style>
