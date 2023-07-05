@@ -60,7 +60,7 @@ class Cart(models.Model):
     @property
     def get_total_price(self):
         cartitems = self.cartitems.all()
-        total = sum([item.price for item in cartitems])
+        total = sum([item.part.price for item in cartitems])
         return total
 
     @property
@@ -77,6 +77,7 @@ class CartItem(models.Model):
 
     def __str__(self):
         return self.part.name
+
 
     # @property
     # def price(self):
