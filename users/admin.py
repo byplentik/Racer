@@ -18,14 +18,14 @@ class AdminCustomUser(BaseUserAdmin):
 
     fieldsets = (
         (None, {'fields': ('email', 'password')}),
-        (('Личная Информация'), {'fields': ('first_name', 'last_name', 'last_login')}),
+        (('Личная Информация'), {'fields': ('name', 'last_name', 'last_login')}),
         (('Разрешения'), {
             'fields': ('is_staff', 'is_superuser'),
         })
     )
-    list_display = ('email', 'first_name', 'last_name', 'is_staff')
+    list_display = ('email', 'name', 'last_name', 'is_staff')
     list_filter = ('is_staff', 'is_superuser', 'groups')
-    search_fields = ('email', 'first_name', 'last_name')
+    search_fields = ('email', 'name', 'last_name')
     ordering = ('email',)
     filter_horizontal = ('groups', 'user_permissions',)
 
