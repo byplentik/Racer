@@ -34,3 +34,11 @@ class UserChangeForm(forms.ModelForm):
     class Meta:
         model = CustomUser
         fields = ['email', 'name', 'last_name', 'is_staff']
+
+
+class PhoneNumberForm(forms.Form):
+    phone_number = forms.CharField(label='Номер телефрна', max_length=12, min_length=7)
+
+
+class VerificationCodeForm(forms.Form):
+    code = forms.CharField(label='Введите проверочный код', max_length=6)

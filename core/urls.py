@@ -19,7 +19,8 @@ from django.urls import path, include, re_path
 from basket.views import HomeView
 
 urlpatterns = [
-    re_path(r'^admin/', admin.site.urls),
-    re_path(r'^basket/', include('basket.urls')),
-    re_path(r'^', HomeView.as_view(), name='home')
+    path('admin/', admin.site.urls),
+    path('basket/', include('basket.urls')),
+    path('auth/', include('users.urls')),
+    path('', HomeView.as_view(), name='home')
 ]

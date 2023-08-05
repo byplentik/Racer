@@ -17,10 +17,11 @@
           <li><a href="{% url 'catalog' %}">Каталог</a></li>
           {% if user.is_authenticated %}
           <li><a href="{{ cart.get_absolute_url }}">Корзина</a></li>
+          <li><a href="{% url 'logout' %}">Выйти</a></li>
           {% else %}
           <li><a href="{% url 'cart-session' %}">Корзина</a></li>
+          <li><a href="{% url 'login' %}">Войти</a></li>
           {% endif %}
-          <li><a href="#">Войти</a></li>
         </ul>
       </nav>
     </div>
