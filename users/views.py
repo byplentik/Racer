@@ -1,24 +1,16 @@
-"""
-API_KEY = pz5W72Pabh9ttLh_1cLxNu3xrqnaon_9
-SMS_TEXT = 'Ваш проверочный код: {code}'
-SMS_URL = 'https://bplentik@gmail.com:{API_KEY}@gate.smsaero.ru/v2/sms/send?number={number}&text={SMS_TEXT}&sign=SMS Aero'
-"""
-
-
-import random
-from dotenv import load_dotenv
 import os
+import random
 
 import requests
-from django.views import generic
-from django.shortcuts import render, redirect, reverse
 from django.contrib.auth import login, logout
-from django.db import IntegrityError
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.db import IntegrityError
+from django.shortcuts import render, redirect
+from django.views import generic
+from dotenv import load_dotenv
 
-
-from .models import CustomUser
 from .forms import PhoneNumberForm, VerificationCodeForm
+from .models import CustomUser
 
 load_dotenv()
 
