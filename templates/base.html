@@ -15,11 +15,11 @@
         <ul>
           <li><a href="{% url 'home' %}">Главная</a></li>
           <li><a href="{% url 'catalog' %}">Каталог</a></li>
+          <li><a href="{% url 'cart-session' %}">Корзина</a></li>
           {% if user.is_authenticated %}
-          <li><a href="{{ cart.get_absolute_url }}">Корзина</a></li>
+          {% comment %} <li><a href="{{ cart.get_absolute_url }}">Корзина</a></li> {% endcomment %}
           <li><a href="{% url 'logout' %}">Выйти</a></li>
           {% else %}
-          <li><a href="{% url 'cart-session' %}">Корзина</a></li>
           <li><a href="{% url 'login' %}">Войти</a></li>
           {% endif %}
         </ul>
