@@ -5,28 +5,27 @@ from django.shortcuts import redirect, render
 from django.views import generic
 
 from .models import Category, MainPart, Part
+from .mixins import CreateSessionKeyMixin
 
 
-class HomeView(generic.View):
+class HomeView(CreateSessionKeyMixin, generic.View):
     def get(self, request):
-        if request.session.session_key is None and request.user.is_authenticated != True:
-            request.session['user'] = 'Anonymus user'
         return render(request, 'home.html')
 
 
-class CatalogListView(generic.ListView):
+class CatalogListView(CreateSessionKeyMixin, generic.ListView):
     model = Category
     template_name = 'basket/catalog.html'
     context_object_name = 'categories'
 
 
-class MainPartDetailView(generic.DetailView):
+class MainPartDetailView(CreateSessionKeyMixin, generic.DetailView):
     model = MainPart
     template_name = 'basket/part_detail.html'
     context_object_name = 'mainpart'
 
 
-class AddToCartView(generic.View):
+class AddToCartView(CreateSessionKeyMixin, generic.View):
     def post(self, request, part_id, quantity):
         SessionStore = import_module(settings.SESSION_ENGINE).SessionStore
         session = SessionStore(session_key=request.session.session_key)
@@ -46,7 +45,7 @@ class AddToCartView(generic.View):
         return redirect('catalog')
 
 
-class CartSessionDetailView(generic.TemplateView):
+class CartSessionDetailView(CreateSessionKeyMixin, generic.TemplateView):
     template_name = 'basket/cart-session-detail.html'
 
     def get_context_data(self, **kwargs):
