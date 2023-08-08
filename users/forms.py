@@ -42,3 +42,9 @@ class PhoneNumberForm(forms.Form):
 
 class VerificationCodeForm(forms.Form):
     code = forms.CharField(label='Введите проверочный код', max_length=6)
+
+
+class PersonalСabinetForm(forms.ModelForm):
+    class Meta:
+        model = CustomUser
+        fields = ['email', 'name', 'last_name', 'delivery_address', 'delivery_index']

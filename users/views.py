@@ -6,10 +6,11 @@ from django.contrib.auth import login, logout
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db import IntegrityError
 from django.shortcuts import render, redirect
+from django.urls import reverse, reverse_lazy
 from django.views import generic
 from dotenv import load_dotenv
 
-from .forms import PhoneNumberForm, VerificationCodeForm
+from .forms import PhoneNumberForm, VerificationCodeForm, PersonalСabinetForm
 from .models import CustomUser
 
 load_dotenv()
@@ -93,3 +94,33 @@ class LogoutView(LoginRequiredMixin, generic.View):
         if self.request.user.is_authenticated:
             logout(request)
             return redirect('home')
+
+
+class PersonalСabinetTemplateView(generic.TemplateView):
+    template_name = 'users/personal_cabinet.html'
+
+
+class PersonalСabinetFormView(generic.FormView):
+    template_name = 'users/update-personal-cabinet.html'
+    form_class = PersonalСabinetForm
+    success_url = reverse_lazy('cabinet')
+
+    def form_valid(self, form):
+        user = self.request.user
+        user.email = form.cleaned_data['email']
+        user.name = form.cleaned_data['name']
+        user.last_name = form.cleaned_data['last_name']
+        user.delivery_address = form.cleaned_data['delivery_address']
+        user.delivery_index = form.cleaned_data['delivery_index']
+        user.save()
+        return redirect(self.get_success_url())
+
+    def get_initial(self):
+        initial = super().get_initial()
+        user = self.request.user
+        initial['email'] = user.email
+        initial['name'] = user.name
+        initial['last_name'] = user.last_name
+        initial['delivery_address'] = user.delivery_address
+        initial['delivery_index'] = user.delivery_index
+        return initial

@@ -32,6 +32,17 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
     email = models.EmailField(verbose_name='Email', max_length=255, blank=True)
     name = models.CharField(verbose_name='Имя', max_length=255, blank=True)
     last_name = models.CharField(verbose_name='Фамилия', max_length=255, blank=True)
+    delivery_address = models.TextField(
+        verbose_name='Полный адрес доставки',
+        help_text='Введите полный адрес доставки (Страна, Город, Улица, Дом)',
+        null=True, blank=True
+        )
+    delivery_index = models.IntegerField(
+        verbose_name='Индекс',
+        help_text='Это индекс почтового отделения, куда будет доставлена посылка из вашего заказа',
+        null=True, blank=True
+    )
+
     is_staff = models.BooleanField(
         ('статус персонала'),
         default=False,

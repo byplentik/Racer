@@ -46,7 +46,7 @@ class AddToCartView(CreateSessionKeyMixin, generic.View):
         return redirect('catalog')
 
 
-class RemoveFromCartView(generic.View):
+class RemoveFromCartView(CreateSessionKeyMixin, generic.View):
 
     def post(self, request, part_id):
         SessionStore = import_module(settings.SESSION_ENGINE).SessionStore
@@ -74,7 +74,6 @@ class RemoveFromCartView(generic.View):
         return JsonResponse({'total_price': total_price, 'num_items': num_items, 'quantity': quantity})
 
 
-
 class CartSessionDetailView(CreateSessionKeyMixin, generic.TemplateView):
     template_name = 'basket/cart-session-detail.html'
 
@@ -88,3 +87,8 @@ class CartSessionDetailView(CreateSessionKeyMixin, generic.TemplateView):
         context['total_price'] = total_price
         context['get_num_of_items'] = get_num_of_items
         return context
+
+
+class CheckoutFromCartView(generic.View):
+    pass
+

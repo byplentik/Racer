@@ -17,10 +17,9 @@
           <li><a href="{% url 'catalog' %}">Каталог</a></li>
           <li><a href="{% url 'cart-session' %}">Корзина</a></li>
           {% if user.is_authenticated %}
-          {% comment %} <li><a href="{{ cart.get_absolute_url }}">Корзина</a></li> {% endcomment %}
-          <li><a href="{% url 'logout' %}">Выйти</a></li>
+          <li><a href="{% url 'cabinet' %}">Личный кабинет</a></li>
           {% else %}
-          <li><a href="{% url 'login' %}">Войти</a></li>
+          <li><a href="{% url 'login' %}">Личный кабинет</a></li>
           {% endif %}
         </ul>
       </nav>

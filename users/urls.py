@@ -1,9 +1,11 @@
 from django.urls import path
 
-from .views import LoginView, VerifyCodeView, LogoutView
+from users import views
 
 urlpatterns = [
-    path('login/', LoginView.as_view(), name='login'),
-    path('verify-code/', VerifyCodeView.as_view(), name='verify_code'),
-    path('logout/', LogoutView.as_view(), name='logout'),
+    path('login/', views.LoginView.as_view(), name='login'),
+    path('verify-code/', views.VerifyCodeView.as_view(), name='verify_code'),
+    path('logout/', views.LogoutView.as_view(), name='logout'),
+    path('cabinet/update/', views.PersonalСabinetFormView.as_view(), name='cabinet_update'),
+    path('cabinet/', views.PersonalСabinetTemplateView.as_view(), name='cabinet'),
 ]
