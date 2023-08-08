@@ -3,6 +3,7 @@ from importlib import import_module
 from django.conf import settings
 from django.shortcuts import redirect, render
 from django.views import generic
+from django.http import JsonResponse
 
 from .models import Category, MainPart, Part
 from .mixins import CreateSessionKeyMixin
@@ -43,6 +44,35 @@ class AddToCartView(CreateSessionKeyMixin, generic.View):
         session['cart'] = cart
         session.save()
         return redirect('catalog')
+
+
+class RemoveFromCartView(generic.View):
+
+    def post(self, request, part_id):
+        SessionStore = import_module(settings.SESSION_ENGINE).SessionStore
+        session = SessionStore(session_key=request.session.session_key)
+        cart = session.get('cart', {})
+
+        # Уменьшаем количество товара в корзине
+        if str(part_id) in cart:
+            cart[str(part_id)]['quantity'] -= 1
+
+            # Если количество стало меньше или равно 0, удаляем товар из корзины
+            if cart[str(part_id)]['quantity'] <= 0:
+                del cart[str(part_id)]
+                quantity = 0
+            else:
+                quantity = cart[str(part_id)]['quantity']
+
+            session['cart'] = cart
+            session.save()
+
+        # Вычисляем обновленную сумму и количество товаров в корзине
+        total_price = sum(item['price'] * item['quantity'] for item in cart.values())
+        num_items = sum(item['quantity'] for item in cart.values())
+
+        return JsonResponse({'total_price': total_price, 'num_items': num_items, 'quantity': quantity})
+
 
 
 class CartSessionDetailView(CreateSessionKeyMixin, generic.TemplateView):
