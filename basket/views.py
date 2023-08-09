@@ -89,6 +89,6 @@ class CartSessionDetailView(CreateSessionKeyMixin, generic.TemplateView):
         return context
 
 
-class CheckoutFromCartView(generic.View):
+class CheckoutFromCartView(generic.FormView):
     pass
 

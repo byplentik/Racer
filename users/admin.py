@@ -17,13 +17,13 @@ class AdminCustomUser(BaseUserAdmin):
     )
 
     fieldsets = (
-        (None, {'fields': ('phone_number', 'email', 'password')}),
+        (None, {'fields': ('phone_number', 'email', 'password', 'delivery_address', 'delivery_index')}),
         (('Личная Информация'), {'fields': ('name', 'last_name', 'last_login')}),
         (('Разрешения'), {
             'fields': ('is_staff', 'is_superuser'),
         })
     )
-    list_display = ('phone_number', 'name', 'last_name', 'email', 'is_staff')
+    list_display = ('phone_number', 'name', 'last_name', 'email', 'delivery_index', 'is_staff')
     list_filter = ('is_staff', 'is_superuser', 'groups')
     search_fields = ('email', 'name', 'last_name', 'phone_number')
     ordering = ('email',)

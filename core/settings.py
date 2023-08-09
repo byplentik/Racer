@@ -45,7 +45,13 @@ INSTALLED_APPS = [
     # Local
     'basket.apps.BasketConfig',
     'users.apps.UsersConfig',
+
+    # 3-rd packages
+    'hcaptcha',
 ]
+
+HCAPTCHA_SITEKEY = os.getenv('HCAPTCHA_SITEKEY')
+HCAPTCHA_SECRET = os.getenv('HCAPTCHA_SECRET')
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',

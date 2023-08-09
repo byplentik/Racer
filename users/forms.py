@@ -2,6 +2,8 @@ from django import forms
 from django.contrib.auth.forms import ReadOnlyPasswordHashField
 from django.core.exceptions import ValidationError
 
+from hcaptcha.fields import hCaptchaField
+
 from .models import CustomUser
 
 
@@ -38,6 +40,7 @@ class UserChangeForm(forms.ModelForm):
 
 class PhoneNumberForm(forms.Form):
     phone_number = forms.CharField(label='Номер телефрна', max_length=12, min_length=7)
+    hcaptcha = hCaptchaField()
 
 
 class VerificationCodeForm(forms.Form):
