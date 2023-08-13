@@ -22,3 +22,18 @@ class AdminCategory(admin.ModelAdmin):
 @admin.register(models.Part)
 class AdminCategory(admin.ModelAdmin):
     list_display = ['name', 'main_part', 'price', 'number']
+
+
+class OrderedPartInline(admin.TabularInline):
+    model = models.OrderedPart
+    extra = 0
+    readonly_fields = ('part', 'quantity')
+
+
+@admin.register(models.CheckoutCart)
+class CheckoutCartAdmin(admin.ModelAdmin):
+    list_display = ('id', 'user', 'total_price', 'created_at')
+    inlines = (OrderedPartInline,)
+
+
+admin.site.register(models.OrderedPart)

@@ -71,13 +71,13 @@ class VerifyCodeView(generic.View):
                 del request.session['auth_code']
                 phone_number = request.session.get('phone_number')
                 try:
-                    user = CustomUser.objects.create_user(phone_number=phone_number, name='', last_name='')
-                    login(request, user)
-                    return redirect('home')
-                except IntegrityError:
                     user = CustomUser.objects.get(phone_number=phone_number)
+                except Exception:
+                    user = CustomUser.objects.create(phone_number=phone_number, name='', last_name='')
+                finally:
                     login(request, user)
-                    return redirect('home')
+                    del request.session['phone_number']
+                    return redirect('cabinet')
             else:
                 form.add_error('code', 'Неверный код')
 

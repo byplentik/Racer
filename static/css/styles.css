@@ -73,6 +73,7 @@ nav ul li a {
   border: none;
   padding: 5px 10px;
   cursor: pointer;
+  text-decoration: none;
 }
 
 .add-to-cart:hover {

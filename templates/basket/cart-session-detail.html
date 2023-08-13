@@ -33,7 +33,13 @@
     </table>
     <p>Итого: <span id="total-price">{{ total_price }}</span></p>
     <p>Всего товаров в корзине: <span id="num-of-items">{{ get_num_of_items }}</span></p>
-    <button class="add-to-cart">Оформить заказ</button>
+
+    {% if user.is_authenticated %}
+    <a href="{% url 'checkout-form' %}" class="add-to-cart">Оформить заказ</a>
+    {% else %}
+    <a href="{% url 'checkout-form-not-auth' %}" class="add-to-cart">Оформить заказ</a>
+    {% endif %}
+    
   </div>
 {% else %}
   <h1>Корзина</h1>
