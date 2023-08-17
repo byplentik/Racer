@@ -10,8 +10,9 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.0/ref/settings/
 """
 
-from pathlib import Path
 import os
+from pathlib import Path
+
 from dotenv import load_dotenv
 
 load_dotenv()
@@ -145,3 +146,8 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # Модель пользователя
 AUTH_USER_MODEL = 'users.CustomUser'
+
+# Данные для аунтификации SMS Aero
+API_KEY = os.getenv('API_KEY')
+EMAIL = os.getenv('EMAIL')
+URL_SMS_AERO = os.getenv('URL_SMS_AERO')

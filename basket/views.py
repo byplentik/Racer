@@ -4,23 +4,20 @@ from importlib import import_module
 
 import requests
 from django.conf import settings
-from django.shortcuts import redirect, render
+from django.contrib.auth import get_user_model as User, login
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.http import JsonResponse
+from django.shortcuts import redirect
 from django.urls import reverse_lazy
 from django.views import generic
-from django.http import JsonResponse
-from django.contrib.auth.mixins import LoginRequiredMixin
-from django.contrib.auth import get_user_model as User, login
-from django.core.exceptions import ObjectDoesNotExist
 
-
-from .models import Category, MainPart, Part, CheckoutCart, OrderedPart
-from .mixins import CreateSessionKeyMixin
 from .forms import CheckoutFromCartForm, CheckoutFromCartFormNotAuth, VerifyCodeFormAndCreateOrder
-from users.views import LoginView
+from .mixins import CreateSessionKeyMixin
+from .models import Category, MainPart, Part, CheckoutCart, OrderedPart
 
-class HomeView(CreateSessionKeyMixin, generic.View):
-    def get(self, request):
-        return render(request, 'home.html')
+
+class HomeView(CreateSessionKeyMixin, generic.TemplateView):
+    template_name = 'home.html'
 
 
 class CatalogListView(CreateSessionKeyMixin, generic.ListView):

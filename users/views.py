@@ -1,12 +1,13 @@
-import os
-import random
+import re
+import secrets
+
 
 import requests
 from django.contrib.auth import login, logout
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.db import IntegrityError
+from django.conf import settings
 from django.shortcuts import render, redirect
-from django.urls import reverse, reverse_lazy
+from django.urls import reverse_lazy
 from django.views import generic
 from dotenv import load_dotenv
 
@@ -16,72 +17,87 @@ from .models import CustomUser
 load_dotenv()
 
 
-class LoginView(generic.View):
+class LoginView(generic.FormView):
+    """
+    Представление Django для обработки входа пользователя в систему.
+
+    Представление отображает форму для ввода номера телефона и отправляет проверочный код на введенный номер.
+    Класс проверяет принадлежность введенного номера к странам СНГ (Россия, Казахстан) и форматирует его в стандартный
+    формат (8). Затем он отправляет POST-запрос к SMS API-сервису для отправки проверочного кода на номер телефона.
+    В случае успешного выполнения запроса пользователь перенаправляется на страницу с проверочным кодом.
+    В противном случае выдается сообщение об ошибке.
+    """
+
     template_name = 'users/login.html'
+    form_class = PhoneNumberForm
+    success_url = reverse_lazy('verify_code')
 
-    def is_sng_number(self, number):
-        return number.startswith('7') or number.startswith('8') or number.startswith('+7') or number.startswith('+8')
+    def is_sng_number(self, number: str) -> bool:
+        """
+        Проверяем, является ли введенный номер из формы к Странам СНГ
+        (Россия, Казахстан)
+        """
+        return re.match(r'^(\+?7|\+?8)', number) is not None
 
-    def to_correct_number(self, number: str):
+    def to_correct_number(self, number: str) -> str:
+        """
+        Форматирование телефонного номера в стандартный формат.
+        """
         if number.startswith('+7') or number.startswith('+8'):
             return '8' + number[2:]
         if number.startswith('7'):
             return '8' + number[1:]
         return number
 
-    def get(self, request):
-        form_class = PhoneNumberForm()
-        return render(request, 'users/login.html', {'form': form_class})
+    def form_valid(self, form: PhoneNumberForm):
+        code = str(secrets.randbelow(1000000)).zfill(6)
+        number = form.cleaned_data['phone_number']
+        if not self.is_sng_number(number):
+            form.add_error('phone_number', 'Укажите корректный номер телефона')
+            return self.form_invalid(form)
+        correct_number = self.to_correct_number(number)
 
-    def post(self, request):
-        form = PhoneNumberForm(request.POST)
-        if form.is_valid():
-            API_KEY = os.getenv('API_KEY')
-            EMAIL = os.getenv('EMAIL')
-            code = ''.join(random.choices('123456', k=6))
-            number = form.cleaned_data['phone_number']
-            if not self.is_sng_number(number):
-                form.add_error('phone_number', 'Укажите корректный номер телефона')
-                return render(request, self.template_name, {'form': form})
-            correct_number = self.to_correct_number(number)
-            request.session['auth_code'] = code
-            request.session['phone_number'] = correct_number
-            url = f'https://{EMAIL}:{API_KEY}@gate.smsaero.ru/v2/sms/send?number={number}&text=Код верефикации: {code}&sign=SMS Aero'
-            response = requests.get(url)
-            if response.status_code == 200:
-                return redirect('verify_code')
-            else:
-                return render(request, self.template_name, {'form': form, 'error_message': 'Не удалось отправить SMS'})
-        return render(request, self.template_name, {'form': form})
+        # Сохраняем код и номер телефона в сессии пользователя
+        self.request.session['auth_code'] = code
+        self.request.session['phone_number'] = correct_number
+
+        # Отправка post запроса на API сервис для отправки сообщения
+        data = {
+            'number': correct_number,
+            'text': f'Ваш код верефикации {code}',
+            'sign': 'SMS Aero'
+        }
+        response = requests.post(url=settings.URL_SMS_AERO, auth=(settings.EMAIL, settings.API_KEY), data=data)
+
+        # Проверяем status code
+        if response.status_code == 200:
+            return super().form_valid(form)
+        else:
+            form.add_error('phone_number', 'Не удалось отправить SMS')
+            return self.form_invalid(form)
 
 
-class VerifyCodeView(generic.View):
+class VerifyCodeView(generic.FormView):
     form_class = VerificationCodeForm
     template_name = 'users/verify_code.html'
+    success_url = reverse_lazy('cabinet')
 
-    def get(self, request):
-        form = self.form_class()
-        return render(request, self.template_name, {'form': form})
-
-    def post(self, request):
-        form = self.form_class(request.POST)
-        if form.is_valid():
-            entered_code = form.cleaned_data['code']
-            if entered_code == request.session.get('auth_code'):
-                del request.session['auth_code']
-                phone_number = request.session.get('phone_number')
-                try:
-                    user = CustomUser.objects.get(phone_number=phone_number)
-                except Exception:
-                    user = CustomUser.objects.create(phone_number=phone_number, name='', last_name='')
-                finally:
-                    login(request, user)
-                    del request.session['phone_number']
-                    return redirect('cabinet')
-            else:
-                form.add_error('code', 'Неверный код')
-
-        return render(request, self.template_name, {'form': form})
+    def form_valid(self, form):
+        entered_code = form.cleaned_data['code']
+        if entered_code == self.request.session.get('auth_code'):
+            del self.request.session['auth_code']
+            phone_number = self.request.session.get('phone_number')
+            try:
+                user = CustomUser.objects.get(phone_number=phone_number)
+            except Exception:
+                user = CustomUser.objects.create(phone_number=phone_number, name='', last_name='')
+            finally:
+                login(self.request, user)
+                del self.request.session['phone_number']
+                return super().form_valid(form)
+        else:
+            form.add_error('code', 'Неверный код')
+            return self.form_invalid(form)
 
 
 class LogoutView(LoginRequiredMixin, generic.View):
