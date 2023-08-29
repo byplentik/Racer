@@ -13,7 +13,7 @@ from django.views import generic
 
 from .forms import CheckoutFromCartForm, CheckoutFromCartFormNotAuth, VerifyCodeFormAndCreateOrder
 from .mixins import CreateSessionKeyMixin
-from .models import Category, MainPart, Part, CheckoutCart, OrderedPart
+from .models import Category, MainPart, Part, CheckoutCart, OrderedPart, Motorcycle
 
 
 class HomeView(CreateSessionKeyMixin, generic.TemplateView):
@@ -26,10 +26,10 @@ class CatalogListView(CreateSessionKeyMixin, generic.ListView):
     context_object_name = 'categories'
 
 
-class MainPartDetailView(CreateSessionKeyMixin, generic.DetailView):
-    model = MainPart
+class MotorcycleDetailView(CreateSessionKeyMixin, generic.DetailView):
+    model = Motorcycle
     template_name = 'basket/part_detail.html'
-    context_object_name = 'mainpart'
+    context_object_name = 'motorcycle'
 
 
 class AddToCartView(CreateSessionKeyMixin, generic.View):

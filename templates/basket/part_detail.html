@@ -1,31 +1,35 @@
 {% extends 'base.html' %}
 
 {% block content %}
-  <div class="part-detail">
-    <h1>{{ mainpart.name }}</h1>
-    <table>
-      <thead>
+<h1>{{ motorcycle.name }}</h1>
+<div class="part-detail">
+  {% for mainpart in motorcycle.mainpart_set.all %}
+    <div class="main-part">
+      <h2>{{ mainpart.name }}</h2>
+      <img src="{{ mainpart.image.url }}" alt="">
+      <table>
         <tr>
-          <th>№</th>
+          <th>Номер</th>
           <th>Наименование</th>
           <th>Цена</th>
-          <th>К заказу</th>
+          <th>Действия</th>
         </tr>
-      </thead>
-      <tbody>
         {% for part in mainpart.part_set.all %}
           <tr>
             <td>{{ part.number }}</td>
             <td>{{ part.name }}</td>
-            <td>{{ part.price }}р</td>
+            <td>{{ part.price }}</td>
             <td>
-              <button class="add-to-cart" data-part-id="{{ part.pk }}">Добавить в корзину</button>
+              <button class="add-to-cart" data-part-id="{{ part.id }}">Добавить в корзину</button>
             </td>
           </tr>
         {% endfor %}
-      </tbody>
-    </table>
-  </div>
+      </table>
+    </div>
+  {% endfor %}
+</div>
+
+
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <script>
     $(document).ready(function() {

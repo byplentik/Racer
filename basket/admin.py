@@ -9,18 +9,18 @@ class AdminCategory(admin.ModelAdmin):
 
 
 @admin.register(models.Motorcycle)
-class AdminCategory(admin.ModelAdmin):
+class AdminMotorcycle(admin.ModelAdmin):
     list_display = ['name', 'category']
-
-
-@admin.register(models.MainPart)
-class AdminCategory(admin.ModelAdmin):
-    list_display = ['name', 'motorcycle']
     prepopulated_fields = {'slug': ['name']}
 
 
+@admin.register(models.MainPart)
+class AdminMainPart(admin.ModelAdmin):
+    list_display = ['name', 'motorcycle']
+
+
 @admin.register(models.Part)
-class AdminCategory(admin.ModelAdmin):
+class AdminPart(admin.ModelAdmin):
     list_display = ['name', 'main_part', 'price', 'number']
 
 
