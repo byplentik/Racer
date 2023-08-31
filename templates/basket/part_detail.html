@@ -6,7 +6,9 @@
   {% for mainpart in motorcycle.mainpart_set.all %}
     <div class="main-part">
       <h2>{{ mainpart.name }}</h2>
-      <img src="{{ mainpart.image.url }}" alt="">
+      {% if mainpart.image %}
+        <img src="{{ mainpart.image.url }}" alt="">
+      {% endif %}
       <table>
         <tr>
           <th>Номер</th>

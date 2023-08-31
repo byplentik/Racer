@@ -19,6 +19,7 @@ class Motorcycle(models.Model):
     name = models.CharField(max_length=255, verbose_name='Мото/Двигатели')
     category = models.ForeignKey(Category, on_delete=models.CASCADE, verbose_name='Категория')
     slug = models.SlugField(max_length=300, verbose_name='URL', unique=True)
+    excel_file = models.FileField(verbose_name='Excel файл', blank=True)
 
     def __str__(self):
         return self.name
@@ -39,10 +40,12 @@ class MainPart(models.Model):
 class Part(models.Model):
     main_part = models.ForeignKey(MainPart, on_delete=models.CASCADE, verbose_name='Основная запчасть')
     number = models.IntegerField(verbose_name='№')
-    item = models.CharField(max_length=150, verbose_name='Артикул', blank=True)
     code = models.CharField(max_length=150, verbose_name='Уникальный код', blank=True)
     name = models.CharField(max_length=300, verbose_name='Наименование')
     price = models.IntegerField(default=0, verbose_name='Цена')
+
+    class Meta:
+        ordering = ['number']
 
     def __str__(self):
         return self.name
