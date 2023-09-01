@@ -26,57 +26,37 @@ class AdminMotorcycle(admin.ModelAdmin):
                 ws = wb[wb.sheetnames[0]]
 
                 mainparts = []
-                parts = []
-                counter_mainparts = 0
+                counter_mainparts = -1
                 previous_value = 0
 
                 # Получаем данные с Excel файла и создаем объект экземпляра MainPart
                 for row in ws.iter_rows(min_row=1, min_col=2, max_col=6):
-                    value_mainpart = str(row[0].value)
-                    for i in range(1, 100):
-                        if value_mainpart is not None and value_mainpart.startswith(str(i) + '.'):
-                            obj_mainaprt = models.MainPart(
-                                name=value_mainpart,
+                    value_mainpart_or_number = str(row[0].value)
+                    try:
+                        value_number = int(value_mainpart_or_number)
+                        code_value = str(row[1].value)
+                        name_value = str(row[3].value)
+
+                        if value_number > previous_value and code_value.startswith('R'):
+                            models.Part.objects.create(
+                                main_part=mainparts[counter_mainparts],
+                                number=value_number,
+                                code=code_value,
+                                name=name_value,
+                            )
+
+                            previous_value = value_number
+                    except:
+                        mainpart_value = str(value_mainpart_or_number)
+                        if mainpart_value != 'None' and any(mainpart_value.startswith(str(i) + '.') for i in range(1, 101)):
+                            mainpart_obj, created = models.MainPart.objects.get_or_create(
                                 motorcycle=obj,
+                                name=mainpart_value
                             )
-                            mainparts.append(obj_mainaprt)
-
-                # Создаем объекты MainPart
-                models.MainPart.objects.bulk_create(mainparts)
-
-                # Получаем данные с Excel файла и создаем объект экземпляра Part
-                for row in ws.iter_rows(min_row=1, min_col=2, max_col=6):
-                    name_value = str(row[3].value)
-                    value_code = str(row[1].value)
-                    if value_code is not None and value_code.startswith('R'):
-                        number_value = int(row[0].value)
-                        if number_value > previous_value:
-                            previous_value = number_value
-
-                            # Создаем экземпляр модели Part
-                            part = models.Part(
-                                main_part=mainparts[counter_mainparts],
-                                number=number_value,
-                                code=value_code,
-                                name=name_value
-                            )
-
-                            parts.append(part)
-                        elif number_value == 1:
                             counter_mainparts += 1
-                            previous_value = number_value
+                            previous_value = 0
+                            mainparts.append(mainpart_obj)
 
-                            part = models.Part(
-                                main_part=mainparts[counter_mainparts],
-                                number=number_value,
-                                code=value_code,
-                                name=name_value
-                            )
-
-                            parts.append(part)
-
-                # Создаем модели Part
-                models.Part.objects.bulk_create(parts)
             except Exception as ex:
                 obj.delete()
                 messages.error(request, "Не удалось получить данные с excel файла")
