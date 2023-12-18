@@ -37,7 +37,7 @@
     {% if user.is_authenticated %}
     <a href="{% url 'checkout-form' %}" class="add-to-cart">Оформить заказ</a>
     {% else %}
-    <a href="{% url 'checkout-form-not-auth' %}" class="add-to-cart">Оформить заказ</a>
+    <a href="#" class="add-to-cart">Оформить заказ</a>
     {% endif %}
     
   </div>

@@ -5,22 +5,22 @@ from django.contrib.auth.models import (
 
 
 class CustomUserManager(BaseUserManager):
-    def create_user(self, phone_number, name, last_name, password=None):
-        if not phone_number:
-            raise ValueError('Пользователь должен указать номер телефона')
+    def create_user(self, email, name, last_name, password=None):
+        if not email:
+            raise ValueError('Пользователь должен указать email адрес')
 
         user = self.model(
             name=name,
             last_name=last_name,
-            phone_number=phone_number
+            email=email
             )
 
         user.set_password(password)
         user.save(using=self._db)
         return user
 
-    def create_superuser(self, phone_number, name, last_name, password=None):
-        user = self.create_user(phone_number, name=name, last_name=last_name, password=password)
+    def create_superuser(self, email, name, last_name, password=None):
+        user = self.create_user(email, name=name, last_name=last_name, password=password)
         user.is_staff = True
         user.is_superuser = True
         user.save(using=self._db)
@@ -28,8 +28,8 @@ class CustomUserManager(BaseUserManager):
 
 
 class CustomUser(AbstractBaseUser, PermissionsMixin):
-    phone_number = models.CharField(verbose_name='Номер телефона', unique=True, max_length=20)
-    email = models.EmailField(verbose_name='Email', max_length=255, blank=True)
+    phone_number = models.CharField(verbose_name='Номер телефона', unique=True, max_length=20, blank=True)
+    email = models.EmailField(verbose_name='Email', max_length=255, unique=True)
     name = models.CharField(verbose_name='Имя', max_length=255, blank=True)
     last_name = models.CharField(verbose_name='Фамилия', max_length=255, blank=True)
     delivery_address = models.TextField(
@@ -50,7 +50,7 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
 
     objects = CustomUserManager()
 
-    USERNAME_FIELD = 'phone_number'
+    USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = ['name', 'last_name']
 
     def __str__(self):

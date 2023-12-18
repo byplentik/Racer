@@ -1,6 +1,4 @@
-from django.contrib import admin
-from django.contrib import messages
-from django.shortcuts import redirect
+from django.contrib import admin, messages
 
 from openpyxl import load_workbook, Workbook
 
@@ -69,7 +67,7 @@ class AdminMainPart(admin.ModelAdmin):
 
 @admin.register(models.Part)
 class AdminPart(admin.ModelAdmin):
-    list_display = ['name', 'main_part', 'price', 'number']
+    list_display = ['name', 'code', 'main_part', 'price', 'number']
 
 
 class OrderedPartInline(admin.TabularInline):
@@ -85,3 +83,29 @@ class CheckoutCartAdmin(admin.ModelAdmin):
 
 
 admin.site.register(models.OrderedPart)
+
+
+@admin.register(models.ExcelFileCatalog)
+class AdminExcelFileCatalog(admin.ModelAdmin):
+
+        def save_model(self, request, obj, form, change):
+            super().save_model(request, obj, form, change)
+            parts = []
+
+            if obj.excel_file:
+                try:
+                    wb: Workbook = load_workbook(obj.excel_file)
+                    ws = wb[wb.sheetnames[0]]
+
+                    for row in ws.iter_rows(min_row=1, min_col=1, max_col=3):
+                        if row[0].value is not None and str(row[0].value).startswith('R'):
+                            code_value = str(row[0].value)
+                            price_value = str(row[2].value)
+                            try:
+                                part = models.Part.objects.filter(
+                                    code=code_value
+                                ).update(price=price_value)
+                            except:
+                                pass
+                except:
+                    pass

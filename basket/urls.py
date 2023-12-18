@@ -9,6 +9,4 @@ urlpatterns = [
     path('catalog/', views.CatalogListView.as_view(), name='catalog'),
     path('catalog/<slug:slug>/', views.MotorcycleDetailView.as_view(), name='motorcycle-detail'),
     path('checkout/', views.CheckoutFromCartView.as_view(), name='checkout-form'),
-    path('checkout-user/', views.CheckoutFromCartViewNotAuthenticated.as_view(), name='checkout-form-not-auth'),
-    path('checkout-verified/', views.VerifyCodeViewAndCreateOrder.as_view(), name='verified-checkout'),
 ]

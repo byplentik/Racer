@@ -67,3 +67,9 @@ class OrderedPart(models.Model):
 
     def __str__(self):
         return f'{self.cart}'
+
+
+class ExcelFileCatalog(models.Model):
+    excel_file = models.FileField(verbose_name='Каталог',
+                                  help_text='Загрузите Excel файл для обновления каталога запчастей')
+    created_at = models.DateField(auto_now_add=True)

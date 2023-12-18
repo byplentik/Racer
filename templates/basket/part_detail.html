@@ -3,7 +3,7 @@
 {% block content %}
 <h1>{{ motorcycle.name }}</h1>
 <div class="part-detail">
-  {% for mainpart in motorcycle.mainpart_set.all %}
+  {% for mainpart in main_parts %}
     <div class="main-part">
       <h2>{{ mainpart.name }}</h2>
       {% if mainpart.image %}
@@ -17,65 +17,23 @@
           <th>Действия</th>
         </tr>
         {% for part in mainpart.part_set.all %}
+          {% if part.price > 0 %}
           <tr>
             <td>{{ part.number }}</td>
             <td>{{ part.name }}</td>
             <td>{{ part.price }}</td>
             <td>
-              <button class="add-to-cart" data-part-id="{{ part.id }}">Добавить в корзину</button>
+              <form method="post" action="{% url 'add-to-cart' part_id=part.id quantity=1 %}">
+                {% csrf_token %}
+                <input type="submit" value="Добавить в корзину">
+              </form>            
             </td>
           </tr>
+          {% endif %}
         {% endfor %}
       </table>
     </div>
   {% endfor %}
 </div>
 
-
-  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-  <script>
-    $(document).ready(function() {
-      $('.add-to-cart').click(function() {
-        var partId = $(this).data('part-id');
-        var quantity = 1;
-
-        $(this).append('<span class="animation">+1</span>');
-        var animation = $(this).find('.animation');
-        animation.fadeIn(400).fadeOut(400, function() {
-          animation.remove();
-        });
-
-        $.ajax({
-          url: "{% url 'add-to-cart' part_id=0 quantity=0 %}".replace('0', partId).replace('0', quantity),
-          type: "POST",
-          beforeSend: function(xhr) {
-            xhr.setRequestHeader("X-CSRFToken", "{{ csrf_token }}");
-          },
-          success: function(response) {
-          },
-          error: function(xhr, textStatus, errorThrown) {
-          }
-        });
-      });
-    });
-  </script>
 {% endblock content %}
-
-<style>
-  /* Дополнительные стили для анимации */
-  .add-to-cart {
-    position: relative;
-  }
-
-  .add-to-cart .animation {
-    position: absolute;
-    top: -10px;
-    right: -10px;
-    background-color: green;
-    color: white;
-    padding: 3px 6px;
-    border-radius: 50%;
-    font-size: 12px;
-    display: none;
-  }
-</style>

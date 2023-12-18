@@ -17,9 +17,9 @@
           <li><a href="{% url 'catalog' %}">Каталог</a></li>
           <li><a href="{% url 'cart-session' %}">Корзина</a></li>
           {% if user.is_authenticated %}
-          <li><a href="{% url 'cabinet' %}">Личный кабинет</a></li>
+          <li><a href="#">Личный кабинет</a></li>
           {% else %}
-          <li><a href="{% url 'login' %}">Личный кабинет</a></li>
+          <li><a href="#">Личный кабинет</a></li>
           {% endif %}
         </ul>
       </nav>
