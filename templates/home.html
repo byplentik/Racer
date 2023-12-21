@@ -1,7 +1,482 @@
-{% extends 'base.html' %}
+{% load static %}
 
-{% block content %}
-<h1>Это главная страница</h1>
-<p>Здесь будет какая то инфа</p>
-<hr>
-{% endblock content %}
+<!DOCTYPE html>
+<html lang="ru" class="js webp-on" data-scrapbook-source="https://racer-parts.ru/" data-scrapbook-create="20231220073940472" data-scrapbook-title="Купить запчасти Racer в интернет магазине Рейсер">
+
+<head>
+    <title>Купить запчасти Racer в интернет магазине Рейсер</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="msapplication-tap-highlight" content="no">
+    <meta name="theme-color" content="#4754C2">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <link rel="shortcut icon" href="{% static "other/favicon.ico" %}" type="image/vnd.microsoft.icon">
+
+    {% comment %} js scripts {% endcomment %}
+    <script type="text/javascript" async="" src="{% static "js/client.js" %}"></script>
+
+    <meta name="description" content="Более 4000 запчастей Racer в наличии и под заказ в интернет магазине racer-parts.ru. Доставка запчастей по России и СНГ.">
+    <meta name="rating" content="safe for kids">
+    <link rel="canonical" href="https://racer-parts.ru/">
+    <link rel="shortlink" href="https://racer-parts.ru/">
+    <link href="{% static "css/css.css" %}" rel="stylesheet">
+    <link type="text/css" rel="stylesheet" href="{% static "css/css__mUwr2m3vjCWDt6bNOZxBgX_kh5nsxBGYBaIxcVSj7vM__s74ROVNvpiw2d-ZgqxO8O1eBEOlxeP2GAKIXEWczN6I__9tFTvjcbZXsmyrrOP2ytdUmEp.css" %}" media="all">
+    <link type="text/css" rel="stylesheet" href="{% static "css/css__WRF7jVUOarzJxXhelqhwo5Gpzph52l_WYanZgLwl14Q__AbY1rYZhkrduWtAnhtdmoe6vOx6JEuzQCcgMPpK8gDs__9tFTvjcbZXsmyrrOP2ytdUmEp.css" %}" media="all">
+    <style>
+        #loader {
+            background: #fff;
+            bottom: 0;
+            height: 100%;
+            left: 0;
+            position: fixed;
+            right: 0;
+            top: 0;
+            width: 100%;
+            z-index: 9999
+        }
+    </style>
+    <style id="__replain_styles"></style>
+</head>
+
+<body class="form-single-submit-processed no-touch">
+    <header class="header">
+        <div class="header__nav">
+            <div class="header__nav-wrap content-w">
+                <nav class="nav">
+                    <div class="nav__shade"></div>
+                    <div class="nav__list-wrap animate trs">
+                        <ul class="nav__list">
+                            <li class="menu-211 first active"><a href="" title="" class="active">Главная</a></li>
+                            <li class="menu-2178"><a href="#">Каталог</a></li>
+                            <li class="menu-1217"><a href="#" title="">Ваши вопросы</a></li>
+                            <li class="menu-1001"><a href="#">Отзывы</a></li>
+                            <li class="menu-2481"><a href="#" title="">Видео</a></li>
+                            <li class="menu-990"><a href="#">Контакты</a></li>
+                            <li class="menu-3522 last"><a href="#" title="">Личный кабинет</a></li>
+                        </ul>
+                        <div class="nav__search">
+                            <form action="https://racer-parts.ru/facet" method="get" id="search-block-form--2" accept-charset="UTF-8">
+                                <div>
+                                    <div class="container-inline">
+                                        <div class="form-item form-type-textfield form-item-search-block-form"> <input title="Введите ключевые слова для поиска." placeholder=" Поиск по каталогу " type="text" id="edit-search-block-form--4" name="text" size="15" maxlength="128" class="form-text" value=""></div>
+                                        <div class="form-actions form-wrapper" id="edit-actions--2"><input type="submit" id="edit-submit--2" class="form-submit" value=""></div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="nav__contacts">
+                            <div class="nav__contacts-social"> <a href="viber://add?number=+79193781078"><img src="{% static "webp/viber_mob.webp" %}" loading="auto" decoding="async" alt="">Viber</a> <a href="whatsapp://send?text=Racer-Parts.ru&amp;abid=+79193781078"><img src="{% static "webp/whatsapp_mob.webp" %}" loading="auto" decoding="async" alt="">WhatsApp</a></div> <span class="nav__contacts-phone">+7 (919) 378-10-78</span>
+                        </div>
+                    </div>
+                    <div class="nav__mob-button"></div>
+                </nav>
+                <div class="header__search">
+                    <form action="https://racer-parts.ru/facet" method="get" id="search-block-form--2" accept-charset="UTF-8">
+                        <div>
+                            <div class="container-inline">
+                                <div class="form-item form-type-textfield form-item-search-block-form"> <input title="Введите ключевые слова для поиска." placeholder=" Поиск по каталогу " type="text" id="edit-search-block-form--4" name="text" size="15" maxlength="128" class="form-text" value=""></div>
+                                <div class="form-actions form-wrapper" id="edit-actions--2"> <input type="submit" id="edit-submit--2" class="form-submit" value=""></div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="header__social"> <a href="https://www.youtube.com/channel/UCzv4GaWT10_7IN0TXwjyl0A" target="_blank"><img src="{% static "webp/soc-youtube.webp" %}" alt="youtube" loading="auto" decoding="async"></a> <a href="https://vk.com/moto_sib" target="_blank"><img src="{% static "webp/soc-vk.webp" %}" alt="vk" loading="auto" decoding="async"></a> <a href="https://ok.ru/zapchastir" target="_blank"><img src="{% static "webp/soc-od.webp" %}" alt="odnoklassniki" loading="auto" decoding="async"></a></div>
+            </div>
+        </div>
+        <div class="header__top content-w">
+            <div class="nav-mob-button"></div>
+            <div class="logo"> <a class="logo__link h6" href=""><img src="{% static "webp/logo.webp" %}" loading="auto" decoding="async" alt=""></a></div>
+            <div class="header__contacts hidden-phone">
+                <div class="header__contacts-social"> <a href="viber://+79193781078"><img src="{% static "webp/soc-viber.webp" %}" loading="auto" decoding="async" alt=""></a> <a href="whatsapp://+79193781078"><img src="{% static "webp/soc-wap.webp" %}" loading="auto" decoding="async" alt=""></a></div>
+                <p class="header__phone h7">+7 (919) 378-10-78</p>
+            </div> <a class="autodialog cta-btn autodialog-processed" data-dialog-width="60%" href="#" id="autodialog-1">КАТАЛОГ ЗАПЧАСТЕЙ</a> <a class="cta-btn light" href="#"><span>КАБИНЕТ</span></a>
+            <div class="block block-uc-ajax-cart block-odd first last block" data-bid="44" id="b44">
+                <div id="ajaxCartUpdate" class="load-on-view ajax-cart-processed">
+                    <div class="header__order" id="cart-block-contents-ajax"><a class="autodialog" href="#"><span>(<span>0</span>)</span></a></div>
+                </div>
+            </div>
+        </div>
+    </header>
+    <main class="main">
+        <div class="block block-views block-odd first block" data-bid="71" id="b71">
+            <div class="view view-slide view-id-slide view-display-id-block view-dom-id-c3e862d7b8af7c30135c4a6097ea5a04">
+                <div class="attachment attachment-before"></div>
+                <div class="view-content">
+                    <div>
+                        <section class="welcome">
+                            <div class="welcome-slider">
+                                <div class="welcome-slider__item" style="background-image: url(&quot;{% static "webp/home-bg.webp" %}&quot;);">
+                                    <div class="welcome-slider__item-content content-w">
+                                        <h3 class="welcome-slider__sub-title s1">Фирменный магазин</h3>
+                                        <h2 class="welcome-slider__title h1">Запчасти Racer в России и СНГ</h2>
+                                        <div class="welcome-slider__advantages">
+                                            <div><span>Доставка в любую точку России и СНГ</span></div>
+                                            <div><span>Без предоплаты за запчасти</span></div>
+                                            <div><span>Оригинальные детали RACER &gt;&gt;</span></div>
+                                        </div><a class="link-more welcome-slider__link" href="#contacts">Заказать сейчас</a><a class="autodialog link-more welcome-slider__link welcome-slider__link_dark autodialog-processed" data-dialog-width="60%" href="#" id="autodialog-2">Выбрать в каталоге</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+                    </div>
+                </div>
+                <div class="attachment attachment-after"></div>
+            </div>
+        </div>
+        <div class="block block-views block-even block" data-bid="69" id="b69">
+            <div class="view view-adv1 view-id-adv1 view-display-id-block view-dom-id-8dcf01fe5418522f9f6a2f791698fb8b">
+                <div class="attachment attachment-before"></div>
+                <div class="view-content">
+                    <div>
+                        <section class="benefits section" id="questions">
+                            <div class="benefits__layer"></div>
+                            <div class="benefits__content content-w">
+                                <div class="benefits__img"><img src="{% static "webp/advantages.webp" %}" loading="auto" decoding="async" alt=""></div>
+                                <div class="benefits__desc">
+                                    <h2 class="section-title">Почему именно наши запчасти?</h2>
+                                    <div class="benefits__items">
+                                        <h3>Специализированный магазин, все опубликованные детали в каталогах используются в мототехнике RACER.</h3>
+                                        <p>Это значит что запчасти без опасений встанут как родные. А если деталь не подойдет - мы просто вернем деньги.</p>
+                                        <h3>Быстрая обработка заказов и оперативная отправка с нашего склада в Барнауле.</h3>
+                                        <p>Это крупнейший склад на всей территории страны и он находится именно в Барнауле. В Москве нет, в Питере нет, а в Барнауле - есть! Это значит, что запчасти придут быстрее, чем у всех посредников вместе взятых.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+                    </div>
+                </div>
+                <div class="attachment attachment-after"></div>
+            </div>
+        </div>
+        <div class="block block-views block-odd block" data-bid="67" id="b67">
+            <div class="view view-banner1 view-id-banner1 view-display-id-block view-dom-id-3e3e2ce80f65f2b453bdbe0e94c33143">
+                <div class="attachment attachment-before"></div>
+                <div class="view-content">
+                    <div class="views-row views-row-1 views-row-odd views-row-first views-row-last">
+                        <section class="banner section">
+                            <div class="content-w">
+                                <div class="banner__logo"><img src="{% static "webp/logo_short.webp" %}" loading="auto" decoding="async" alt=""></div>
+                                <p>9730 запчастей Racer в наличии и под заказ в интернет магазине racer-parts.ru. Доставка запчастей по России и СНГ. 100% Оригинальные запчасти RACER. Совместимость STELLS, IRBIS - уточняйте перед заказом.</p><span>─ Интернет магазин racer-parts.ru ─</span>
+                            </div>
+                        </section>
+                    </div>
+                </div>
+                <div class="attachment attachment-after"></div>
+            </div>
+        </div>
+        <div class="block block-views block-even block" data-bid="70" id="b70">
+            <div class="view view-adv2 view-id-adv2 view-display-id-block view-dom-id-7d10a2148bdcea866dff0b7dc19b8156">
+                <div class="attachment attachment-before"></div>
+                <div class="view-content">
+                    <div>
+                        <section class="payment section content-w">
+                            <div class="benefits__desc">
+                                <h2 class="section-title">Оплата заказа при получении!</h2>
+                                <div class="benefits__items">
+                                    <h3>Важно! Без предоплаты за запчасти*</h3>
+                                    <p>Высылаем наложенным платежом. Обязательное условие: действующий Email и предоплата 300р. за отправку груза с нашего склада. Служит для нас подтверждением, что Вы не передумаете и заберете посылку. Полная оплата при получении посылки в Вашем отделении почты.</p>
+                                    <p>Во все крупные города, по Вашему желанию отправляем транспортными компаниями, по умолчанию Почтой России.</p>
+                                    <p>В села, деревни и труднодоступные населенные пункты – Почтой России.</p>
+                                </div>
+                            </div>
+                            <div class="payment__img"><img src="{% static "webp/order.webp" %}" loading="auto" decoding="async" alt=""></div>
+                        </section>
+                    </div>
+                </div>
+                <div class="attachment attachment-after"></div>
+            </div>
+        </div>
+        <div class="block block-views block-odd block" data-bid="68" id="b68">
+            <div class="view view-banner2 view-id-banner2 view-display-id-block view-dom-id-01c9f8407f94b60be95b712458b9af08">
+                <div class="attachment attachment-before"></div>
+                <div class="view-content">
+                    <div class="views-row views-row-1 views-row-odd views-row-first views-row-last">
+                        <section class="banner section">
+                            <div class="content-w">
+                                <div class="banner__logo"><img src="{% static "webp/logo_short.webp" %}" loading="auto" decoding="async" alt=""></div>
+                                <p>Доставляем оригинальные запчасти в любую точку России и СНГ. Это значит хоть в Новокукуево:), а не только в Москву, Минск или Астану.</p><span>─ Интернет магазин racer-parts.ru ─</span>
+                            </div>
+                        </section>
+                    </div>
+                </div>
+                <div class="attachment attachment-after"></div>
+            </div>
+        </div>
+        <div class="block block-views block-even block" data-bid="66" id="b66">
+            <section class="advantages section content-w">
+                <h2 class="section-title">Почему именно наши запчасти?</h2>
+                <h3 class="advantages__sub-title">Оригинальные (стоковые) запчасти Racer как при покупке нового мото в магазине</h3>
+                <h4 class="advantages__sign">─ Официальный поставщик Racer ─</h4>
+                <div class="attachment attachment-before"></div>
+                <div class="advantages__items">
+                    <div class="advantages__item">
+                        <div class="advantages__img"><img src="{% static "webp/advantages-1.webp" %}" loading="auto" decoding="async" alt=""></div>
+                        <p class="advantages__text">Заказал запчасть взамен старой – установил новую без переделок и доработок.</p>
+                    </div>
+                    <div class="advantages__item">
+                        <div class="advantages__img"><img src="{% static "webp/advantages-2.webp" %}" loading="auto" decoding="async" alt=""></div>
+                        <p class="advantages__text">Именно такие запчасти стоят на Вашем RACER.</p>
+                    </div>
+                    <div class="advantages__item">
+                        <div class="advantages__img"><img src="{% static "webp/advantages-3.webp" %}" loading="auto" decoding="async" alt=""></div>
+                        <p class="advantages__text">Размеры и расцветка деталей, количество отверстий, все вплоть до наклеек на пластике – как при покупке нового мото в магазине.</p>
+                    </div>
+                    <div class="advantages__item">
+                        <div class="advantages__img"><img src="{% static "webp/advantages-4.webp" %}" loading="auto" decoding="async" alt=""></div>
+                        <p class="advantages__text">Не нужно быть спецом, чтобы заменить не основные запчасти!</p>
+                    </div>
+                </div>
+                <div class="attachment attachment-after"></div>
+            </section>
+        </div>
+        <div class="block block-views block-odd block" data-bid="54" id="b54">
+            <section class="comments section" id="opinions">
+                <div class="content-w">
+                    <h2 class="section-title">Уже более 350 отзывов о нашей работе</h2>
+                    <h3 class="comments__sub-title">Для удобства задавайте вопросы в наших группах и оставляйте свои комментарии!</h3>
+                    <div class="gallery">
+                        <div class="attachment attachment-before"></div>
+                        <div class="comments__items slick-initialized slick-slider" style="height:350px !important"><button type="button" data-role="none" class="slick-prev slick-arrow" aria-label="Previous" role="button" style="">Previous</button>
+                            <div aria-live="polite" class="slick-list draggable">
+                                <div class="slick-track" role="listbox" style="opacity: 1; width: 4950px; transform: translate3d(-2750px, 0px, 0px);">
+                                    <div class="comments__item slick-slide slick-cloned" data-slick-index="-2" aria-hidden="true" tabindex="-1" style="width: 510px;">
+                                        <div class="comments__item-img"><img src="{% static "webp/paste_1493536273.webp" %}" loading="auto" decoding="async" alt=""></div>
+                                        <div class="comments__desc"><a class="comments__link" href="https://vk.com/id138707442" target="_blank" tabindex="-1">vk.com/id138707442</a><span class="comments__author">Роман Разин</span>
+                                            <p class="comments__text">"Второй раз заказываю в Беларусь г. Минск. На этот раз просил чтобы подобрали облицовку&nbsp;по цвету.&nbsp;Цвет коричневый на Racer Ranger-RC200.&nbsp;Очень доволен пришло быстро, 11 дней ,спасибо компании Racer и продавцу Сергею Костромину в частности..."</p>
+                                        </div>
+                                    </div>
+                                    <div class="comments__item slick-slide slick-cloned" data-slick-index="-1" aria-hidden="true" tabindex="-1" style="width: 510px;">
+                                        <div class="comments__item-img"><img src="{% static "webp/paste_1493536720.webp" %}" loading="auto" decoding="async" alt=""></div>
+                                        <div class="comments__desc"><a class="comments__link" href="https://vk.com/id204394760" target="_blank" tabindex="-1">vk.com/id204394760</a><span class="comments__author">Илья Маскаленко</span>
+                                            <p class="comments__text">"Казахстан город Алматы в теме . пришло все и по срокам Заказ пришел через компанию Энергия .хотел бы сказать спасибо персоналу за его терпение и грамотность в объяснение как заказать как получить Спасибо еще раз ! по деньгам я остался в плюсе Заказывайте не бойтесь."</p>
+                                        </div>
+                                    </div>
+                                    <div class="comments__item slick-slide" data-slick-index="0" aria-hidden="true" tabindex="-1" role="option" aria-describedby="slick-slide00" style="width: 510px;">
+                                        <div class="comments__item-img"><img src="{% static "webp/paste_1493538104.webp" %}" loading="auto" decoding="async" alt=""></div>
+                                        <div class="comments__desc"><a class="comments__link" href="https://vk.com/id22633253" target="_blank" tabindex="-1">vk.com/id22633253</a><span class="comments__author">Антон Мамонтов</span>
+                                            <p class="comments__text">"Заказал переднее колесо в Иркутск, посылка пришла за 6 дней, не считая выходных. Все четко, как и заказывал. Оплата после получения. Не бойтесь, заказывайте. Теперь только тут буду заказывать запчасти!!! Спасибо огромное магазину!!!"</p>
+                                        </div>
+                                    </div>
+                                    <div class="comments__item slick-slide" data-slick-index="1" aria-hidden="true" tabindex="-1" role="option" aria-describedby="slick-slide01" style="width: 510px;">
+                                        <div class="comments__item-img"><img src="{% static "webp/paste_1493537694.webp" %}" loading="auto" decoding="async" alt=""></div>
+                                        <div class="comments__desc"><a class="comments__link" href="https://vk.com/id217209161" target="_blank" tabindex="-1">vk.com/id217209161</a><span class="comments__author">Юлечка Зайцева</span>
+                                            <p class="comments__text">"Заказывала корзину на рейнджера. Получила ровно через неделю. Было бы быстрей если б в транспортной на выходные не попали.. Барнаул - Братск 3 дня в пути была посылка. Все отлично. Спасибо магазину и Отзывчивому специалисту Сергею Костромину за оперативность и честность работы. Теперь точно знаю где брать запчасти."</p>
+                                        </div>
+                                    </div>
+                                    <div class="comments__item slick-slide" data-slick-index="2" aria-hidden="true" tabindex="-1" role="option" aria-describedby="slick-slide02" style="width: 510px;">
+                                        <div class="comments__item-img"><img src="{% static "webp/paste_1493535722.webp" %}" loading="auto" decoding="async" alt=""></div>
+                                        <div class="comments__desc"><a class="comments__link" href="https://vk.com/this.is_dota2" target="_blank" tabindex="-1">vk.com/this.is_dota2</a><span class="comments__author">Вадим Григорьев</span>
+                                            <p class="comments__text">Спасибо магазину Racer, особенно Дмитрию! Пришло быстро, мощно запоковано еле раздербанил)), все подошло как и должно быть. P.S заказывал раньше и буду заказывать ещё! И всем кому запчасти нужны заказывайте не пожалеете)</p>
+                                        </div>
+                                    </div>
+                                    <div class="comments__item slick-slide slick-current slick-active" data-slick-index="3" aria-hidden="false" tabindex="-1" role="option" aria-describedby="slick-slide03" style="width: 510px;">
+                                        <div class="comments__item-img"><img src="{% static "webp/paste_1493536273.webp" %}" loading="auto" decoding="async" alt=""></div>
+                                        <div class="comments__desc"><a class="comments__link" href="https://vk.com/id138707442" target="_blank" tabindex="0">vk.com/id138707442</a><span class="comments__author">Роман Разин</span>
+                                            <p class="comments__text">"Второй раз заказываю в Беларусь г. Минск. На этот раз просил чтобы подобрали облицовку&nbsp;по цвету.&nbsp;Цвет коричневый на Racer Ranger-RC200.&nbsp;Очень доволен пришло быстро, 11 дней ,спасибо компании Racer и продавцу Сергею Костромину в частности..."</p>
+                                        </div>
+                                    </div>
+                                    <div class="comments__item slick-slide slick-active" data-slick-index="4" aria-hidden="false" tabindex="-1" role="option" aria-describedby="slick-slide04" style="width: 510px;">
+                                        <div class="comments__item-img"><img src="{% static "webp/paste_1493536720.webp" %}" loading="auto" decoding="async" alt=""></div>
+                                        <div class="comments__desc"><a class="comments__link" href="https://vk.com/id204394760" target="_blank" tabindex="0">vk.com/id204394760</a><span class="comments__author">Илья Маскаленко</span>
+                                            <p class="comments__text">"Казахстан город Алматы в теме . пришло все и по срокам Заказ пришел через компанию Энергия .хотел бы сказать спасибо персоналу за его терпение и грамотность в объяснение как заказать как получить Спасибо еще раз ! по деньгам я остался в плюсе Заказывайте не бойтесь."</p>
+                                        </div>
+                                    </div>
+                                    <div class="comments__item slick-slide slick-cloned" data-slick-index="5" aria-hidden="true" tabindex="-1" style="width: 510px;">
+                                        <div class="comments__item-img"><img src="{% static "webp/paste_1493538104.webp" %}" loading="auto" decoding="async" alt=""></div>
+                                        <div class="comments__desc"><a class="comments__link" href="https://vk.com/id22633253" target="_blank" tabindex="-1">vk.com/id22633253</a><span class="comments__author">Антон Мамонтов</span>
+                                            <p class="comments__text">"Заказал переднее колесо в Иркутск, посылка пришла за 6 дней, не считая выходных. Все четко, как и заказывал. Оплата после получения. Не бойтесь, заказывайте. Теперь только тут буду заказывать запчасти!!! Спасибо огромное магазину!!!"</p>
+                                        </div>
+                                    </div>
+                                    <div class="comments__item slick-slide slick-cloned" data-slick-index="6" aria-hidden="true" tabindex="-1" style="width: 510px;">
+                                        <div class="comments__item-img"><img src="{% static "webp/paste_1493537694.webp" %}" loading="auto" decoding="async" alt=""></div>
+                                        <div class="comments__desc"><a class="comments__link" href="https://vk.com/id217209161" target="_blank" tabindex="-1">vk.com/id217209161</a><span class="comments__author">Юлечка Зайцева</span>
+                                            <p class="comments__text">"Заказывала корзину на рейнджера. Получила ровно через неделю. Было бы быстрей если б в транспортной на выходные не попали.. Барнаул - Братск 3 дня в пути была посылка. Все отлично. Спасибо магазину и Отзывчивому специалисту Сергею Костромину за оперативность и честность работы. Теперь точно знаю где брать запчасти."</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div><button type="button" data-role="none" class="slick-next slick-arrow" aria-label="Next" role="button" style="">Next</button>
+                        </div>
+                        <div class="attachment attachment-after"></div>
+                        <div class="comments__more" id="video">
+                            <p><a class="link-more" href="https://www.youtube.com/channel/UCzv4GaWT10_7IN0TXwjyl0A" target="_blank">ВИДЕООТЗЫВЫ</a><br><a class="link-more" href="https://vk.com/topic-54600761_29072810?offset=last&amp;scroll=1" target="_blank">ЧИТАТЬ ВСЕ ОТЗЫВЫ В VK</a></p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+        <div class="block block-views block-even block" data-bid="55" id="b55">
+            <section class="main-gallery section">
+                <div class="content-w">
+                    <h2 class="section-title">Сейчас на складе в наличии 9730 позиций запчастей:</h2>
+                    <h3 class="section-sub-title">Каталог запчастей показывает схематичное изображение узлов. Каждой детали присвоена цифра и наименование запчасти. Ниже публикуются только те запчасти, которые есть в наличии. Это значит, что других деталей из этого узла на текущий момент нет в наличии. Адаптировано для просмотра на смартфонах и планшетах.</h3>
+                    <div class="gallery">
+                        <div class="attachment attachment-before"></div>
+                        <div class="gallery__items slick-initialized slick-slider slick-dotted" style="height:270px !important" role="toolbar"><button type="button" data-role="none" class="slick-prev slick-arrow" aria-label="Previous" role="button" style="">Previous</button>
+                            <div aria-live="polite" class="slick-list draggable">
+                                <div class="slick-track" role="listbox" style="opacity: 1; width: 4675px; transform: translate3d(-2200px, 0px, 0px);">
+                                    <div class="gallery__item slick-slide slick-cloned" data-slick-index="-4" aria-hidden="true" tabindex="-1" style="width: 275px;"><a class="gallery__link" href="{% static "webp/2017-04-29_21-16-10.webp" %}" data-lightbox="gallery-1" tabindex="-1"><img src="2017-04-29_21-16-10.webp" alt="" loading="auto" decoding="async"></a></div>
+                                    <div class="gallery__item slick-slide slick-cloned" data-slick-index="-3" aria-hidden="true" tabindex="-1" style="width: 275px;"><a class="gallery__link" href="{% static "webp/2017-04-29_21-17-15.webp" %}" data-lightbox="gallery-1" tabindex="-1"><img src="2017-04-29_21-17-15.webp" alt="" loading="auto" decoding="async"></a></div>
+                                    <div class="gallery__item slick-slide slick-cloned" data-slick-index="-2" aria-hidden="true" tabindex="-1" style="width: 275px;"><a class="gallery__link" href="{% static "webp/2017-04-29_21-22-11.webp" %}" data-lightbox="gallery-1" tabindex="-1"><img src="2017-04-29_21-22-11.webp" alt="" loading="auto" decoding="async"></a></div>
+                                    <div class="gallery__item slick-slide slick-cloned" data-slick-index="-1" aria-hidden="true" tabindex="-1" style="width: 275px;"><a class="gallery__link" href="{% static "webp/2017-04-29_21-18-03.webp" %}" data-lightbox="gallery-1" tabindex="-1"><img src="2017-04-29_21-18-03.webp" alt="" loading="auto" decoding="async"></a></div>
+                                    <div class="gallery__item slick-slide" data-slick-index="0" aria-hidden="true" tabindex="-1" role="option" aria-describedby="slick-slide10" style="width: 275px;"><a class="gallery__link" href="{% static "webp/paste_1493477289.webp" %}" data-lightbox="gallery-1" tabindex="-1"><img src="paste_1493477289.webp" alt="" loading="auto" decoding="async"></a></div>
+                                    <div class="gallery__item slick-slide" data-slick-index="1" aria-hidden="true" tabindex="-1" role="option" aria-describedby="slick-slide11" style="width: 275px;"><a class="gallery__link" href="{% static "webp/2017-04-29_21-13-23.webp" %}" data-lightbox="gallery-1" tabindex="-1"><img src="2017-04-29_21-13-23.webp" alt="" loading="auto" decoding="async"></a></div>
+                                    <div class="gallery__item slick-slide" data-slick-index="2" aria-hidden="true" tabindex="-1" role="option" aria-describedby="slick-slide12" style="width: 275px;"><a class="gallery__link" href="{% static "webp/2017-04-29_21-14-12.webp" %}" data-lightbox="gallery-1" tabindex="-1"><img src="2017-04-29_21-14-12.webp" alt="" loading="auto" decoding="async"></a></div>
+                                    <div class="gallery__item slick-slide" data-slick-index="3" aria-hidden="true" tabindex="-1" role="option" aria-describedby="slick-slide13" style="width: 275px;"><a class="gallery__link" href="{% static "webp/2017-04-29_21-14-48.webp" %}" data-lightbox="gallery-1" tabindex="-1"><img src="2017-04-29_21-14-48.webp" alt="" loading="auto" decoding="async"></a></div>
+                                    <div class="gallery__item slick-slide slick-current slick-active" data-slick-index="4" aria-hidden="false" tabindex="-1" role="option" aria-describedby="slick-slide14" style="width: 275px;"><a class="gallery__link" href="{% static "webp/2017-04-29_21-18-59.webp" %}" data-lightbox="gallery-1" tabindex="0"><img src="2017-04-29_21-18-59.webp" alt="" loading="auto" decoding="async"></a></div>
+                                    <div class="gallery__item slick-slide slick-active" data-slick-index="5" aria-hidden="false" tabindex="-1" role="option" aria-describedby="slick-slide15" style="width: 275px;"><a class="gallery__link" href="{% static "webp/2017-04-29_21-16-10.webp" %}" data-lightbox="gallery-1" tabindex="0"><img src="2017-04-29_21-16-10.webp" alt="" loading="auto" decoding="async"></a></div>
+                                    <div class="gallery__item slick-slide slick-active" data-slick-index="6" aria-hidden="false" tabindex="-1" role="option" aria-describedby="slick-slide16" style="width: 275px;"><a class="gallery__link" href="{% static "webp/2017-04-29_21-17-15.webp" %}" data-lightbox="gallery-1" tabindex="0"><img src="2017-04-29_21-17-15.webp" alt="" loading="auto" decoding="async"></a></div>
+                                    <div class="gallery__item slick-slide slick-active" data-slick-index="7" aria-hidden="false" tabindex="-1" role="option" aria-describedby="slick-slide17" style="width: 275px;"><a class="gallery__link" href="{% static "webp/2017-04-29_21-22-11.webp" %}" data-lightbox="gallery-1" tabindex="0"><img src="2017-04-29_21-22-11.webp" alt="" loading="auto" decoding="async"></a></div>
+                                    <div class="gallery__item slick-slide" data-slick-index="8" aria-hidden="true" tabindex="-1" role="option" aria-describedby="slick-slide18" style="width: 275px;"><a class="gallery__link" href="{% static "webp/2017-04-29_21-18-03.webp" %}" data-lightbox="gallery-1" tabindex="-1"><img src="2017-04-29_21-18-03.webp" alt="" loading="auto" decoding="async"></a></div>
+                                    <div class="gallery__item slick-slide slick-cloned" data-slick-index="9" aria-hidden="true" tabindex="-1" style="width: 275px;"><a class="gallery__link" href="{% static "webp/paste_1493477289.webp" %}" data-lightbox="gallery-1" tabindex="-1"><img src="paste_1493477289.webp" alt="" loading="auto" decoding="async"></a></div>
+                                    <div class="gallery__item slick-slide slick-cloned" data-slick-index="10" aria-hidden="true" tabindex="-1" style="width: 275px;"><a class="gallery__link" href="{% static "webp/2017-04-29_21-13-23.webp" %}" data-lightbox="gallery-1" tabindex="-1"><img src="2017-04-29_21-13-23.webp" alt="" loading="auto" decoding="async"></a></div>
+                                    <div class="gallery__item slick-slide slick-cloned" data-slick-index="11" aria-hidden="true" tabindex="-1" style="width: 275px;"><a class="gallery__link" href="{% static "webp/2017-04-29_21-14-12.webp" %}" data-lightbox="gallery-1" tabindex="-1"><img src="2017-04-29_21-14-12.webp" alt="" loading="auto" decoding="async"></a></div>
+                                    <div class="gallery__item slick-slide slick-cloned" data-slick-index="12" aria-hidden="true" tabindex="-1" style="width: 275px;"><a class="gallery__link" href="{% static "webp/2017-04-29_21-14-48.webp" %}" data-lightbox="gallery-1" tabindex="-1"><img src="2017-04-29_21-14-48.webp" alt="" loading="auto" decoding="async"></a></div>
+                                </div>
+                            </div><button type="button" data-role="none" class="slick-next slick-arrow" aria-label="Next" role="button" style="">Next</button>
+                            <ul class="slick-dots" style="" role="tablist">
+                                <li class="" aria-hidden="true" role="presentation" aria-selected="true" aria-controls="navigation10" id="slick-slide10"><button type="button" data-role="none" role="button" tabindex="0">1</button></li>
+                                <li aria-hidden="true" role="presentation" aria-selected="false" aria-controls="navigation11" id="slick-slide11" class=""><button type="button" data-role="none" role="button" tabindex="0">2</button></li>
+                                <li aria-hidden="true" role="presentation" aria-selected="false" aria-controls="navigation12" id="slick-slide12" class=""><button type="button" data-role="none" role="button" tabindex="0">3</button></li>
+                                <li aria-hidden="true" role="presentation" aria-selected="false" aria-controls="navigation13" id="slick-slide13" class=""><button type="button" data-role="none" role="button" tabindex="0">4</button></li>
+                                <li aria-hidden="false" role="presentation" aria-selected="false" aria-controls="navigation14" id="slick-slide14" class="slick-active"><button type="button" data-role="none" role="button" tabindex="0">5</button></li>
+                                <li aria-hidden="true" role="presentation" aria-selected="false" aria-controls="navigation15" id="slick-slide15"><button type="button" data-role="none" role="button" tabindex="0">6</button></li>
+                                <li aria-hidden="true" role="presentation" aria-selected="false" aria-controls="navigation16" id="slick-slide16"><button type="button" data-role="none" role="button" tabindex="0">7</button></li>
+                                <li aria-hidden="true" role="presentation" aria-selected="false" aria-controls="navigation17" id="slick-slide17"><button type="button" data-role="none" role="button" tabindex="0">8</button></li>
+                                <li aria-hidden="true" role="presentation" aria-selected="false" aria-controls="navigation18" id="slick-slide18"><button type="button" data-role="none" role="button" tabindex="0">9</button></li>
+                            </ul>
+                        </div>
+                        <div class="attachment attachment-after"></div>
+                        <div class="main-gallery__link">
+                            <p><a class="autodialog link-more welcome-slider__link autodialog-processed" data-dialog-width="1000" href="https://racer-parts.ru/catalog#top" id="autodialog-3">ВЫБРАТЬ В КАТАЛОГЕ</a></p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+        <div class="block block-views block-odd block" data-bid="52" id="b52">
+            <section class="order section">
+                <div class="content-w">
+                    <h2 class="section-title">Заказать запчасть - просто!</h2>
+                    <h3 class="section-sub-title">Что нужно сделать для отправки груза наложенным платежом?</h3>
+                    <div class="attachment attachment-before"></div>
+                    <div class="order__items">
+                        <div class="order__item">
+                            <div class="order__img" style="height: 128px;"><img src="{% static "webp/order-1.webp" %}" loading="auto" decoding="async" alt=""></div>
+                            <div class="order__count">1</div>
+                            <p class="order__text"></p>
+                            <div>Указать в заявке действующий Email и контактный телефон для связи</div>
+                        </div>
+                        <div class="order__item">
+                            <div class="order__img" style="height: 128px;"><img src="{% static "webp/order-2.webp" %}" loading="auto" decoding="async" alt=""></div>
+                            <div class="order__count">2</div>
+                            <p class="order__text"></p>
+                            <div>Дождаться сообщения от менеджера на указанный в заявке Email</div>
+                        </div>
+                        <div class="order__item">
+                            <div class="order__img" style="height: 128px;"><img src="{% static "webp/order-3.webp" %}" loading="auto" decoding="async" alt=""></div>
+                            <div class="order__count">3</div>
+                            <p class="order__text"></p>
+                            <div>Согласовать детали заказа при необходимости, например, цвет пластика</div>
+                        </div>
+                        <div class="order__item">
+                            <div class="order__img" style="height: 128px;"><img src="{% static "webp/order-4.webp" %}" loading="auto" decoding="async" alt=""></div>
+                            <div class="order__count">4</div>
+                            <p class="order__text"></p>
+                            <div>Сделать предоплату 300р. за отправку груза, подтвердив свое намерение заказать</div>
+                        </div>
+                        <div class="order__item">
+                            <div class="order__img" style="height: 128px;"><img src="{% static "webp/order-5.webp" %}" loading="auto" decoding="async" alt=""></div>
+                            <div class="order__count">5</div>
+                            <p class="order__text"></p>
+                            <div>Отслеживать свою посылку по высланному трек номеру</div>
+                        </div>
+                        <div class="order__item">
+                            <div class="order__img" style="height: 128px;"><img src="{% static "webp/order-6.webp" %}" loading="auto" decoding="async" alt=""></div>
+                            <div class="order__count">6</div>
+                            <p class="order__text"></p>
+                            <div>Прийти на почту, оплатить наложенный платеж и забрать свои запчасти</div>
+                        </div>
+                    </div>
+                    <div class="attachment attachment-after"></div>
+                </div>
+            </section>
+        </div>
+        <div id="first-time">
+            <p>Содержимое главной страницы еще не создано.</p>
+            <div class="item-list">
+                <ul>
+                    <li class="first last"><a href="https://racer-parts.ru/node/add">Добавить новый материал</a></li>
+                </ul>
+            </div>
+        </div>
+        <section class="feedback section" id="contacts">
+            <div class="content-w">
+                <div class="feedback__form">
+                    <h3 class="feedback__form-title">Какая запчасть вам нужна?</h3> <noscript>
+                        <style>
+                            form.antibot {
+                                display: none !important;
+                            }
+                        </style>
+                        <div class="antibot-no-js antibot-message antibot-message-warning messages warning"> Вы должны включить JavaScript чтобы использовать эту форму.</div>
+                    </noscript>
+                    <div id="webform-ajax-wrapper-91551">
+                        <form class="webform-client-form webform-client-form-91551 antibot" action="https://racer-parts.ru/" method="post" id="webform-client-form-91551" accept-charset="UTF-8">
+                            <div>
+                                <div class="form-item webform-component webform-component-textarea webform-component--soobshchenie"> <label class="element-invisible" for="edit-submitted-soobshchenie">Сообщение <span class="form-required" title="Это поле обязательно для заполнения.">*</span></label>
+                                    <div class="form-textarea-wrapper"><textarea required="required" placeholder="Модель, мото, запчасть" id="edit-submitted-soobshchenie" name="submitted[soobshchenie]" cols="100%" rows="5" class="form-textarea required"></textarea></div>
+                                </div>
+                                <div class="form-item webform-component webform-component-textfield webform-component--fio"> <label class="element-invisible" for="edit-submitted-fio">ФИО <span class="form-required" title="Это поле обязательно для заполнения.">*</span></label> <input required="required" placeholder="Представьтесь, пожалуйста" type="text" id="edit-submitted-fio" name="submitted[fio]" value="" size="60" maxlength="128" class="form-text required"></div>
+                                <div class="form-item webform-component webform-component-email webform-component--elektronnyy-adres"> <label class="element-invisible" for="edit-submitted-elektronnyy-adres">Электронный адрес <span class="form-required" title="Это поле обязательно для заполнения.">*</span></label> <input required="required" class="email form-text form-email required" placeholder="E-mail" type="email" id="edit-submitted-elektronnyy-adres" name="submitted[elektronnyy_adres]" size="60" value=""></div>
+                                <div class="form-item webform-component webform-component-textfield webform-component--kontaktnyy-telefon"> <label class="element-invisible" for="edit-submitted-kontaktnyy-telefon">Телефон <span class="form-required" title="Это поле обязательно для заполнения.">*</span></label> <input required="required" placeholder="Контактный телефон" type="text" id="edit-submitted-kontaktnyy-telefon" name="submitted[kontaktnyy_telefon]" value="" size="60" maxlength="20" class="form-text required"></div><input type="hidden" name="details[sid]" value=""><input type="hidden" name="details[page_num]" value="1"><input type="hidden" name="details[page_count]" value="1"><input type="hidden" name="details[finished]" value="0"><input type="hidden" name="form_build_id" value="form-ZeqOmg-tFtBHaJcztMY5qQZpoUZKfjKc9PSiDIU4vNI"><input type="hidden" name="form_id" value="webform_client_form_91551"><input type="hidden" name="antibot_key" value="c70c22bbaba018e863e971eaa78b5308">
+                                <div class="form-item form-type-checkbox form-item-fz152-agreement"> <input required="required" type="checkbox" id="edit-fz152-agreement" name="fz152_agreement" value="1" class="form-checkbox required"> <label class="option" for="edit-fz152-agreement">
+                                        <div class="fz152">Я подтверждаю согласие на обработку моих персональных данных<p><a href="https://racer-parts.ru/politika-konfidencialnosti" target="_blank" rel="nofollow">Политика конфиденциальности</a></p>
+                                        </div> <span class="form-required" title="Это поле обязательно для заполнения.">*</span>
+                                    </label></div><input type="hidden" name="webform_ajax_wrapper_id" value="webform-ajax-wrapper-91551">
+                                <div class="form-actions"><input class="webform-submit button-primary form-submit ajax-processed" type="submit" id="edit-submit" name="op" value="Отправить запрос"></div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="feedback__info">
+                    <h3 class="feedback__info-title">ЗАПЧАСТИ <span>RACER™</span></h3>
+                    <div class="block block-block block-odd first block" data-bid="50" id="b50">
+                        <p>Реквизиты:</p>
+                        <div class="feedback__info-items">
+                            <p>Россия, Алтайский край г. Барнаул пр. Космонавтов 12</p>
+                            <p>ОГРНИП 320222500026141</p>
+                            <p>ИНН 222307916500</p>
+                            <p>Банк МОСКОВСКИЙ ФИЛИАЛ АО КБ "МОДУЛЬБАНК"</p>
+                            <p>БИК 044525092</p>
+                            <p>К/c 30101810645250000092</p>
+                            <p>Счет 40802810570010255595</p>
+                        </div>
+                    </div>
+                </div>
+                <footer class="footer section">
+                    <div class="footer__content content-w">
+                        <div class="logo footer__logo"><a class="logo__link h6" href=""><img src="{% static "webp/logo.webp" %}" loading="auto" decoding="async" alt=""></a>
+                            <div class="footer__copy">
+                                <p>© 2023 Использование материалов сайта запрещено без письменного согласия владельца сайта</p>
+                                <p><br><a class="confid" href="https://racer-parts.ru/politika-konfidencialnosti">Политика конфиденциальности</a></p>
+                            </div>
+                        </div>
+                        <div class="footer__widget">
+                            <div class="block block-block block-even block" data-bid="64" id="b64">
+                                <div id="ok_group_widget"><a href="https://ok.ru/zapchastir?st._aid=ExternalGroupWidget_OpenGroup" target="_blank"><img alt="Racer Одноклассники" src="{% static "webp/ok.webp" %}" title="Вступите в нашу группу OK" width="200" loading="auto" decoding="async"></a></div>
+                            </div>
+                        </div>
+                        <div class="footer__widget">
+                            <div class="block block-block block-odd block" data-bid="65" id="b65"> <a href="https://vk.com/moto_sib" target="_blank"><img alt="Racer Vkontakte" src="{% static "webp/vk.webp" %}" title="Вступите в нашу группу VK" width="200" loading="auto" decoding="async"></a></div>
+                        </div>
+                    </div>
+                    <div class="footer__copy content-w">
+                        <p>© 2023 Использование материалов сайта запрещено без письменного согласия владельца сайта</p>
+                        <p><a class="confid" href="https://racer-parts.ru/politika-konfidencialnosti">Политика конфиденциальности</a></p>
+                    </div>
+                </footer>
+            </div>
+        </section>
+    </main>
+</body>
+</html>

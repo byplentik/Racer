@@ -9,8 +9,6 @@
       <ul>
         {% for motorcycle in category.motorcycle_set.all %}
           <li><a href="{{ motorcycle.get_absolute_url}}">{{ motorcycle.name }}</a></li>
-          {% for mainpart in motorcycle.mainpart_set.all %}
-          {% endfor %}
         {% endfor %}
       </ul>
       <hr>

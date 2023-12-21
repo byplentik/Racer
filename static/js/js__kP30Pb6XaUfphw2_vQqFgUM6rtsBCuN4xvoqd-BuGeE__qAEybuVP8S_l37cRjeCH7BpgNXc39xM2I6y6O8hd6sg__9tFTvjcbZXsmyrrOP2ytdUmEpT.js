@@ -1,0 +1,2 @@
+!function(e,o){if(!e.contains("webp-on")&&!e.contains("webp-off")){const n=o.getItem("webpsupp");if("1"===n)e.add("webp-on");else if("0"===n)e.add("webp-off");else{const n=new Image;n.onload=function(){e.add("webp-on"),o.setItem("webpsupp","1")},n.onerror=function(){e.add("webp-off"),o.setItem("webpsupp","0")},n.src="data:image/webp;base64,UklGRhYAAABXRUJQVlA4TAoAAAAvAAAAAEX/I/of"}}}(document.documentElement.classList,window.localStorage);
+;/*})'"*/;/*})'"*/
