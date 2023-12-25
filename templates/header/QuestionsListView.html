@@ -1,0 +1,33 @@
+{% extends "base_racer.html" %}
+{% load static %}
+
+{% block content %}
+<section class="questions section">
+    <div class="product__logo"><img src="{% static "images/logo.webp" %}" loading="auto" decoding="async" alt=""></div>
+    <h3 class="product__name">Ваши вопросы</h3>
+    <div class="your__question"><a class="cta-btn" href="{% url "zadat_question" %}">Задайте
+            Ваш вопрос!</a></div>
+    <div class="attachment attachment-before"></div>
+    <div class="questions__items">
+        {% for question in object_list %}
+            {% if question.answered %}
+                <div class="questions__item">
+                    <h3>- {{question.question}}</h3>
+                    {{question.response}}
+                </div>
+            {% endif %}
+        {% endfor %}
+    </div>
+    <div class="item_list">
+        <ul class="pager">
+            {% for num in page_obj.paginator.page_range %}
+            {% if page_obj.number == num %}
+                <p class="current-page">{{num}}</p>
+            {% else %}
+                <a href="http://127.0.0.1:8000/vashi-voprosy/?page={{num}}">{{num}}</a>
+            {% endif %}
+            {% endfor %}
+        </ul>
+    </div>
+</section>
+{% endblock content %}

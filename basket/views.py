@@ -12,10 +12,6 @@ from .mixins import CreateSessionKeyMixin
 from .models import Category, Part, CheckoutCart, OrderedPart, Motorcycle
 
 
-class HomeView(CreateSessionKeyMixin, generic.TemplateView):
-    template_name = 'home.html'
-
-
 class CatalogListView(CreateSessionKeyMixin, generic.ListView):
     model = Category
     template_name = 'basket/catalog.html'

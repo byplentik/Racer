@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     # Local
     'basket.apps.BasketConfig',
     'users.apps.UsersConfig',
+    'header.apps.HeaderConfig',
 
     # 3-rd packages
     'hcaptcha',

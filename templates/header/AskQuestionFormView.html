@@ -1,0 +1,68 @@
+{% extends "base_racer.html" %}
+{% load static %}
+
+{% block content %}
+<div class="product">
+    <div class="product__logo">
+        <img src="{% static "images/logo.webp" %}">
+    </div>
+    <h3 class="product__name">Новый Вопрос</h3>
+    <form action="{% url 'zadat_question' %}" method="post" class="custom-form">
+        {% csrf_token %}
+        <p>
+            <label for="id_title">Название вопроса (Тема):</label>
+            <input type="text" name="title" maxlength="255" required="" id="id_title">
+        </p>
+        <p>
+            <label for="id_question">Ваш вопрос:</label>
+            <textarea name="question" cols="40" rows="10" required="" id="id_question"></textarea>
+        </p>
+        <div class="form-actions form-wrapper" id="edit-actions">
+            <input type="submit" id="edit-submit" name="op" value="Отправить!" class="form-submit">
+        </div>
+    </form>
+</div>
+<style>
+    .custom-form {
+        max-width: 4000px;
+        padding: 20px;
+        border: 1px solid #ccc;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .custom-form label {
+        display: block;
+        margin-bottom: 8px;
+        font-weight: bold;
+    }
+
+    .custom-form input[type="text"],
+    .custom-form textarea {
+        width: 100%;
+        padding: 8px;
+        margin-bottom: 16px;
+        box-sizing: border-box;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+    }
+
+    .form-actions {
+        text-align: center;
+    }
+
+    .form-submit {
+        padding: 10px 20px;
+        font-size: 16px;
+        background-color: #4CAF50;
+        color: #fff;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+
+    .form-submit:hover {
+        background-color: #45a049;
+    }
+</style>
+{% endblock content %}

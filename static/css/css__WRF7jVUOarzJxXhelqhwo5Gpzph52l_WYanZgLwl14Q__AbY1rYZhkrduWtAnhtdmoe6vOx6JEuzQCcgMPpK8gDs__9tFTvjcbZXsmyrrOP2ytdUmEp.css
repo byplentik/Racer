@@ -98,7 +98,7 @@
 }
 
 body:after {
-    content: url("../webp/close.webp") url("../gif/loading.gif") url("../webp/prev.webp") url("../webp/next.webp");
+    content: url("../images/close.webp") url("../images/loading.gif") url("../images/prev.webp") url("../images/next.webp");
     display: none
 }
 
@@ -187,7 +187,7 @@ body.lb-disable-scrolling {
 
 .lb-nav a {
     outline: 0;
-    background-image: url("../gif/b103aa629cacdd90b39538a7561da7f8e49ad73f.gif")
+    background-image: url("b103aa629cacdd90b39538a7561da7f8e49ad73f.gif")
 }
 
 .lb-next,
@@ -201,7 +201,7 @@ body.lb-disable-scrolling {
     width: 34%;
     left: 0;
     float: left;
-    background: url("prev.webp") left 48% no-repeat;
+    background: url("../images/prev.webp") left 48% no-repeat;
     opacity: 0;
     transition: opacity .6s
 }
@@ -214,7 +214,7 @@ body.lb-disable-scrolling {
     width: 64%;
     right: 0;
     float: right;
-    background: url("next.webp") right 48% no-repeat;
+    background: url("../images/next.webp") right 48% no-repeat;
     opacity: 0;
     transition: opacity .6s
 }
@@ -272,7 +272,7 @@ body.lb-disable-scrolling {
     float: right;
     width: 30px;
     height: 30px;
-    background: url("close.webp") top right no-repeat;
+    background: url("../images/close.webp") top right no-repeat;
     text-align: right;
     outline: 0;
     opacity: .7;
@@ -384,7 +384,7 @@ body.lb-disable-scrolling {
 }
 
 body:after {
-    content: url("../webp/close.webp") url("../gif/loading.gif") url("../webp/prev.webp") url("../webp/next.webp");
+    content: url("../images/close.webp") url("../images/loading.gif") url("../images/prev.webp") url("../images/next.webp");
     display: none
 }
 
@@ -455,7 +455,7 @@ body.lb-disable-scrolling {
     width: 32px;
     height: 32px;
     margin: 0 auto;
-    background: url("../gif/loading.gif") no-repeat
+    background: url("loading.gif") no-repeat
 }
 
 .lb-nav {
@@ -487,7 +487,7 @@ body.lb-disable-scrolling {
     width: 34%;
     left: 0;
     float: left;
-    background: url("prev.webp") left 48% no-repeat;
+    background: url("../images/prev.webp") left 48% no-repeat;
     opacity: 0;
     transition: opacity .6s
 }
@@ -500,7 +500,7 @@ body.lb-disable-scrolling {
     width: 64%;
     right: 0;
     float: right;
-    background: url("next.webp") right 48% no-repeat;
+    background: url("../images/next.webp") right 48% no-repeat;
     opacity: 0;
     transition: opacity .6s
 }
@@ -558,7 +558,7 @@ body.lb-disable-scrolling {
     float: right;
     width: 30px;
     height: 30px;
-    background: url("close.webp") top right no-repeat;
+    background: url("../images/close.webp") top right no-repeat;
     text-align: right;
     outline: 0;
     opacity: .7;
@@ -2092,13 +2092,13 @@ body.no-touch #colorbox .node-webform .content form input[type=submit]:hover {
     display: none;
     width: 25px;
     height: 25px;
-    background: url("../webp/mob-menu_light.webp") no-repeat center;
+    background: url("../images/mob-menu_light.webp") no-repeat center;
     background-size: 23px 23px;
     cursor: pointer
 }
 
 .nav-mob-button {
-    background: url("../webp/mob-menu.webp") no-repeat center
+    background: url("../images/mob-menu.webp") no-repeat center
 }
 
 .nav__contacts {
@@ -2333,12 +2333,12 @@ body.no-touch .product__item .basic-cart-cart-form .light.basic-cart-call-to-act
 
 .slick-prev {
     left: -10px;
-    background-image: url("../webp/arr-left_accent.webp")
+    background-image: url("../images/arr-left_accent.webp")
 }
 
 .slick-next {
     right: -10px;
-    background-image: url("../webp/arr-right_accent.webp")
+    background-image: url("../images/arr-right_accent.webp")
 }
 
 .comments .slick-next,
@@ -2363,12 +2363,12 @@ body.no-touch .product__item .basic-cart-cart-form .light.basic-cart-call-to-act
 
 .comments .slick-prev {
     left: -5px;
-    background-image: url("../webp/arr-left.webp")
+    background-image: url("../images/arr-left.webp")
 }
 
 .comments .slick-next {
     right: -5px;
-    background-image: url("../webp/arr-right.webp")
+    background-image: url("../images/arr-right.webp")
 }
 
 .slick-dots {
@@ -2448,7 +2448,7 @@ body.no-touch .product__item .basic-cart-cart-form .light.basic-cart-call-to-act
     right: 0;
     top: 0;
     bottom: 0;
-    background: url("../webp/zoom.webp") no-repeat center;
+    background: url("../images/zoom.webp") no-repeat center;
     background-color: rgba(0, 0, 0, .5);
     transition: opacity .25s
 }
@@ -2467,7 +2467,7 @@ body.no-touch .product__item .basic-cart-cart-form .light.basic-cart-call-to-act
     height: 50px;
     border-radius: 50%;
     background: #8b8b8b;
-    background: url("../webp/to-top-btn.webp") no-repeat center;
+    background: url("../images/to-top-btn.webp") no-repeat center;
     background-size: contain;
     transition: opacity .2s, box-shadow .2s;
     cursor: pointer
@@ -2810,7 +2810,7 @@ body.no-touch .articles__more button:hover {
     padding: 0 !important;
     width: 20px;
     height: 20px;
-    background-image: url("../webp/search.webp");
+    background-image: url("../images/search.webp");
     background-repeat: no-repeat;
     background-position: center;
     text-indent: -9999px;
@@ -2821,7 +2821,7 @@ body.no-touch .articles__more button:hover {
 .header__search .form-actions input:hover,
 .nav__search .form-actions input:hover {
     background-color: transparent !important;
-    background-image: url("../webp/search.webp") !important;
+    background-image: url("../images/search.webp") !important;
     background-repeat: no-repeat !important;
     background-position: center !important
 }
@@ -2861,7 +2861,7 @@ body.no-touch .articles__more button:hover {
 .header__order {
     margin-left: 30px;
     padding-left: 40px;
-    background: url("../webp/basket.webp") no-repeat;
+    background: url("../images/basket.webp") no-repeat;
     background-position: left center;
     background-size: contain
 }
@@ -2913,15 +2913,15 @@ body.no-touch .articles__more button:hover {
 }
 
 .welcome-slider__advantages>div:nth-child(1) {
-    background-image: url("../webp/rocket.webp")
+    background-image: url("../images/rocket.webp")
 }
 
 .welcome-slider__advantages>div:nth-child(2) {
-    background-image: url("../webp/like.webp")
+    background-image: url("../images/like.webp")
 }
 
 .welcome-slider__advantages>div:nth-child(3) {
-    background-image: url("../webp/wrench.webp")
+    background-image: url("../images/wrench.webp")
 }
 
 .welcome-slider__link {
@@ -3194,13 +3194,13 @@ body.no-touch .articles__more button:hover {
 .comments__more .link-more:first-child {
     width: auto;
     padding-left: 110px !important;
-    background-image: url("../webp/youtube.webp");
+    background-image: url("../images/youtube.webp");
     background-repeat: no-repeat;
     background-position: left 15px center
 }
 
 .comments__more .link-more:first-child:hover {
-    background-image: url("../webp/youtube.webp");
+    background-image: url("../images/youtube.webp");
     background-repeat: no-repeat;
     background-position: left 15px center
 }
@@ -3494,7 +3494,7 @@ body.catalog .main>.content-w {
 
 .side-nav__list a.active {
     margin-left: 15px;
-    background: url("../webp/arr-right_accent.webp") no-repeat left 10px center;
+    background: url("../images/arr-right_accent.webp") no-repeat left 10px center;
     background-size: 6px 10px;
     color: #ec1827
 }
@@ -4849,7 +4849,7 @@ form .form-item textarea {
         height: 45px;
         text-align: center;
         background-color: #f04753;
-        background-image: url("../webp/arr-right_light.webp");
+        background-image: url("../images/arr-right_light.webp");
         background-repeat: no-repeat;
         background-position: center
     }
@@ -4860,7 +4860,7 @@ form .form-item textarea {
 
     header .nav__list {
         padding-top: 65px;
-        background-image: url("../webp/mob-menu_light.webp");
+        background-image: url("../images/mob-menu_light.webp");
         background-position: 20px 20px;
         background-repeat: no-repeat;
         background-size: 20px 20px
@@ -4899,7 +4899,7 @@ form .form-item textarea {
         height: 25px;
         line-height: 25px;
         padding-left: 35px;
-        background: url("../webp/call.webp") no-repeat left center;
+        background: url("../images/call.webp") no-repeat left center;
         font-size: 1rem
     }
 
@@ -5531,12 +5531,12 @@ form .form-item textarea {
 
     .comments__items .slick-prev {
         left: -11px;
-        background-image: url("../webp/arr-left_accent.webp")
+        background-image: url("../images/arr-left_accent.webp")
     }
 
     .comments__items .slick-next {
         right: -11px;
-        background-image: url("../webp/arr-right_accent.webp")
+        background-image: url("../images/arr-right_accent.webp")
     }
 
     .comments__item {
@@ -6402,4 +6402,57 @@ form .form-item textarea {
 .tabz li.active a,
 .tabz li.active:hover a {
     color: #000
+}
+
+.side-nav__list a {
+    display: inline-block;
+    padding-left: 30px;
+    background: url("../images/side-nav-arr.webp") no-repeat left 10px center;
+    background-size: 6px 10px;
+    font-size: .9375rem;
+    color: #2b2b2b
+}
+
+.node__content ul li {
+    display: block;
+    padding-left: 30px;
+    background: url("../images/side-nav-arr.webp") no-repeat left 10px center;
+    background-size: 6px 10px;
+    font-size: .9375rem;
+    color: #2b2b2b;
+    margin: 15px 0 5px
+}
+
+.item_list {
+    text-align: center; /* Центрируем пагинацию */
+}
+
+.pager {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    justify-content: center; /* Равномерное распределение элементов */
+}
+
+.pager a {
+    text-decoration: none;
+    color: #333;
+    margin: 0 5px; /* Расстояние между элементами */
+    padding: 8px 12px; /* Поля вокруг текста */
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+.pager a:hover {
+    background-color: #ddd; /* Изменение цвета при наведении */
+}
+
+.current-page {
+    background-color: #ff0000; /* Цвет фона для текущей страницы */
+    color: #fff; /* Цвет текста для текущей страницы */
+    margin: 0 5px; /* Расстояние от текущей страницы до соседних элементов */
+    padding: 8px 12px;
+    border: 1px solid #0056b3;
+    border-radius: 5px;
 }
