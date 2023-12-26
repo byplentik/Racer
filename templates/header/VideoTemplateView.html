@@ -1,11 +1,31 @@
-{% extends "base_racer.html" %}
+{% extends 'base_racer.html' %}
 {% load static %}
 
 {% block content %}
-<div class="product">
+  <div class="product">
     <div class="product__logo">
-        <img src="{% static "images/logo.webp" %}">
+      <img src="{% static 'images/logo.webp' %}" />
     </div>
     <h3 class="product__name">Видео</h3>
-    <div class="view view-video view-id-video view-display-id-page view-dom-id-258b6baf9bf3ac6ff916d2e3842a5cd2"><div class="attachment attachment-before"></div><div class="view-content"><div><div class="youtube-container--responsive"><iframe id="youtube-field-player" class="youtube-field-player" width="100%" height="100%" src="https://www.youtube.com/embed/JtQmZ3xnHCQ?rel=0&amp;modestbranding=1&amp;enablejsapi=1&amp;origin=https%3A//racer-parts.ru&amp;wmode=opaque" title="Embedded video for ЗАПЧАСТИ RACER Ответы на часто задаваемые вопросы." frameborder="0" allowfullscreen="" allow="autoplay; fullscreen"><a href="https://www.youtube.com/embed/JtQmZ3xnHCQ?rel=0&modestbranding=1&enablejsapi=1&origin=https%3A//racer-parts.ru&wmode=opaque">Embedded video for ЗАПЧАСТИ RACER Ответы на часто задаваемые вопросы.</a></iframe></div></div><div><div class="youtube-container--responsive"><iframe id="youtube-field-player--2" class="youtube-field-player" width="100%" height="100%" src="https://www.youtube.com/embed/iI3AKAzlu_Q?rel=0&amp;modestbranding=1&amp;enablejsapi=1&amp;origin=https%3A//racer-parts.ru&amp;wmode=opaque" title="Embedded video for Видео отзывы о нашей работе" frameborder="0" allowfullscreen="" allow="autoplay; fullscreen"><a href="https://www.youtube.com/embed/iI3AKAzlu_Q?rel=0&modestbranding=1&enablejsapi=1&origin=https%3A//racer-parts.ru&wmode=opaque">Embedded video for Видео отзывы о нашей работе</a></iframe></div></div></div><div class="attachment attachment-after"></div></div>
-{% endblock content %}
+    <div class="view view-video view-id-video view-display-id-page view-dom-id-258b6baf9bf3ac6ff916d2e3842a5cd2">
+      <div class="attachment attachment-before"></div>
+      <div class="view-content">
+        <div>
+          <div class="youtube-container--responsive">
+            <iframe id="youtube-field-player" class="youtube-field-player" width="100%" height="100%" src="https://www.youtube.com/embed/JtQmZ3xnHCQ?rel=0&amp;modestbranding=1&amp;enablejsapi=1&amp;origin=https%3A//racer-parts.ru&amp;wmode=opaque" title="Embedded video for ЗАПЧАСТИ RACER Ответы на часто задаваемые вопросы." frameborder="0" allowfullscreen="" allow="autoplay; fullscreen">
+              <a href="https://www.youtube.com/embed/JtQmZ3xnHCQ?rel=0&modestbranding=1&enablejsapi=1&origin=https%3A//racer-parts.ru&wmode=opaque">Embedded video for ЗАПЧАСТИ RACER Ответы на часто задаваемые вопросы.</a>
+            </iframe>
+          </div>
+        </div>
+        <div>
+          <div class="youtube-container--responsive">
+            <iframe id="youtube-field-player--2" class="youtube-field-player" width="100%" height="100%" src="https://www.youtube.com/embed/iI3AKAzlu_Q?rel=0&amp;modestbranding=1&amp;enablejsapi=1&amp;origin=https%3A//racer-parts.ru&amp;wmode=opaque" title="Embedded video for Видео отзывы о нашей работе" frameborder="0" allowfullscreen="" allow="autoplay; fullscreen">
+              <a href="https://www.youtube.com/embed/iI3AKAzlu_Q?rel=0&modestbranding=1&enablejsapi=1&origin=https%3A//racer-parts.ru&wmode=opaque">Embedded video for Видео отзывы о нашей работе</a>
+            </iframe>
+          </div>
+        </div>
+      </div>
+      <div class="attachment attachment-after"></div>
+    </div>
+  </div>
+{% endblock %}

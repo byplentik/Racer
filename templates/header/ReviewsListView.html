@@ -39,15 +39,15 @@
         {% csrf_token %}
         <div class="form-group">
           <label for="id_username">Имя пользователя:</label>
-          <input type="text" name="username" maxlength="255" required="" id="id_username">
+          <input class="input-form" type="text" name="username" maxlength="255" required="" id="id_username">
         </div>
         <div class="form-group">
           <label for="id_avatar">Аватар:</label>
-          <input type="file" name="avatar" accept="image/*" required="" id="id_avatar"> 
+          <input class="input-form" type="file" name="avatar" accept="image/*" required="" id="id_avatar"> 
         </div>
         <div class="form-group">
           <label for="id_review">Отзыв:</label>
-          <textarea name="review" cols="40" rows="10" required="" id="id_review"></textarea>
+          <textarea class="input-form" name="review" cols="40" rows="10" required="" id="id_review"></textarea>
         </div>
         <input type="submit" id="edit-submit" name="op" value="Сохранить" class="form-submit">
       </form>
@@ -73,9 +73,7 @@
         margin-bottom: 5px;
       }
       
-      input[type="text"],
-      input[type="file"],
-      textarea {
+      .input-form {
         width: 100%;
         padding: 8px;
         box-sizing: border-box;
