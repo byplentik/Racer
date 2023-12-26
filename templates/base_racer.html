@@ -54,9 +54,9 @@
                             <li class="menu-211 first"><a href="{% url "home" %}" title="">Главная</a></li>
                             <li class="menu-2178"><a href="#">Каталог</a></li>
                             <li class="menu-1217"><a href="{% url "questions" %}" title="">Ваши вопросы</a></li>
-                            <li class="menu-1001"><a href="#">Отзывы</a></li>
-                            <li class="menu-2481"><a href="#" title="">Видео</a></li>
-                            <li class="menu-990"><a href="#">Контакты</a></li>
+                            <li class="menu-1001"><a href="{% url "reviews_view" %}">Отзывы</a></li>
+                            <li class="menu-2481"><a href="{% url "video_view" %}" title="">Видео</a></li>
+                            <li class="menu-990"><a href="{% url "kontakty_view" %}">Контакты</a></li>
                             <li class="menu-3522 last"><a href="#" title="">Личный кабинет</a>
                             </li>
                         </ul>

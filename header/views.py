@@ -1,8 +1,9 @@
 from django.views import generic
 from django.urls import reverse_lazy
+from django.shortcuts import redirect, render
 
-from header.models import QuestionsModel
-from header.forms import AskQuestionForm
+from header.models import QuestionsModel, ReviewsModel
+from header.forms import AskQuestionForm, ReviewForm
 
 
 class HomePageTemplateView(generic.TemplateView):
@@ -31,6 +32,32 @@ class AskQuestionFormView(generic.FormView):
     success_url = reverse_lazy('zadat_question')
 
     def form_valid(self, form):
-        # Сохранение данных в базу данных
         form.save()
         return super().form_valid(form)
+
+
+class ReviewsListView(generic.ListView):
+    model = ReviewsModel
+    template_name = 'header/ReviewsListView.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['review_form'] = ReviewForm()
+        return context
+
+    def post(self, request, *args, **kwargs):
+        review_form = ReviewForm(request.POST, request.FILES)
+        if review_form.is_valid():
+            review_form.save()
+            return redirect('reviews_view')
+        else:
+            print(review_form.errors)
+            return render(request, self.template_name, {'review_form': review_form, 'object_list': self.get_queryset()})
+
+
+class VideoTemplateView(generic.TemplateView):
+    template_name = 'header/VideoTemplateView.html'
+
+
+class ContactsTemplateView(generic.TemplateView):
+    template_name = 'header/ContactsTemplateView.html'

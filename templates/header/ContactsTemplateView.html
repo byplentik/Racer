@@ -1,0 +1,21 @@
+{% extends "base_racer.html" %}
+{% load static %}
+
+{% block content %}
+<div class="product">
+    <div class="product__logo">
+        <img src="{% static "images/logo.webp" %}">
+    </div>
+    <h3 class="product__name">Контакты</h3>
+    <div class="node__content">
+        <p>Россия, Алтайский край,</p><p>г. Барнаул, 656039,</p>
+        <p>пр-кт Космонавтов, 12</p>
+        <h4>Контактные телефоны:</h4>
+        <ul>
+            <li>МТС* WhatsApp* Viber</li>
+            <li>+7 (919) 378-10-78</li>
+            <li><strong>E-mail:</strong> <a href="mailto:racersparts@gmail.com">racersparts@gmail.com</a></li>
+        </ul>
+    </div>
+
+{% endblock content %}

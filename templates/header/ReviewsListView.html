@@ -1,0 +1,88 @@
+{% extends "base_racer.html" %}
+{% load static %}
+
+{% block content %}
+<div class="product">
+    <div class="product__logo">
+        <img src="{% static "images/logo.webp" %}">
+    </div>
+    <h3 class="product__name">Отзывы</h3>
+
+    <div class="block block-views block-odd first block" data-bid="72" id="b72">
+        <div class="view view-opinions view-id-opinions view-display-id-block view-dom-id-bcdc47ae94ec776d71b8f18bc4e3af99">
+            <div class="attachment attachment-before"></div>
+            <div class="view-content">
+                <ul class="comment__list">
+
+                    {% for review in object_list %}
+                    <li>
+                        {% if review.avatar %}
+                        <div class="comment__avatar"><img src="{{ review.avatar.url }}" loading="auto" decoding="async" alt=""></div>
+                        {% endif %}
+                        <div class="comment__wrap"><em>{{review.created_at}}</em>
+                            <p>Автор: <strong>{{review.username}}</strong></p>
+                            <div class="comment__text">
+                                <p>{{review.review}}</p>
+                            </div>
+                        </div>
+                    </li>
+                    {% endfor %}
+
+                </ul>
+            </div>
+        </div>
+    </div>
+    <hr>
+    <div class="comment__header"><h3>Напишите отзыв о нашей продукции</h3></div>
+
+    <form method="post" enctype="multipart/form-data" class="custom-form">
+        {% csrf_token %}
+        <div class="form-group">
+          <label for="id_username">Имя пользователя:</label>
+          <input type="text" name="username" maxlength="255" required="" id="id_username">
+        </div>
+        <div class="form-group">
+          <label for="id_avatar">Аватар:</label>
+          <input type="file" name="avatar" accept="image/*" required="" id="id_avatar"> 
+        </div>
+        <div class="form-group">
+          <label for="id_review">Отзыв:</label>
+          <textarea name="review" cols="40" rows="10" required="" id="id_review"></textarea>
+        </div>
+        <input type="submit" id="edit-submit" name="op" value="Сохранить" class="form-submit">
+      </form>
+</div>
+
+<style>
+    .custom-form {
+        max-width: 4000px;
+        padding: 20px;
+        border: 1px solid #ccc;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        margin-top: 20px;
+      }
+      
+      .form-group {
+        margin-bottom: 20px;
+      }
+      
+      label {
+        display: block;
+        font-weight: bold;
+        margin-bottom: 5px;
+      }
+      
+      input[type="text"],
+      input[type="file"],
+      textarea {
+        width: 100%;
+        padding: 8px;
+        box-sizing: border-box;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        margin-top: 5px;
+        margin-bottom: 10px;
+      }
+</style>
+{% endblock content %}

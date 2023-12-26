@@ -9,3 +9,13 @@ class QuestionsModel(models.Model):
 
     def __str__(self):
         return str(self.title)
+
+
+class ReviewsModel(models.Model):
+    created_at = models.DateTimeField(auto_now_add=True, verbose_name='Дата создания')
+    username = models.CharField(max_length=255, verbose_name='Имя пользователя')
+    avatar = models.ImageField(upload_to='images_avatars/', verbose_name='Аватар')
+    review = models.TextField(verbose_name='Отзыв')
+
+    def __str__(self):
+        return str(self.username)
