@@ -1,0 +1,64 @@
+{% extends 'base_racer.html' %}
+{% load static %}
+
+{% block content %}
+  <div class="account__item">
+    <div class="product__logo">
+      <img src="{% static 'images/logo.webp' %}" loading="auto" decoding="async" alt="" />
+    </div><h3 class="product__name">Учётная запись пользователя</h3><h2 class="element-invisible">Главные вкладки</h2><ul class="tabz">
+      <li>
+        <a href="{% url 'register' %}"><span class="tab task-регистрация">Регистрация</span></a>
+      </li>
+      <li class="active">
+        <a href="#" class="active"><span class="tab task-войти">Войти</span><span class="element-invisible">(активная вкладка)</span></a>
+      </li>
+      <li>
+        <a href="#"><span class="tab task-забыли-пароль">Забыли пароль?</span></a>
+      </li>
+    </ul>
+    <form class="custom-form" method="post">
+      {% csrf_token %}
+      {{ form.as_p }}
+      <div class="form-actions form-wrapper" id="edit-actions">
+        <input type="submit" id="edit-submit" name="op" value="Войти" class="form-submit" />
+      </div>
+    </form>
+  </div>
+
+  <style>
+    .custom-form {
+      max-width: 400px;
+      margin: 25px 10px 0;
+      padding: 20px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+    
+    .custom-form p {
+      margin-bottom: 15px;
+    }
+    
+    .custom-form label {
+      display: block;
+      margin-bottom: 5px;
+      font-weight: bold;
+    }
+    .input-custom-form {
+      width: 100%;
+      padding: 8px;
+      margin-bottom: 16px;
+      box-sizing: border-box;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+    
+    .errorlist {
+      background-color: #ffdddd; /* Цвет фона для сообщений об ошибке */
+      color: #8b0000; /* Цвет текста для сообщений об ошибке */
+      padding: 8px; /* Паддинг вокруг текста сообщений об ошибке */
+      margin-bottom: 20px; /* Отступ между сообщениями об ошибке */
+      border-radius: 5px; /* Скругление углов блока с сообщениями об ошибке */
+    }
+  </style>
+{% endblock %}

@@ -73,9 +73,15 @@
                 <li class="menu-990">
                   <a href="{% url 'kontakty_view' %}">Контакты</a>
                 </li>
-                <li class="menu-3522 last">
-                  <a href="#" title="">Личный кабинет</a>
-                </li>
+                {% if user.is_authenticated %}
+                  <li class="menu-3522 last">
+                    <a href="#" title="">Личный кабинет</a>
+                  </li>
+                {% else %}
+                  <li class="menu-3522 last">
+                    <a href="{% url 'register' %}" title="">Личный кабинет</a>
+                  </li>
+                {% endif %}
               </ul>
               <div class="nav__search">
                 <form action="#" method="get" id="search-block-form--2" accept-charset="UTF-8">
@@ -160,7 +166,12 @@
                 <a href="https://racer-parts.ru/+79193781078"><img src="{% static 'images/soc-viber.webp' %}" loading="auto" decoding="async" alt="" /></a> <a href="https://racer-parts.ru/+79193781078"><img src="{% static 'images/soc-wap.webp' %}" loading="auto" decoding="async" alt="" /></a>
               </div>
               <p class="header__phone h7">+7 (919) 378-10-78</p>
-            </div> <a class="autodialog cta-btn autodialog-processed" data-dialog-width="60%" href="#" id="autodialog-7">КАТАЛОГ ЗАПЧАСТЕЙ</a> <a class="cta-btn light" href="#"><span>КАБИНЕТ</span></a>
+            </div> <a class="autodialog cta-btn autodialog-processed" data-dialog-width="60%" href="#" id="autodialog-7">КАТАЛОГ ЗАПЧАСТЕЙ</a>
+            {% if user.is_authenticated %}
+              <a class="cta-btn light" href="#"><span>КАБИНЕТ</span></a>
+            {% else %}
+              <a class="cta-btn light" href="{% url 'register' %}"><span>КАБИНЕТ</span></a>
+            {% endif %}
             <div class="block block-uc-ajax-cart block-odd first last block" data-bid="44" id="b44">
               <div id="ajaxCartUpdate" class="load-on-view ajax-cart-processed">
                 <div class="header__order" id="cart-block-contents-ajax">

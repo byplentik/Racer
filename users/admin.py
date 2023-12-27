@@ -12,20 +12,18 @@ class AdminCustomUser(BaseUserAdmin):
     add_fieldsets = (
         (None, {
             'classes': ('wide',),
-                'fields': ('phone_number', 'password1', 'password2'),
+                'fields': ('email', 'password1', 'password2'),
         }),
     )
 
     fieldsets = (
-        (None, {'fields': ('phone_number', 'email', 'password', 'delivery_address', 'delivery_index')}),
-        (('Личная Информация'), {'fields': ('name', 'last_name', 'last_login')}),
+        (None, {'fields': ('email', 'username')}),
         (('Разрешения'), {
             'fields': ('is_staff', 'is_superuser'),
         })
     )
-    list_display = ('phone_number', 'name', 'last_name', 'email', 'delivery_index', 'is_staff')
+    list_display = ('email', 'username')
     list_filter = ('is_staff', 'is_superuser', 'groups')
-    search_fields = ('email', 'name', 'last_name', 'phone_number')
     ordering = ('email',)
     filter_horizontal = ('groups', 'user_permissions',)
 

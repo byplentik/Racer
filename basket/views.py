@@ -7,7 +7,7 @@ from django.shortcuts import redirect
 from django.urls import reverse_lazy
 from django.views import generic
 
-from .forms import CheckoutFromCartForm
+# from .forms import CheckoutFromCartForm
 from .mixins import CreateSessionKeyMixin
 from .models import Category, Part, CheckoutCart, OrderedPart, Motorcycle
 
@@ -97,10 +97,10 @@ class CartSessionDetailView(CreateSessionKeyMixin, generic.TemplateView):
         return context
 
 
-class CheckoutFromCartView(LoginRequiredMixin, CreateSessionKeyMixin, generic.FormView):
-    template_name = 'basket/checkout-form.html'
-    form_class = CheckoutFromCartForm
-    success_url = reverse_lazy('home')
+# class CheckoutFromCartView(LoginRequiredMixin, CreateSessionKeyMixin, generic.FormView):
+#     template_name = 'basket/checkout-form.html'
+#     form_class = CheckoutFromCartForm
+#     success_url = reverse_lazy('home')
 
     def form_valid(self, form):
         user = self.request.user
