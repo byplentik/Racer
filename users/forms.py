@@ -2,6 +2,8 @@ from django import forms
 from django.contrib.auth import authenticate
 from django.contrib.auth.forms import ReadOnlyPasswordHashField
 from django.core.exceptions import ValidationError
+from django.contrib.auth.forms import PasswordChangeForm
+
 
 from .models import CustomUser
 
@@ -68,3 +70,36 @@ class LoginForm(forms.Form):
                 raise forms.ValidationError("Неверный email или пароль")
 
         return cleaned_data
+
+
+class EditUserForm(forms.Form):
+    email = forms.EmailField(widget=forms.EmailInput(attrs={'class': 'input-custom-form'}), required=True)
+    username = forms.CharField(widget=forms.TextInput(attrs={'class': 'input-custom-form'}), required=True)
+    password = forms.CharField(widget=forms.PasswordInput(attrs={'class': 'input-custom-form', 'placeholder': 'Введите пароль'}), required=True)
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['email'].label = 'Ваш Email адрес'
+        self.fields['username'].label = 'Имя пользователя'
+        self.fields['password'].label = 'Пароль'
+
+
+class UserChangePasswordForm(PasswordChangeForm):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['old_password'].label = 'Текущий пароль'
+        self.fields['new_password1'].label = 'Новый пароль'
+        self.fields['new_password2'].label = 'Подтвердите новый пароль'
+
+        placeholders = {
+            'old_password': 'Введите ваш текущий пароль',
+            'new_password1': 'Новый пароль',
+            'new_password2': 'Повторите новый пароль',
+        }
+
+        for field_name, field in self.fields.items():
+            field.widget.attrs['class'] = 'input-custom-form'
+            if field_name in placeholders:
+                field.widget.attrs['placeholder'] = placeholders[field_name]
+
+

@@ -128,32 +128,17 @@
     </header>
     <main class="main">
       <div class="content-w">
-        <section class="side-nav" style="height: 3484px;">
-          <section class="side-nav" style="height: 3484px;">
-            <h2 class="side-nav__item-title">Каталог</h2>
-            <div class="attachment attachment-before"></div>
-            <ul class="side-nav__list">
-              <li>
-                <a class="autodialog autodialog-processed" href="#" data-dialog-width="60%" id="autodialog-1">Двигатели</a>
-              </li>
-              <li>
-                <a class="autodialog autodialog-processed" href="#" data-dialog-width="60%" id="autodialog-2">Мотоциклы</a>
-              </li>
-              <li>
-                <a class="autodialog autodialog-processed" href="#" data-dialog-width="60%" id="autodialog-3">Скутеры</a>
-              </li>
-              <li>
-                <a class="autodialog autodialog-processed" href="#" data-dialog-width="60%" id="autodialog-4">Мопеды</a>
-              </li>
-              <li>
-                <a class="autodialog autodialog-processed" href="#" data-dialog-width="60%" id="autodialog-5">Трициклы</a>
-              </li>
-              <li>
-                <a class="autodialog autodialog-processed" href="#" data-dialog-width="60%" id="autodialog-6">Снегоходы</a>
-              </li>
-            </ul>
-            <div class="attachment attachment-after"></div>
-          </section>
+        <section class="side-nav" style="height: 1125px;">
+          <h2 class="side-nav__item-title"><a href="{% url "user-detail" slug=user.slug %}">ЛИЧНЫЙ КАБИНЕТ</a></h2><ul class="side-nav__links">
+            <li>
+              <a href="{% url "edit-user" %}">Сменить логин/пароль</a> 
+              <a href="#">Адрес доставки</a>
+              <a href="#">Личные сообщения</a> 
+              <a href="#">Мои заказы</a> 
+              <a href="#">Корзина заказов</a><hr /> 
+              <a href="#">Выход</a>
+            </li>
+          </ul>
         </section>
         <div class="main-content">
           <div class="header__top content-w">
@@ -168,7 +153,7 @@
               <p class="header__phone h7">+7 (919) 378-10-78</p>
             </div> <a class="autodialog cta-btn autodialog-processed" data-dialog-width="60%" href="#" id="autodialog-7">КАТАЛОГ ЗАПЧАСТЕЙ</a>
             {% if user.is_authenticated %}
-              <a class="cta-btn light" href="{% url "user-detail" slug=user.slug %}"><span>КАБИНЕТ</span></a>
+              <a class="cta-btn light" href="{% url 'user-detail' slug=user.slug %}"><span>КАБИНЕТ</span></a>
             {% else %}
               <a class="cta-btn light" href="{% url 'register' %}"><span>КАБИНЕТ</span></a>
             {% endif %}

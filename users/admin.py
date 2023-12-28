@@ -22,7 +22,7 @@ class AdminCustomUser(BaseUserAdmin):
             'fields': ('is_staff', 'is_superuser'),
         })
     )
-    list_display = ('email', 'username')
+    list_display = ('email', 'username', 'slug')
     list_filter = ('is_staff', 'is_superuser', 'groups')
     ordering = ('email',)
     filter_horizontal = ('groups', 'user_permissions',)

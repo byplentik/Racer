@@ -1,0 +1,82 @@
+{% extends 'personal-cabinet.html' %}
+{% load static %}
+
+{% block content %}
+  <div class="account__item">
+    <div class="product__logo">
+      <img src="{% static 'images/logo.webp' %}" loading="auto" decoding="async" alt="" />
+    </div><h3 class="product__name">{{ user.username }}</h3>
+    <h2 class="element-invisible">Главные вкладки</h2>
+    <ul class="tabz">
+      <li class="active">
+        <a href="{% url 'user-detail' slug=user.slug %}" class="active"><span class="tab task-просмотр">Просмотр</span><span class="element-invisible">(активная вкладка)</span></a>
+      </li>
+      <li>
+        <a href="{% url 'edit-user' %}"><span class="tab task-редактировать">Редактировать</span></a>
+      </li>
+      <li>
+        <a href="{% url "change-password-user" %}"><span class="tab task-редактировать">Сменить пароль</span></a>
+      </li>
+    </ul>
+    <ul class="action-links" id="touser">
+      <li>
+        <a href="#">Написать администратору</a>
+      </li>
+    </ul>
+    <div class="node__content">
+      <p>Приветствуем, Вас в личном кабинете!</p>
+      <p>Здесь Вы можете просматривать историю своих заказов, а также редактировать собственные данные.</p>
+      <p>
+        Появился вопрос? <a href="#">Напишите</a> его администратору, используя меню личные сообщения.
+      </p>
+      <p>
+        Оперативная мобильная связь через мессенджеры <b>Viber / WhatsApp +7 (919) 378 1078</b> – сохраните этот контакт в свой смартфон и будьте всегда с нами на связи!
+      </p>
+      <p>
+        Напоминаем! Запчасти в каталоге без указания цены,т.е. с нулем - отсутствуют в наличии! <b>Минимальная сумма заказа на запчасти от 500р</b>. Цена на запчасти указана без учета доставки!
+      </p>
+    </div>
+  </div>
+  {% if messages %}
+  <ul class="messages">
+    {% for message in messages %}
+      <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+    {% endfor %}
+  </ul>
+  {% for message in messages %}
+    <div id="successMessage" class="success-message">{{ message }}</div>
+  {% endfor %}
+{% endif %}
+
+<style>
+  /* Стили для зеленой таблички */
+  .success-message {
+    border-radius: 10px;
+    border: 3px solid black;
+    font-size: 15px;
+    width: 280px;
+    position: fixed;
+    bottom: 60px;
+    right: 10px;
+    background-color: #4CAF50;
+    color: white;
+    padding: 15px;
+    display: none;
+  }
+</style>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function() {
+      // Получаем элемент с зеленой табличкой
+      var successMessage = document.getElementById('successMessage');
+
+      // Показываем табличку
+      successMessage.style.display = 'block';
+
+      // Ждем 2 секунды и скрываем табличку
+      setTimeout(function() {
+          successMessage.style.display = 'none';
+      }, 5000);
+  });
+</script>  
+{% endblock %}
