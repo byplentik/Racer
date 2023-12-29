@@ -1,0 +1,119 @@
+{% extends 'personal-cabinet.html' %}
+{% load static %}
+
+{% block content %}
+  <div class="account__item">
+    <div class="product__logo">
+      <img src="{% static 'images/logo.webp' %}" loading="auto" decoding="async" alt="" />
+    </div><h3 class="product__name">Адресная книга</h3>
+    <h2 class="element-invisible">Главные вкладки</h2>
+    <ul class="tabz">
+      <li class="active">
+        <a href="{% url "addresses-list" %}"><span class="tab task-просмотр">Список адресов</span></a>
+      </li>
+      <li>
+        <a href="{% url "add-address" %}"><span class="tab task-редактировать">Добавить адрес</span></a>
+      </li>
+    </ul>
+    <table class="account__table account__table_orders">
+      <tbody>
+        <tr>
+          <th>Название</th>
+          <th>ФИО</th>
+          <th>Телефон</th>
+          <th>Адрес доставки</th>
+          <th></th>
+        </tr>
+        {% for address in addresses %}
+          <tr>
+            <td>{{address.name_address}}</td>
+            <td>{{address.full_name}}</td>
+            <td>{{address.phone_number}}</td>
+            <td class="address__wrap">
+              <p>
+                <b>Индекс:</b> {{address.postal_code}}
+              </p>
+              <p>
+                <b>Страна и город:</b> {{address.country_and_city}}
+              </p>
+              <p>
+                <b>Адрес:</b> {{address.delivery_address}}
+              </p>
+            </td>
+            <td>
+              <a href="#"><button class="delete-address-btn" data-id="{{ address.id }}">удалить адрес</button></a>
+            </td>
+          </tr>
+        {% endfor %}
+        <script>
+          document.addEventListener('DOMContentLoaded', function () {
+            var deleteButtons = document.querySelectorAll('.delete-address-btn');
+        
+            deleteButtons.forEach(function (button) {
+              button.addEventListener('click', function () {
+                var addressId = button.getAttribute('data-id');
+                deleteAddress(addressId);
+              });
+            });
+        
+            function deleteAddress(addressId) {
+              fetch('/user/delete_address/' + addressId + '/', {
+                method: 'POST',
+                headers: {
+                  'X-CSRFToken': '{{ csrf_token }}', // Добавьте этот заголовок для защиты от CSRF
+                },
+              })
+                .then(response => response.json())
+                .then(data => {
+                  if (data.success) {
+                    location.reload(); // Перезагрузить страницу после успешного удаления
+                  } else {
+                    console.error('Ошибка удаления адреса');
+                  }
+                })
+                .catch(error => console.error('Ошибка сети', error));
+            }
+          });
+        </script>
+      </tbody>
+    </table>
+  </div>
+
+  {% if messages %}
+  {% for message in messages %}
+    <div id="successMessage" class="success-message">{{ message }}</div>
+  {% endfor %}
+{% endif %}
+
+<style>
+  /* Стили для зеленой таблички */
+  .success-message {
+    border-radius: 10px;
+    border: 3px solid black;
+    font-size: 15px;
+    width: 280px;
+    position: fixed;
+    bottom: 60px;
+    right: 10px;
+    background-color: #4CAF50;
+    color: white;
+    padding: 15px;
+    display: none;
+  }
+</style>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function() {
+      // Получаем элемент с зеленой табличкой
+      var successMessage = document.getElementById('successMessage');
+
+      // Показываем табличку
+      successMessage.style.display = 'block';
+
+      // Ждем 2 секунды и скрываем табличку
+      setTimeout(function() {
+          successMessage.style.display = 'none';
+      }, 5000);
+  });
+</script> 
+{% endblock %}

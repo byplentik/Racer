@@ -53,3 +53,20 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
 
     def get_absolute_url(self):
         return reverse('user-detail', kwargs={'slug': self.slug})
+
+
+class DeliveryAddressModel(models.Model):
+    full_name = models.CharField(verbose_name='ФИО', max_length=455)
+    phone_number = models.IntegerField(verbose_name='Номер телефона')
+    postal_code = models.IntegerField(verbose_name='Почтовый код')
+    country_and_city = models.CharField(verbose_name='Страна и город', max_length=455)
+    delivery_address = models.CharField(verbose_name='Адрес доставки', max_length=455)
+    name_address = models.CharField(verbose_name='Сохранить как', max_length=455)
+    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE, verbose_name='Пользователь')
+
+    def __str__(self):
+        return f'{self.user}'
+
+    class Meta:
+        verbose_name = 'Адресная книга'
+        verbose_name_plural = 'Адресная книга пользователей'

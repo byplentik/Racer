@@ -1,7 +1,7 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 
-from .models import CustomUser
+from .models import CustomUser, DeliveryAddressModel
 from .forms import UserCreationForm, UserChangeForm
 
 
@@ -29,3 +29,8 @@ class AdminCustomUser(BaseUserAdmin):
 
 
 admin.site.register(CustomUser, AdminCustomUser)
+
+
+@admin.register(DeliveryAddressModel)
+class AdminDeliveryAddressModel(admin.ModelAdmin):
+    list_display = ['phone_number', 'postal_code', 'user', 'name_address']

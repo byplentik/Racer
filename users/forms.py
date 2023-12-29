@@ -4,8 +4,7 @@ from django.contrib.auth.forms import ReadOnlyPasswordHashField
 from django.core.exceptions import ValidationError
 from django.contrib.auth.forms import PasswordChangeForm
 
-
-from .models import CustomUser
+from .models import CustomUser, DeliveryAddressModel
 
 
 class UserCreationForm(forms.ModelForm):
@@ -103,3 +102,28 @@ class UserChangePasswordForm(PasswordChangeForm):
                 field.widget.attrs['placeholder'] = placeholders[field_name]
 
 
+class DeliveryAddressAddForm(forms.ModelForm):
+    class Meta:
+        model = DeliveryAddressModel
+        fields = ['full_name', 'phone_number', 'postal_code', 'country_and_city', 'delivery_address', 'name_address']
+        widgets = {
+            'full_name': forms.TextInput(attrs={'class': 'input-custom-form', 'placeholder': 'Фамилия Имя Отчество'}),
+            'phone_number': forms.TextInput(attrs={'class': 'input-custom-form', 'placeholder': '79008008080'}),
+            'postal_code': forms.TextInput(attrs={'class': 'input-custom-form', 'placeholder': '600900'}),
+            'country_and_city': forms.TextInput(attrs={'class': 'input-custom-form', 'placeholder': 'Россия, Москва'}),
+            'delivery_address': forms.TextInput(attrs={'class': 'input-custom-form', 'placeholder': 'Ул Пушкина 40'}),
+            'name_address': forms.TextInput(attrs={'class': 'input-custom-form', 'placeholder': 'Дом, работа'}),
+        }
+
+    def __init__(self, *args, user=None, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.user = user
+
+    def save(self, commit=True):
+        instance = super().save(commit=False)
+        instance.user = self.user
+
+        if commit:
+            instance.save()
+
+        return instance

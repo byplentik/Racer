@@ -102,25 +102,26 @@ class CartSessionDetailView(CreateSessionKeyMixin, generic.TemplateView):
 #     form_class = CheckoutFromCartForm
 #     success_url = reverse_lazy('home')
 
-    def form_valid(self, form):
-        user = self.request.user
-        cart = self.request.session.get('cart', {})
-        total_price = sum(item['price'] * item['quantity'] for item in cart.values())
-        checkout_cart = CheckoutCart.objects.create(user=user, total_price=total_price)
+    # def form_valid(self, form):
+    #     user = self.request.user
+    #     cart = self.request.session.get('cart', {})
+    #     total_price = sum(item['price'] * item['quantity'] for item in cart.values())
+    #     checkout_cart = CheckoutCart.objects.create(user=user, total_price=total_price)
+    #
+    #     for part_id, cart_item in cart.items():
+    #         part = Part.objects.get(pk=part_id)
+    #         quantity = cart_item['quantity']
+    #         OrderedPart.objects.create(cart=checkout_cart, part=part, quantity=quantity)
+    #     self.request.session['cart'] = {}
+    #     return super().form_valid(form)
+    #
+    # def get_initial(self):
+    #     initial = super().get_initial()
+    #     user = self.request.user
+    #     initial['email'] = user.email
+    #     initial['name'] = user.name
+    #     initial['last_name'] = user.last_name
+    #     initial['delivery_address'] = user.delivery_address
+    #     initial['delivery_index'] = user.delivery_index
+    #     return initial
 
-        for part_id, cart_item in cart.items():
-            part = Part.objects.get(pk=part_id)
-            quantity = cart_item['quantity']
-            OrderedPart.objects.create(cart=checkout_cart, part=part, quantity=quantity)
-        self.request.session['cart'] = {}
-        return super().form_valid(form)
-
-    def get_initial(self):
-        initial = super().get_initial()
-        user = self.request.user
-        initial['email'] = user.email
-        initial['name'] = user.name
-        initial['last_name'] = user.last_name
-        initial['delivery_address'] = user.delivery_address
-        initial['delivery_index'] = user.delivery_index
-        return initial
