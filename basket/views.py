@@ -3,7 +3,7 @@ from importlib import import_module
 from django.conf import settings
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import JsonResponse
-from django.shortcuts import redirect
+from django.shortcuts import redirect, render
 from django.urls import reverse_lazy
 from django.views import generic
 
@@ -83,18 +83,24 @@ class RemoveFromCartView(CreateSessionKeyMixin, generic.View):
 
 
 class CartSessionDetailView(CreateSessionKeyMixin, generic.TemplateView):
-    template_name = 'basket/cart-session-detail.html'
+    template_name = 'basket/cart-session-detail-test.html'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         session = self.request.session
         cart = session.get('cart', {})
-        total_price = sum(item['price'] * item['quantity'] for item in cart.values())
-        get_num_of_items = sum(item['quantity'] for item in cart.values())
-        context['cart_items'] = cart
-        context['total_price'] = total_price
-        context['get_num_of_items'] = get_num_of_items
-        return context
+
+        if cart == {}:
+            context['cart_status'] = False
+            return context
+        else:
+            context['cart_status'] = True
+            total_price = sum(item['price'] * item['quantity'] for item in cart.values())
+            get_num_of_items = sum(item['quantity'] for item in cart.values())
+            context['cart_items'] = cart
+            context['total_price'] = total_price
+            context['get_num_of_items'] = get_num_of_items
+            return context
 
 
 # class CheckoutFromCartView(LoginRequiredMixin, CreateSessionKeyMixin, generic.FormView):

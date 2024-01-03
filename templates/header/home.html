@@ -55,7 +55,7 @@
                   <a href="" title="" class="active">Главная</a>
                 </li>
                 <li class="menu-2178">
-                  <a href="#">Каталог</a>
+                  <a href="{% url "catalog" %}">Каталог</a>
                 </li>
                 <li class="menu-1217">
                   <a href="{% url 'questions' %}" title="">Ваши вопросы</a>
@@ -130,7 +130,7 @@
             <a href="viber://+79193781078"><img src="{% static 'images/soc-viber.webp' %}" loading="auto" decoding="async" alt="" /></a> <a href="whatsapp://+79193781078"><img src="{% static 'images/soc-wap.webp' %}" loading="auto" decoding="async" alt="" /></a>
           </div>
           <p class="header__phone h7">+7 (919) 378-10-78</p>
-        </div> <a class="autodialog cta-btn autodialog-processed" data-dialog-width="60%" href="#" id="autodialog-1">КАТАЛОГ ЗАПЧАСТЕЙ</a>
+        </div> <a class="autodialog cta-btn autodialog-processed" data-dialog-width="60%" href="{% url "catalog" %}" id="autodialog-1">КАТАЛОГ ЗАПЧАСТЕЙ</a>
         {% if user.is_authenticated %}
           <a class="cta-btn light" href="{% url "user-detail" slug=user.slug %}"><span>КАБИНЕТ</span></a>
         {% else %}
@@ -139,7 +139,7 @@
         <div class="block block-uc-ajax-cart block-odd first last block" data-bid="44" id="b44">
           <div id="ajaxCartUpdate" class="load-on-view ajax-cart-processed">
             <div class="header__order" id="cart-block-contents-ajax">
-              <a class="autodialog" href="#"><span>(<span>0</span>)</span></a>
+              <a class="autodialog" href="{% url "cart-session" %}"><span>(<span>0</span>)</span></a>
             </div>
           </div>
         </div>
@@ -167,7 +167,7 @@
                         <div>
                           <span>Оригинальные детали RACER &gt;&gt;</span>
                         </div>
-                      </div><a class="link-more welcome-slider__link" href="#contacts">Заказать сейчас</a><a class="autodialog link-more welcome-slider__link welcome-slider__link_dark autodialog-processed" data-dialog-width="60%" href="#" id="autodialog-2">Выбрать в каталоге</a>
+                      </div><a class="link-more welcome-slider__link" href="#contacts">Заказать сейчас</a><a class="autodialog link-more welcome-slider__link welcome-slider__link_dark autodialog-processed" data-dialog-width="60%" href="{% url "catalog" %}" id="autodialog-2">Выбрать в каталоге</a>
                     </div>
                   </div>
                 </div>
@@ -501,7 +501,7 @@
               <div class="attachment attachment-after"></div>
               <div class="main-gallery__link">
                 <p>
-                  <a class="autodialog link-more welcome-slider__link autodialog-processed" data-dialog-width="1000" href="#" id="autodialog-3">ВЫБРАТЬ В КАТАЛОГЕ</a>
+                  <a class="autodialog link-more welcome-slider__link autodialog-processed" data-dialog-width="1000" href="{% url "catalog" %}" id="autodialog-3">ВЫБРАТЬ В КАТАЛОГЕ</a>
                 </p>
               </div>
             </div>

@@ -1,17 +1,33 @@
-{% extends 'base.html' %}
+{% extends 'base_racer.html' %}
+{% load static %}
 
 {% block content %}
-  <h1>Каталог</h1>
-
-  <ul>
+  <div class="catalog-parts">
     {% for category in categories %}
-      <li>{{ category.name }}</li>
-      <ul>
+      <div class="catalog-cat">
+        <p class="name-category">{{ category.name }}</p>
         {% for motorcycle in category.motorcycle_set.all %}
-          <li><a href="{{ motorcycle.get_absolute_url}}">{{ motorcycle.name }}</a></li>
+          <li>
+            <a href="{{ motorcycle.get_absolute_url }}">{{ motorcycle.name }}</a>
+          </li>
         {% endfor %}
-      </ul>
-      <hr>
+      </div>
+      <hr />
     {% endfor %}
-  </ul>
-{% endblock content %}
+  </div>
+
+  <style>
+    .catalog-parts {
+      width: 100%;
+      padding-left: 15px;
+      padding-right: 15px;
+      margin-top: 15px;
+
+    }
+    .name-category{
+        font-size: 20px;
+        color: black;
+        margin-bottom: 10px;
+    }
+  </style>
+{% endblock %}
