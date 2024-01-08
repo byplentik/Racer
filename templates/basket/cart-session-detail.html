@@ -1,6 +1,8 @@
 {% extends 'base_racer.html' %}
 {% load static %}
 
+{% block title %}Корзина | Racer{% endblock title %}
+
 {% block content %}
 <div class="product">
   <div class="product__logo">
@@ -28,11 +30,13 @@
                   <input class="button-remove-from-cart" type="button" value="-" />
                 </form>
               </div>
+
               <span class="quantity-value">{{ item_data.quantity }}</span>
+
               <div class="wrapper-form-buttons">
-                <form class="form-buttons" method="post" accept-charset="UTF-8">
+                <form class="form-buttons add-to-cart-form" method="post" accept-charset="UTF-8" data-part-id="{{ item_id }}">
                   {% csrf_token %}
-                  <input class="button-remove-from-cart" type="button" value="+" />
+                  <input class="button-add-to-cart" type="button" value="+" />
                 </form>
               </div>
             </td>
@@ -76,6 +80,28 @@
     })
   }
   
+  function addToCart(partId) {
+    // Получаем данные формы
+    var formData = {
+      part_id: partId,
+      csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val()
+    }
+  
+    // Отправляем AJAX-запрос
+    $.ajax({
+      type: 'POST',
+      url: '/cart/add-one-part/' + partId + '/',
+      data: formData,
+      success: function (response) {
+        // Обновление данных в пользовательском интерфейсе
+        updateCartUI(response)
+      },
+      error: function (error) {
+        // Обработка ошибок
+      }
+    })
+  }
+  
   function updateCartUI(response) {
     var quantity = response.quantity
     var partId = response.partId
@@ -83,25 +109,12 @@
     var num_items = response.num_items
   
     // Обновляем количество товара в соответствующей ячейке
-    $('#quantity-' + partId).html(`
-      <div class="wrapper-form-buttons">
-        <form class="form-buttons" method="post" accept-charset="UTF-8" data-part-id="${partId}">
-          <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
-          <input class="button-remove-from-cart" type="button" value="-" />
-        </form>
-      </div>
-      <span class="quantity-value">${quantity}</span>
-      <div class="wrapper-form-buttons">
-        <form class="form-buttons" method="post" accept-charset="UTF-8">
-          <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
-          <input class="button-remove-from-cart" type="button" value="+" />
-        </form>
-      </div>
-    `);
-
+    var quantityContainer = $('#quantity-' + partId)
+    quantityContainer.find('.quantity-value').text(quantity)
+  
     // Если количество товара стало 0, скрываем строку из таблицы
     if (quantity === 0) {
-      $('#row-' + partId).hide();
+      $('#row-' + partId).hide()
     }
   
     // Обновляем общую сумму и количество товаров в корзине
@@ -117,9 +130,15 @@
   
   // Обработчик клика на кнопке удаления товара
   $('body').on('click', '.button-remove-from-cart', function () {
-    var partId = $(this).closest('form').data('part-id');
-    removeFromCart(partId);
-  });
+    var partId = $(this).closest('form').data('part-id')
+    removeFromCart(partId)
+  })
+  
+  // Обработчик клика на кнопке добавления товара
+  $('body').on('click', '.button-add-to-cart', function () {
+    var partId = $(this).closest('form').data('part-id')
+    addToCart(partId)
+  })
 </script>
 
 <style>
@@ -146,26 +165,32 @@
     border: 1px solid #dddddd;
     padding: 8px;
   }
-
-  .form-buttons{
+  
+  .form-buttons {
     display: inline;
     padding: 0;
     margin: 0;
     border: 0;
   }
-
-  .wrapper-form-buttons{
+  
+  .wrapper-form-buttons {
     display: inline;
     padding: 0;
     margin: 0;
     border: 0;
   }
-
-  .quantity-value{
+  
+  .quantity-value {
     margin: 0 5px;
   }
-
-  /* Стили для кнопок "+" и "-" в ячейке "Кол-во" */
+  
+  @media screen and (max-width: 800px) {
+    .quantity-value {
+      margin: 0 0px; /* Для экранов шириной 800px и меньше */
+    }
+  }
+  
+  /* Стили для кнопки"-" в ячейке "Кол-во" */
   .button-remove-from-cart {
     padding: 5px 10px; /* Уменьшаем отступы, чтобы кнопки были компактными */
     font-size: 16px; /* Уменьшаем размер шрифта */
@@ -177,6 +202,7 @@
   /* Стили для кнопок при наведении */
   .button-remove-from-cart:hover {
     background-color: #e0e0e0;
+    border: 1px solid red;
   }
   
   /* Стили для кнопок при нажатии */
@@ -187,6 +213,32 @@
   }
   
   .button-remove-from-cart:focus {
+    color: black;
+  }
+  
+  /* Стили для кнопки"+" в ячейке "Кол-во" */
+  .button-add-to-cart {
+    padding: 5px 10px; /* Уменьшаем отступы, чтобы кнопки были компактными */
+    font-size: 16px; /* Уменьшаем размер шрифта */
+    background-color: #f9f9f9;
+    border: 1px solid #dddddd;
+    cursor: pointer;
+  }
+  
+  /* Стили для кнопок при наведении */
+  .button-add-to-cart:hover {
+    background-color: #e0e0e0;
+    border: 1px solid green;
+  }
+  
+  /* Стили для кнопок при нажатии */
+  .button-add-to-cart:active {
+    background-color: #d0d0d0;
+    transform: translateY(1px);
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+  }
+  
+  .button-add-to-cart:focus {
     color: black;
   }
   
