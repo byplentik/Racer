@@ -1,0 +1,221 @@
+{% extends 'personal-cabinet.html' %}
+{% load static %}
+
+{% block content %}
+  <div class="product">
+    <div class="product__logo">
+      <img src="{% static 'images/logo.webp' %}" />
+    </div>
+    <h3 class="product__name">Корзина</h3>
+    {% if cart_items %}
+      <table style="width: 100%;">
+        <thead>
+          <tr>
+            <th>Наименование</th>
+            <th style="min-width: 105px; text-align: center;">Кол-во</th>
+            <th style="min-width: 80px;">Сумма</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for item_id, item_data in cart_items.items %}
+            <tr class="odd" id="row-{{ item_id }}">
+              <td>{{ item_data.name }}</td>
+
+              <td style="text-align: center;" id="quantity-{{ item_id }}">
+                <div class="wrapper-form-buttons">
+                  <form class="form-buttons" method="post" accept-charset="UTF-8" data-part-id="{{ item_id }}">
+                    {% csrf_token %}
+                    <input class="button-remove-from-cart" type="button" value="-" />
+                  </form>
+                </div>
+                <span class="quantity-value">{{ item_data.quantity }}</span>
+                <div class="wrapper-form-buttons">
+                  <form class="form-buttons" method="post" accept-charset="UTF-8">
+                    {% csrf_token %}
+                    <input class="button-remove-from-cart" type="button" value="+" />
+                  </form>
+                </div>
+              </td>
+
+              <td>
+                <span>{{ item_data.price }} р.</span>
+              </td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+      <p id="total-price">Итого: {{ total_price }} рублей</p>
+      <p id="num-items">Всего товаров в корзине: {{ get_num_of_items }}</p>
+      <hr class="hr" />
+      <input class="btn-order" type="submit" value="Оформить заказ" />
+    {% else %}
+      <p>Ваша корзина пуста</p>
+    {% endif %}
+  </div>
+
+  <script>
+    function removeFromCart(partId) {
+      // Получаем данные формы
+      var formData = {
+        part_id: partId,
+        csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val()
+      }
+    
+      // Отправляем AJAX-запрос
+      $.ajax({
+        type: 'POST',
+        url: '/cart/remove/' + partId + '/',
+        data: formData,
+        success: function (response) {
+          // Обновление данных в пользовательском интерфейсе, например, обновление суммы и количества товаров в корзине
+          updateCartUI(response)
+        },
+        error: function (error) {
+          // Обработка ошибок
+        }
+      })
+    }
+    
+    function updateCartUI(response) {
+      var quantity = response.quantity
+      var partId = response.partId
+      var total_price = response.total_price
+      var num_items = response.num_items
+    
+      // Обновляем количество товара в соответствующей ячейке
+      $('#quantity-' + partId).html(`
+        <div class="wrapper-form-buttons">
+          <form class="form-buttons" method="post" accept-charset="UTF-8" data-part-id="${partId}">
+            <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
+            <input class="button-remove-from-cart" type="button" value="-" />
+          </form>
+        </div>
+        <span class="quantity-value">${quantity}</span>
+        <div class="wrapper-form-buttons">
+          <form class="form-buttons" method="post" accept-charset="UTF-8">
+            <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
+            <input class="button-remove-from-cart" type="button" value="+" />
+          </form>
+        </div>
+      `);
+
+      // Если количество товара стало 0, скрываем строку из таблицы
+      if (quantity === 0) {
+        $('#row-' + partId).hide();
+      }
+    
+      // Обновляем общую сумму и количество товаров в корзине
+      $('#total-price').text('Итого: ' + total_price + ' рублей')
+      $('#num-items').text('Всего товаров в корзине: ' + num_items)
+    
+      // Проверяем, остались ли еще товары в корзине
+      if (num_items === 0) {
+        // Скрываем таблицу, кнопки и другие элементы
+        $('table, #total-price, #num-items, .hr, .btn-order').hide()
+      }
+    }
+    
+    // Обработчик клика на кнопке удаления товара
+    $('body').on('click', '.button-remove-from-cart', function () {
+      var partId = $(this).closest('form').data('part-id');
+      removeFromCart(partId);
+    });
+  </script>
+
+  <style>
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+    
+    /* Стили для заголовков таблицы */
+    thead th {
+      background-color: #f2f2f2;
+      border: 1px solid #dddddd;
+      text-align: left;
+      padding: 8px;
+    }
+    
+    /* Стили для строк с нечетным порядковым номером */
+    tbody tr.odd {
+      background-color: #f9f9f9;
+    }
+    
+    /* Стили для ячеек в теле таблицы */
+    tbody td {
+      border: 1px solid #dddddd;
+      padding: 8px;
+    }
+
+    .form-buttons{
+      display: inline;
+      padding: 0;
+      margin: 0;
+      border: 0;
+    }
+
+    .wrapper-form-buttons{
+      display: inline;
+      padding: 0;
+      margin: 0;
+      border: 0;
+    }
+
+    .quantity-value{
+      margin: 0 5px;
+    }
+
+    /* Стили для кнопок "+" и "-" в ячейке "Кол-во" */
+    .button-remove-from-cart {
+      padding: 5px 10px; /* Уменьшаем отступы, чтобы кнопки были компактными */
+      font-size: 16px; /* Уменьшаем размер шрифта */
+      background-color: #f9f9f9;
+      border: 1px solid #dddddd;
+      cursor: pointer;
+    }
+    
+    /* Стили для кнопок при наведении */
+    .button-remove-from-cart:hover {
+      background-color: #e0e0e0;
+    }
+    
+    /* Стили для кнопок при нажатии */
+    .button-remove-from-cart:active {
+      background-color: #d0d0d0;
+      transform: translateY(1px);
+      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+    }
+    
+    .button-remove-from-cart:focus {
+      color: black;
+    }
+    
+    /* Стили для цены в ячейке "Сумма" */
+    tbody td span {
+      font-weight: bold;
+      color: #007bff;
+    }
+    
+    .btn-order {
+      margin-top: 20px;
+      width: 200px;
+      height: 45px;
+      color: white;
+      background-color: #ec1827;
+      border-radius: 10px;
+    }
+    
+    .btn-order:active {
+      color: white;
+      background-color: #ba141f; /* Новый цвет фона при нажатии */
+      transform: translateY(2px); /* Смещение кнопки вниз для визуального эффекта */
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Тень для создания визуального эффекта поднятия */
+    }
+    
+    .btn-order:hover {
+      color: white;
+      background-color: #d61a2f; /* Новый цвет фона при наведении */
+      cursor: pointer; /* Изменение формы курсора для обозначения активности */
+    }
+  </style>
+{% endblock %}

@@ -204,7 +204,7 @@
                                 <td class="product__item-thumb"></td>
                                 <td>{{ part.name }}</td>
                                 <td>
-                                  <span class="uc-price">{{ part.price }} рублей</span>
+                                  <span class="uc-price">{{ part.price }} р.</span>
                                 </td>
                                 <td class="product__item-add" id="p123784">
                                   <form class="addToCartForm" method="post" accept-charset="UTF-8" data-part-id="{{ part.id }}" data-quantity="1">
@@ -277,15 +277,11 @@
         // Отправляем AJAX-запрос
         $.ajax({
             type: 'POST',
-            url: '/cart/add-to-cart/' + partId + '/' + quantity + '/',  // Укажите реальный URL
+            url: '/cart/add-to-cart/' + partId + '/' + quantity + '/',
             data: formData,
             success: function(response) {
-                // Обработка успешного ответа (если необходимо)
-                console.log(response);
             },
             error: function(error) {
-                // Обработка ошибок (если необходимо)
-                console.log(error);
             }
         });
     }

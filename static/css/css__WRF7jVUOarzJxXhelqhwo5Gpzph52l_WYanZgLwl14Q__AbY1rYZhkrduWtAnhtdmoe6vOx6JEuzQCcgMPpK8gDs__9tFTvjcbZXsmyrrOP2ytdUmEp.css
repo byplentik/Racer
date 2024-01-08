@@ -6517,3 +6517,7 @@ body.no-touch .product__item-add .list-add-to-cart:hover {
     border: 1px solid #0056b3;
     border-radius: 5px;
 }
+
+input:focus{
+    color: white
+}

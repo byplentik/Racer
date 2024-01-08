@@ -79,28 +79,28 @@ class RemoveFromCartView(CreateSessionKeyMixin, generic.View):
         total_price = sum(item['price'] * item['quantity'] for item in cart.values())
         num_items = sum(item['quantity'] for item in cart.values())
 
-        return JsonResponse({'total_price': total_price, 'num_items': num_items, 'quantity': quantity})
+        return JsonResponse(
+            {'total_price': total_price, 'num_items': num_items, 'quantity': quantity, 'partId': part_id})
 
 
 class CartSessionDetailView(CreateSessionKeyMixin, generic.TemplateView):
-    template_name = 'basket/cart-session-detail-test.html'
+    template_name = 'basket/cart-session-detail.html'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         session = self.request.session
         cart = session.get('cart', {})
+        total_price = sum(item['price'] * item['quantity'] for item in cart.values())
+        get_num_of_items = sum(item['quantity'] for item in cart.values())
+        context['cart_items'] = cart
+        context['total_price'] = total_price
+        context['get_num_of_items'] = get_num_of_items
+        return context
 
-        if cart == {}:
-            context['cart_status'] = False
-            return context
-        else:
-            context['cart_status'] = True
-            total_price = sum(item['price'] * item['quantity'] for item in cart.values())
-            get_num_of_items = sum(item['quantity'] for item in cart.values())
-            context['cart_items'] = cart
-            context['total_price'] = total_price
-            context['get_num_of_items'] = get_num_of_items
-            return context
+    def get(self, request, *args, **kwargs):
+        if request.user.is_authenticated:
+            self.template_name = 'basket/cart-user-detail.html'
+        return super().get(request, *args, **kwargs)
 
 
 # class CheckoutFromCartView(LoginRequiredMixin, CreateSessionKeyMixin, generic.FormView):
