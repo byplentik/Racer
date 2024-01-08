@@ -54,7 +54,7 @@ class AddToCartView(CreateSessionKeyMixin, generic.View):
         return redirect('catalog')
 
 
-class RemoveFromCartView(CreateSessionKeyMixin, generic.View):
+class RemoveOnePartFromCartView(CreateSessionKeyMixin, generic.View):
 
     def post(self, request, part_id):
         SessionStore = import_module(settings.SESSION_ENGINE).SessionStore
@@ -81,6 +81,28 @@ class RemoveFromCartView(CreateSessionKeyMixin, generic.View):
 
         return JsonResponse(
             {'total_price': total_price, 'num_items': num_items, 'quantity': quantity, 'partId': part_id})
+
+
+class AddOnePartFromCartView(CreateSessionKeyMixin, generic.View):
+
+    def post(self, request, part_id):
+        SessionStore = import_module(settings.SESSION_ENGINE).SessionStore
+        session = SessionStore(session_key=request.session.session_key)
+        cart = session.get('cart', {})
+
+        # Увеличиваем количество товара в корзине
+        if str(part_id) in cart:
+            cart[str(part_id)]['quantity'] += 1
+
+        session['cart'] = cart
+        session.save()
+
+        # Вычисляем обновленную сумму и количество товаров в корзине
+        total_price = sum(item['price'] * item['quantity'] for item in cart.values())
+        num_items = sum(item['quantity'] for item in cart.values())
+
+        return JsonResponse(
+            {'total_price': total_price, 'num_items': num_items, 'quantity': cart[str(part_id)]['quantity'], 'partId': part_id})
 
 
 class CartSessionDetailView(CreateSessionKeyMixin, generic.TemplateView):

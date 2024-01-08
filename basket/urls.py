@@ -8,7 +8,8 @@ urlpatterns = [
     # path('catalog/<slug:slug>/', views.TestMotorcycleDetailView.as_view(), name='motorcycle-detail-test')
 
     path('cart/add-to-cart/<int:part_id>/<int:quantity>/', views.AddToCartView.as_view(), name='add-to-cart'),
-    path('cart/remove/<int:part_id>/', views.RemoveFromCartView.as_view(), name='remove-from-cart'),
+    path('cart/remove/<int:part_id>/', views.RemoveOnePartFromCartView.as_view(), name='remove-from-cart'),
+    path('cart/add-one-part/<int:part_id>/', views.AddOnePartFromCartView.as_view(), name="add-one-part"),
     path('cart/', views.CartSessionDetailView.as_view(), name='cart-session'),
     path('catalog/', views.CatalogListView.as_view(), name='catalog'),
     path('catalog/<slug:slug>/', views.MotorcycleDetailView.as_view(), name='motorcycle-detail'),
