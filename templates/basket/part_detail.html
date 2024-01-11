@@ -45,7 +45,7 @@
     <style id="__replain_styles"></style>
   </head>
 
-  <body class="catalog no-touch">
+  <body class="catalog no-touch"> 
     <script></script>
     <header class="header">
       <div class="header__nav">
@@ -161,7 +161,7 @@
             <div class="block block-uc-ajax-cart block-odd first last block" data-bid="44" id="b44">
               <div id="ajaxCartUpdate" class="load-on-view ajax-cart-processed">
                 <div class="header__order" id="cart-block-contents-ajax">
-                  <a class="autodialog" href="{% url "cart-session" %}"><span>(<span>0</span>)</span></a>
+                  <a class="autodialog" href="{% url "cart-session" %}"><span id="cart-count">(<span id="num-of-items">{{get_num_of_items}}</span>)</span></a>
                 </div>
               </div>
             </div>
@@ -189,7 +189,7 @@
                         <tbody>
                           <tr>
                             <th align="center">№</th>
-                            <th>Фото</th>
+                            {% comment %} <th>Фото</th> {% endcomment %}
                             <th>Наименование</th>
                             <th>Цена</th>
                             <th>К заказу</th>
@@ -199,7 +199,7 @@
                             {% if part.price > 0 %}
                               <tr>
                                 <td align="left">{{ part.number }}</td>
-                                <td class="product__item-thumb"></td>
+                                {% comment %} <td class="product__item-thumb"></td> {% endcomment %}
                                 <td>{{ part.name }}</td>
                                 <td>
                                   <span class="uc-price">{{ part.price }} р.</span>
@@ -263,26 +263,6 @@
         </div>
       </div>
     </main>
-    <script>
-      function addToCart(partId, quantity) {
-        // Получаем данные формы
-        var formData = {
-            'part_id': partId,
-            'quantity': quantity,
-            'csrfmiddlewaretoken': $('input[name=csrfmiddlewaretoken]').val()
-        };
-
-        // Отправляем AJAX-запрос
-        $.ajax({
-            type: 'POST',
-            url: '/cart/add-to-cart/' + partId + '/' + quantity + '/',
-            data: formData,
-            success: function(response) {
-            },
-            error: function(error) {
-            }
-        });
-    }
-  </script>
+    <script src="{% static 'js/script.js' %}"></script>
   </body>
 </html>

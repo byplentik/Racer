@@ -3588,9 +3588,9 @@ body.catalog .header__top .header__order {
 }
 
 #uc-cart-view-form table tr:first-child th,
-.product__item-desc tr:first-child th {
+/* .product__item-desc tr:first-child th {
     text-align: center
-}
+} */
 
 #uc-cart-view-form table tr:first-child th:nth-child(1),
 .product__item-desc tr:first-child th:nth-child(1) {
@@ -5302,9 +5302,9 @@ form .form-item textarea {
         padding-right: 20px
     }
 
-    .product__item-desc tr:first-child th:nth-child(2) {
+    /* .product__item-desc tr:first-child th:nth-child(2) {
         display: none
-    }
+    } */
 
     .product__item-desc tr:first-child th:last-child {
         min-width: 110px

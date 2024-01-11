@@ -57,7 +57,7 @@
       <p>Ваша корзина пуста</p>
     {% endif %}
   </div>
-
+  <script src="{% static 'js/script.js' %}"></script>
   <script>
     function removeFromCart(partId) {
       // Получаем данные формы
@@ -73,6 +73,7 @@
         data: formData,
         success: function (response) {
           // Обновление данных в пользовательском интерфейсе, например, обновление суммы и количества товаров в корзине
+          updateNumOfItems(response.num_items)
           updateCartUI(response)
         },
         error: function (error) {
@@ -95,6 +96,7 @@
         data: formData,
         success: function (response) {
           // Обновление данных в пользовательском интерфейсе
+          updateNumOfItems(response.num_items)
           updateCartUI(response)
         },
         error: function (error) {

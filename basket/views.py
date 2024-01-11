@@ -51,7 +51,9 @@ class AddToCartView(CreateSessionKeyMixin, generic.View):
         cart[str(part_id)] = cart_item
         session['cart'] = cart
         session.save()
-        return redirect('catalog')
+
+        num_items = sum(item['quantity'] for item in cart.values())
+        return JsonResponse({'num_items': num_items})
 
 
 class RemoveOnePartFromCartView(CreateSessionKeyMixin, generic.View):
@@ -107,17 +109,6 @@ class AddOnePartFromCartView(CreateSessionKeyMixin, generic.View):
 
 class CartSessionDetailView(CreateSessionKeyMixin, generic.TemplateView):
     template_name = 'basket/cart-session-detail.html'
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        session = self.request.session
-        cart = session.get('cart', {})
-        total_price = sum(item['price'] * item['quantity'] for item in cart.values())
-        get_num_of_items = sum(item['quantity'] for item in cart.values())
-        context['cart_items'] = cart
-        context['total_price'] = total_price
-        context['get_num_of_items'] = get_num_of_items
-        return context
 
     def get(self, request, *args, **kwargs):
         if request.user.is_authenticated:
