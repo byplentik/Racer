@@ -5,7 +5,8 @@
   <head>
     <title>
       {% block title %}
-      {% endblock title %}
+
+      {% endblock %}
     </title>
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
@@ -97,7 +98,7 @@
                   <a href="{% url 'home' %}" title="">Главная</a>
                 </li>
                 <li class="menu-2178">
-                  <a href="{% url "catalog" %}">Каталог</a>
+                  <a href="{% url 'catalog' %}">Каталог</a>
                 </li>
                 <li class="menu-1217">
                   <a href="{% url 'questions' %}" title="">Ваши вопросы</a>
@@ -173,7 +174,7 @@
               <a href="{% url 'addresses-list' %}">Адрес доставки</a>
               <a href="#">Личные сообщения</a>
               <a href="#">Мои заказы</a>
-              <a href="{% url "cart-session" %}">Корзина заказов</a><hr />
+              <a href="{% url 'cart-session' %}">Корзина заказов</a><hr />
               <a href="#" id="logout-btn">Выход</a>
             </li>
           </ul>
@@ -189,7 +190,7 @@
                 <a href="https://racer-parts.ru/+79193781078"><img src="{% static 'images/soc-viber.webp' %}" loading="auto" decoding="async" alt="" /></a> <a href="https://racer-parts.ru/+79193781078"><img src="{% static 'images/soc-wap.webp' %}" loading="auto" decoding="async" alt="" /></a>
               </div>
               <p class="header__phone h7">+7 (919) 378-10-78</p>
-            </div> <a class="autodialog cta-btn autodialog-processed" data-dialog-width="60%" href="{% url "catalog" %}" id="autodialog-7">КАТАЛОГ ЗАПЧАСТЕЙ</a>
+            </div> <a class="autodialog cta-btn autodialog-processed" data-dialog-width="60%" href="{% url 'catalog' %}" id="autodialog-7">КАТАЛОГ ЗАПЧАСТЕЙ</a>
             {% if user.is_authenticated %}
               <a class="cta-btn light" href="{% url 'user-detail' slug=user.slug %}"><span>КАБИНЕТ</span></a>
             {% else %}
@@ -198,7 +199,7 @@
             <div class="block block-uc-ajax-cart block-odd first last block" data-bid="44" id="b44">
               <div id="ajaxCartUpdate" class="load-on-view ajax-cart-processed">
                 <div class="header__order" id="cart-block-contents-ajax">
-                  <a class="autodialog" href="{% url "cart-session" %}"><span id="cart-count">(<span id="num-of-items">{{get_num_of_items}}</span>)</span></a>
+                  <a class="autodialog" href="{% url 'cart-session' %}"><span id="cart-count">(<span id="num-of-items">{{ get_num_of_items }}</span>)</span></a>
                 </div>
               </div>
             </div>
@@ -251,6 +252,72 @@
         <button class="btn-close" onclick="closeModal()">Закрыть</button>
       </div>
     </div>
-    <script src="{% static 'js/logout.js' %}"></script>
+    <script>
+      // Функция отображения всплывающего окна
+      function showOverlay() {
+        document.getElementById('overlay').style.display = 'flex'
+      
+        // Добавим обработчик события для закрытия модального окна при клике за его пределами
+        document.getElementById('overlay').addEventListener('click', closeModalOnOverlayClick)
+      }
+      
+      // Функция скрытия всплывающего окна
+      function closeModal() {
+        document.getElementById('overlay').style.display = 'none'
+      
+        // Удалим обработчик события после закрытия модального окна
+        document.getElementById('overlay').removeEventListener('click', closeModalOnOverlayClick)
+      }
+      
+      // Функция для закрытия модального окна при клике на overlay
+      function closeModalOnOverlayClick(event) {
+        if (event.target.id === 'overlay') {
+          closeModal()
+        }
+      }
+      
+      // Функция обработки выхода
+      function exit() {
+        var xhr = new XMLHttpRequest()
+        xhr.open('POST', "{% url 'logout' %}", true)
+        xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded')
+      
+        // Получение CSRF-токена из куки
+        var csrftoken = getCookie('csrftoken')
+        xhr.setRequestHeader('X-CSRFToken', csrftoken)
+      
+        xhr.onreadystatechange = function () {
+          if (xhr.readyState === 4) {
+            if (xhr.status === 200) {
+              // Успешный выход - перенаправление на главную страницу
+              window.location.href = "{% url 'home' %}"
+            } else {
+              console.error('Произошла ошибка при выходе:', xhr.statusText)
+            }
+          }
+        }
+      
+        xhr.send()
+      }
+      
+      // Функция для получения значения куки по имени
+      function getCookie(name) {
+        var cookieValue = null
+        if (document.cookie && document.cookie !== '') {
+          var cookies = document.cookie.split(';')
+          for (var i = 0; i < cookies.length; i++) {
+            var cookie = cookies[i].trim()
+            if (cookie.substring(0, name.length + 1) === name + '=') {
+              cookieValue = decodeURIComponent(cookie.substring(name.length + 1))
+              break
+            }
+          }
+        }
+        return cookieValue
+      }
+      
+      // Добавьте обработчик события для кнопки "Выход"
+      document.getElementById('logout-btn').addEventListener('click', showOverlay)
+    </script>
   </body>
 </html>
