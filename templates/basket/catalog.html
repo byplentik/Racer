@@ -1,22 +1,29 @@
 {% extends 'base_racer.html' %}
 {% load static %}
 
-{% block title %}Каталог | Racer{% endblock title %}
-
+{% block title %}
+  Каталог | Racer
+{% endblock %}
 
 {% block content %}
-  <div class="catalog-parts">
-    {% for category in categories %}
-      <div class="catalog-cat">
-        <p class="name-category">{{ category.name }}</p>
-        {% for motorcycle in category.motorcycle_set.all %}
-          <li>
-            <a href="{{ motorcycle.get_absolute_url }}">{{ motorcycle.name }}</a>
-          </li>
-        {% endfor %}
-      </div>
-      <hr />
-    {% endfor %}
+  <div class="product">
+    <div class="product__logo">
+      <img src="{% static 'images/logo.webp' %}" />
+    </div>
+    <h3 class="product__name">Каталог запчастей</h3>
+    <div class="catalog-parts">
+      {% for category in categories %}
+        <div class="catalog-cat">
+          <p class="name-category">{{ category.name }}</p>
+          {% for motorcycle in category.motorcycle_set.all %}
+            <li style="margin-bottom: 20px;">
+              <a href="{{ motorcycle.get_absolute_url }}">{{ motorcycle.name }}</a>
+            </li>
+          {% endfor %}
+        </div>
+        <hr />
+      {% endfor %}
+    </div>
   </div>
 
   <style>
@@ -25,12 +32,11 @@
       padding-left: 15px;
       padding-right: 15px;
       margin-top: 15px;
-
     }
-    .name-category{
-        font-size: 20px;
-        color: black;
-        margin-bottom: 10px;
+    .name-category {
+      font-size: 20px;
+      color: black;
+      margin-bottom: 10px;
     }
   </style>
 {% endblock %}

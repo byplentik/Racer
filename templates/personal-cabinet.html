@@ -172,7 +172,6 @@
             <li>
               <a href="{% url 'edit-user' %}">Сменить логин/пароль</a>
               <a href="{% url 'addresses-list' %}">Адрес доставки</a>
-              <a href="#">Личные сообщения</a>
               <a href="#">Мои заказы</a>
               <a href="{% url 'cart-session' %}">Корзина заказов</a><hr />
               <a href="#" id="logout-btn">Выход</a>
@@ -243,6 +242,7 @@
         </div>
       </div>
     </main>
+    <script src="{% static 'js/side-nav.js' %}"></script>
 
     <!-- Код для всплывающего окна -->
     <div class="overlay" id="overlay">

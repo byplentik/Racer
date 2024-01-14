@@ -3463,12 +3463,11 @@ body.catalog .main>.content-w {
     float: left;
     padding: 35px 30px;
     background: #efefef;
-    overflow-y: scroll
 }
 
 .side-nav.fixed {
     position: fixed;
-    top: 0
+    top: 0;
 }
 
 .side-nav__item-title {
@@ -4424,6 +4423,7 @@ body.no-touch .side-nav__item-title a:hover {
     flex-flow: column nowrap;
     -ms-flex-align: start;
     align-items: flex-start;
+    /* height: 970px; */
     min-height: calc(100vh - 70px)
 }
 

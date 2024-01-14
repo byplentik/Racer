@@ -61,7 +61,7 @@ class OrderStatus(models.TextChoices):
 
 class CheckoutCart(models.Model):
     user = models.ForeignKey(get_user_model(), on_delete=models.CASCADE, verbose_name='Пользователь')
-    delivery_address = models.ForeignKey(DeliveryAddressModel, on_delete=models.CASCADE, verbose_name='Адрес доставки', blank=True, null=True)
+    delivery_address = models.ForeignKey(DeliveryAddressModel, on_delete=models.SET_NULL, verbose_name='Адрес доставки', blank=True, null=True)
     total_price = models.DecimalField(max_digits=10, decimal_places=2, default=0, verbose_name='Общая цена')
     created_at = models.DateTimeField(auto_now_add=True, verbose_name='Дата создания')
     comment = models.TextField(blank=True, null=True, verbose_name='Комментарий к заказу')
