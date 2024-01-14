@@ -57,7 +57,7 @@ class AddToCartView(CreateSessionKeyMixin, generic.View):
         session.save()
 
         num_items = sum(item['quantity'] for item in cart.values())
-        return JsonResponse({'num_items': num_items})
+        return JsonResponse({'num_items': num_items, 'part_name': part.name})
 
 
 class RemoveOnePartFromCartView(CreateSessionKeyMixin, generic.View):
