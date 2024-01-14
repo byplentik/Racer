@@ -1,4 +1,4 @@
-{% extends 'personal-cabinet.html' %}
+{% extends 'base_racer.html' %}
 {% load static %}
 
 {% block title %}
@@ -30,40 +30,16 @@
   ">
           <use xlink:href="#exclamation-triangle-fill"></use>
         </svg> <div>
-          ВАЖНО! Указывайте только существующий e-mail, к которому имеете доступ. Иначе мы не сможем отправить ваш заказ. Вы можете изменить свой Email адрес в <a href="">личном кабинете</a>
+          ВАЖНО! Указывайте только существующий e-mail, к которому имеете доступ. Иначе мы не сможем отправить ваш заказ.
         </div>
       </div>
 
     <form class="custom-form" method="post">
       {% csrf_token %}
 
-      {% if form.fields.email %}
         <p>{{ form.email.label_tag }}
           {{ form.email.errors }}
           {{ form.email }}</p>
-      {% endif %}
-
-      {% if form.fields.name_address %}
-      <p>{{ form.name_address.label_tag }}
-        {{ form.name_address.errors }}
-        {{ form.name_address }}</p>
-        {% endif %}
-      <script>
-        document.getElementById('id_name_address').addEventListener('change', function () {
-          var selectedAddressId = this.value
-          if (selectedAddressId) {
-            fetch(`/get_address_details/?address_id=${selectedAddressId}`)
-              .then((response) => response.json())
-              .then((data) => {
-                document.getElementById('id_full_name').value = data.full_name
-                document.getElementById('id_phone_number').value = data.phone_number
-                document.getElementById('id_postal_code').value = data.postal_code
-                document.getElementById('id_country_and_city').value = data.country_and_city
-                document.getElementById('id_delivery_address').value = data.delivery_address
-              })
-          }
-        })
-      </script>
 
       <p>{{ form.full_name.label_tag }}
         {{ form.full_name.errors }}

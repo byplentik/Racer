@@ -3,15 +3,13 @@ from django.urls import path
 from . import views
 
 urlpatterns = [
-    # test path
-    # path('catalog/test/', views.CatalogTestListView.as_view(), name='catalog-test'),
-    # path('catalog/<slug:slug>/', views.TestMotorcycleDetailView.as_view(), name='motorcycle-detail-test')
-
     path('cart/add-to-cart/<int:part_id>/<int:quantity>/', views.AddToCartView.as_view(), name='add-to-cart'),
     path('cart/remove/<int:part_id>/', views.RemoveOnePartFromCartView.as_view(), name='remove-from-cart'),
     path('cart/add-one-part/<int:part_id>/', views.AddOnePartFromCartView.as_view(), name="add-one-part"),
     path('cart/', views.CartSessionDetailView.as_view(), name='cart-session'),
-    path('catalog/', views.CatalogListView.as_view(), name='catalog'),
     path('catalog/<slug:slug>/', views.MotorcycleDetailView.as_view(), name='motorcycle-detail'),
-    # path('checkout/', views.CheckoutFromCartView.as_view(), name='checkout-form'),
+    path('catalog/', views.CatalogListView.as_view(), name='catalog'),
+    path('checkout/', views.CheckoutFromCartView.as_view(), name='checkout-form'),
+    path('get_address_details/', views.get_address_details, name='get_address_details'),
+
 ]

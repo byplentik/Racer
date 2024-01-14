@@ -51,8 +51,8 @@
     <p id="total-price">Итого: {{ total_price }} рублей</p>
     <p id="num-items">Всего товаров в корзине: {{ get_num_of_items }}</p>
     <hr class="hr" />
-    <input class="btn-order" type="submit" value="Оформить заказ" />
-  {% else %}
+    <a href="{% url "checkout-form" %}" class="btn-order">Оформить заказ</a>
+    {% else %}
     <p>Ваша корзина пуста</p>
   {% endif %}
 </div>
@@ -164,6 +164,10 @@
     color: white;
     background-color: #ec1827;
     border-radius: 10px;
+    display: block;
+    text-align: center;
+    line-height: 45px;
+    font-family: "Open Sans", sans-serif;
   }
   
   .btn-order:active {
@@ -177,6 +181,7 @@
     color: white;
     background-color: #d61a2f; /* Новый цвет фона при наведении */
     cursor: pointer; /* Изменение формы курсора для обозначения активности */
+    transition: background .2s;
   }
 </style>
 {% endblock %}

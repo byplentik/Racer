@@ -189,7 +189,6 @@
                         <tbody>
                           <tr>
                             <th align="center">№</th>
-                            {% comment %} <th>Фото</th> {% endcomment %}
                             <th>Наименование</th>
                             <th>Цена</th>
                             <th>К заказу</th>
@@ -199,7 +198,6 @@
                             {% if part.price > 0 %}
                               <tr>
                                 <td align="left">{{ part.number }}</td>
-                                {% comment %} <td class="product__item-thumb"></td> {% endcomment %}
                                 <td>{{ part.name }}</td>
                                 <td>
                                   <span class="uc-price">{{ part.price }} р.</span>

@@ -3,13 +3,17 @@ from importlib import import_module
 from django.conf import settings
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import JsonResponse
-from django.shortcuts import redirect, render
+from django.shortcuts import redirect, render, get_object_or_404
 from django.urls import reverse_lazy
 from django.views import generic
+from django.contrib.auth import get_user_model as User
 
-# from .forms import CheckoutFromCartForm
+
 from .mixins import CreateSessionKeyMixin
 from .models import Category, Part, CheckoutCart, OrderedPart, Motorcycle
+from .forms import CheckoutFromCartForm
+
+from users.models import DeliveryAddressModel
 
 
 class CatalogListView(CreateSessionKeyMixin, generic.ListView):
@@ -116,31 +120,156 @@ class CartSessionDetailView(CreateSessionKeyMixin, generic.TemplateView):
         return super().get(request, *args, **kwargs)
 
 
-# class CheckoutFromCartView(LoginRequiredMixin, CreateSessionKeyMixin, generic.FormView):
-#     template_name = 'basket/checkout-form.html'
-#     form_class = CheckoutFromCartForm
-#     success_url = reverse_lazy('home')
+class CheckoutFromCartView(CreateSessionKeyMixin, generic.FormView):
+    template_name = 'basket/checkout-form.html'
+    form_class = CheckoutFromCartForm
+    success_url = reverse_lazy('home')
 
-    # def form_valid(self, form):
-    #     user = self.request.user
-    #     cart = self.request.session.get('cart', {})
-    #     total_price = sum(item['price'] * item['quantity'] for item in cart.values())
-    #     checkout_cart = CheckoutCart.objects.create(user=user, total_price=total_price)
-    #
-    #     for part_id, cart_item in cart.items():
-    #         part = Part.objects.get(pk=part_id)
-    #         quantity = cart_item['quantity']
-    #         OrderedPart.objects.create(cart=checkout_cart, part=part, quantity=quantity)
-    #     self.request.session['cart'] = {}
-    #     return super().form_valid(form)
-    #
-    # def get_initial(self):
-    #     initial = super().get_initial()
-    #     user = self.request.user
-    #     initial['email'] = user.email
-    #     initial['name'] = user.name
-    #     initial['last_name'] = user.last_name
-    #     initial['delivery_address'] = user.delivery_address
-    #     initial['delivery_index'] = user.delivery_index
-    #     return initial
+    def get(self, request, *args, **kwargs):
+        if not request.user.is_authenticated:
+            self.template_name = 'basket/checkout-form-session.html'
+        return super().get(request, *args, **kwargs)
+
+    def get_form(self, form_class=None):
+        form = super().get_form(form_class)
+        user = self.request.user
+        if user.is_authenticated:
+            addresses = DeliveryAddressModel.objects.filter(user=user)
+            if addresses.count() > 0:
+                form.fields['name_address'].queryset = addresses
+        return form
+
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        kwargs['user'] = self.request.user
+        return kwargs
+
+    def form_valid(self, form: CheckoutFromCartForm):
+        user = self.request.user
+        cart = self.request.session.get('cart', {})
+        total_price = sum(item['price'] * item['quantity'] for item in cart.values())
+        cleaned_data = form.cleaned_data
+
+        if user.is_authenticated:
+            # Если существует поле name_address, значит адрес есть
+            if cleaned_data.get('name_address', False):
+                address_from_db = cleaned_data['name_address']
+
+                # Если данные из формы верны с cleaned_data
+                if self._is_address_valid(address_from_db, cleaned_data):
+                    checkout_cart = self._create_checkout_cart(user, total_price, address_from_db, cleaned_data)
+                else:
+                    # Обновляем адрес и сохраняем экземпляр
+                    self._update_address(address_from_db, cleaned_data)
+                    checkout_cart = self._create_checkout_cart(user, total_price, address_from_db, cleaned_data)
+
+            # Если отсутствует cleaned_data['name_address'], то есть адреса у пользователя нет
+            else:
+                address = DeliveryAddressModel.objects.create(
+                    full_name=cleaned_data['full_name'],
+                    phone_number=cleaned_data['phone_number'],
+                    postal_code=cleaned_data['postal_code'],
+                    country_and_city=cleaned_data['country_and_city'],
+                    delivery_address=cleaned_data['delivery_address'],
+                    user=user,
+                )
+
+                checkout_cart = self._create_checkout_cart(user, total_price, address, cleaned_data)
+
+                address.name_address = f'Адрес из заказа №{checkout_cart.pk}'
+                address.save()
+
+        # Если пользователь не авторизован
+        else:
+            # Создаем пользователя и адрес
+            user, address = self._create_user_and_address(cleaned_data)
+            checkout_cart = self._create_checkout_cart(user, total_price, address, cleaned_data)
+
+            address.name_address = f'Адрес из заказа №{checkout_cart.pk}'
+            address.save()
+
+        # Добавляем запчасти в корзину
+        self._create_ordered_parts(cart, checkout_cart)
+        return super().form_valid(form)
+
+    def _create_user_and_address(self, cleaned_data):
+        email = cleaned_data['email']
+        user, created = User().objects.get_or_create(email=email)
+
+        if created:
+            user.username = email.split('@')[0]
+            user.password = '1234'
+            user.save()
+
+        # Добавляем его адрес в бд
+        address = DeliveryAddressModel.objects.create(
+            full_name=cleaned_data['full_name'],
+            phone_number=cleaned_data['phone_number'],
+            postal_code=cleaned_data['postal_code'],
+            country_and_city=cleaned_data['country_and_city'],
+            delivery_address=cleaned_data['delivery_address'],
+            user=user,
+        )
+        return user, address
+
+    def _create_ordered_parts(self, cart, checkout_cart):
+        for part_id, cart_item in cart.items():
+            part = Part.objects.get(pk=part_id)
+            quantity = cart_item['quantity']
+            OrderedPart.objects.create(cart=checkout_cart, part=part, quantity=quantity)
+        self.request.session['cart'] = {}
+
+    def _create_checkout_cart(self, user, total_price, delivery_address, cleaned_data):
+        checkout_cart = CheckoutCart.objects.create(
+            user=user,
+            total_price=total_price,
+            delivery_address=delivery_address,
+            comment=cleaned_data['comment'],
+        )
+        return checkout_cart
+
+    def _is_address_valid(self, address_from_db, cleaned_data):
+        return (
+            address_from_db.full_name == cleaned_data['full_name'] and
+            address_from_db.phone_number == cleaned_data['phone_number'] and
+            address_from_db.postal_code == cleaned_data['postal_code'] and
+            address_from_db.country_and_city == cleaned_data['country_and_city'] and
+            address_from_db.delivery_address == cleaned_data['delivery_address']
+        )
+
+    def _update_address(self, address_from_db, cleaned_data):
+        address_from_db.full_name = cleaned_data['full_name']
+        address_from_db.phone_number = cleaned_data['phone_number']
+        address_from_db.postal_code = cleaned_data['postal_code']
+        address_from_db.country_and_city = cleaned_data['country_and_city']
+        address_from_db.delivery_address = cleaned_data['delivery_address']
+        address_from_db.save()
+
+    def get_initial(self):
+        initial = super().get_initial()
+        user = self.request.user
+        if user.is_authenticated:
+            address = DeliveryAddressModel.objects.filter(user=user).first()
+            if address is not None:
+                initial['full_name'] = address.full_name
+                initial['phone_number'] = address.phone_number
+                initial['postal_code'] = address.postal_code
+                initial['country_and_city'] = address.country_and_city
+                initial['delivery_address'] = address.delivery_address
+        return initial
+
+
+def get_address_details(request):
+    address_id = request.GET.get('address_id')
+    address = get_object_or_404(DeliveryAddressModel, pk=address_id)
+
+    data = {
+        'full_name': address.full_name,
+        'phone_number': address.phone_number,
+        'postal_code': address.postal_code,
+        'country_and_city': address.country_and_city,
+        'delivery_address': address.delivery_address,
+    }
+    return JsonResponse(data)
+
 

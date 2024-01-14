@@ -61,11 +61,11 @@ class DeliveryAddressModel(models.Model):
     postal_code = models.IntegerField(verbose_name='Почтовый код')
     country_and_city = models.CharField(verbose_name='Страна и город', max_length=455)
     delivery_address = models.CharField(verbose_name='Адрес доставки', max_length=455)
-    name_address = models.CharField(verbose_name='Сохранить как', max_length=455)
+    name_address = models.CharField(verbose_name='Сохранить как', max_length=455, blank=True)
     user = models.ForeignKey(CustomUser, on_delete=models.CASCADE, verbose_name='Пользователь')
 
     def __str__(self):
-        return f'{self.user}'
+        return f'{self.user} - {self.name_address}'
 
     class Meta:
         verbose_name = 'Адресная книга'
