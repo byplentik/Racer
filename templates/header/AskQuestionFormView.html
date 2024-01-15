@@ -12,14 +12,7 @@
     <h3 class="product__name">Новый Вопрос</h3>
     <form action="{% url 'zadat_question' %}" method="post" class="custom-form">
         {% csrf_token %}
-        <p>
-            <label for="id_title">Название вопроса (Тема):</label>
-            <input type="text" name="title" maxlength="255" required="" id="id_title">
-        </p>
-        <p>
-            <label for="id_question">Ваш вопрос:</label>
-            <textarea name="question" cols="40" rows="10" required="" id="id_question"></textarea>
-        </p>
+        {{form.as_p}}
         <div class="form-actions form-wrapper" id="edit-actions">
             <input type="submit" id="edit-submit" name="op" value="Отправить!" class="form-submit">
         </div>
@@ -38,16 +31,6 @@
         display: block;
         margin-bottom: 8px;
         font-weight: bold;
-    }
-
-    .custom-form input[type="text"],
-    .custom-form textarea {
-        width: 100%;
-        padding: 8px;
-        margin-bottom: 16px;
-        box-sizing: border-box;
-        border: 1px solid #ccc;
-        border-radius: 4px;
     }
 
     .form-actions {

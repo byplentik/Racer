@@ -35,8 +35,12 @@ class UserCreationForm(forms.ModelForm):
         self.fields['password1'].label = 'Пароль'
         self.fields['password2'].label = 'Подтвердите пароль'
 
+        self.fields['email'].widget.attrs['placeholder'] = 'example@email.com'
+        self.fields['password1'].widget.attrs['placeholder'] = 'Придумайте пароль'
+        self.fields['password2'].widget.attrs['placeholder'] = 'Повторите пароль'
+
         for field_name in self.fields:
-            self.fields[field_name].widget.attrs.update({'class': 'input-custom-form'})
+            self.fields[field_name].widget.attrs.update({'class': 'form-control'})
 
 
 class UserChangeForm(forms.ModelForm):
@@ -48,8 +52,8 @@ class UserChangeForm(forms.ModelForm):
 
 
 class LoginForm(forms.Form):
-    email = forms.EmailField(widget=forms.EmailInput(attrs={'class': 'input-custom-form'}))
-    password = forms.CharField(widget=forms.PasswordInput(attrs={'class': 'input-custom-form'}))
+    email = forms.EmailField(widget=forms.EmailInput(attrs={'class': 'form-control', 'placeholder': 'example@email.com'}))
+    password = forms.CharField(widget=forms.PasswordInput(attrs={'class': 'form-control', 'placeholder': 'Пароль'}))
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -72,9 +76,9 @@ class LoginForm(forms.Form):
 
 
 class EditUserForm(forms.Form):
-    email = forms.EmailField(widget=forms.EmailInput(attrs={'class': 'input-custom-form'}), required=True)
-    username = forms.CharField(widget=forms.TextInput(attrs={'class': 'input-custom-form'}), required=True)
-    password = forms.CharField(widget=forms.PasswordInput(attrs={'class': 'input-custom-form', 'placeholder': 'Введите пароль'}), required=True)
+    email = forms.EmailField(widget=forms.EmailInput(attrs={'class': 'form-control', 'placeholder': 'example@email.com'}), required=True)
+    username = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'username'}), required=True)
+    password = forms.CharField(widget=forms.PasswordInput(attrs={'class': 'form-control', 'placeholder': 'Текущий пароль'}), required=True)
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -97,7 +101,7 @@ class UserChangePasswordForm(PasswordChangeForm):
         }
 
         for field_name, field in self.fields.items():
-            field.widget.attrs['class'] = 'input-custom-form'
+            field.widget.attrs['class'] = 'form-control'
             if field_name in placeholders:
                 field.widget.attrs['placeholder'] = placeholders[field_name]
 
@@ -107,12 +111,12 @@ class DeliveryAddressAddForm(forms.ModelForm):
         model = DeliveryAddressModel
         fields = ['full_name', 'phone_number', 'postal_code', 'country', 'delivery_address', 'name_address']
         widgets = {
-            'full_name': forms.TextInput(attrs={'class': 'input-custom-form', 'placeholder': 'Фамилия Имя Отчество'}),
-            'phone_number': forms.TextInput(attrs={'class': 'input-custom-form', 'placeholder': '79008008080'}),
-            'postal_code': forms.TextInput(attrs={'class': 'input-custom-form', 'placeholder': '600900'}),
-            'country': forms.Select(attrs={'class': 'input-custom-form'}),
-            'delivery_address': forms.TextInput(attrs={'class': 'input-custom-form', 'placeholder': 'Ул Пушкина 40'}),
-            'name_address': forms.TextInput(attrs={'class': 'input-custom-form', 'placeholder': 'Дом, работа'}),
+            'full_name': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Фамилия Имя Отчество'}),
+            'phone_number': forms.TextInput(attrs={'class': 'form-control', 'placeholder': '79008008080'}),
+            'postal_code': forms.TextInput(attrs={'class': 'form-control', 'placeholder': '600900'}),
+            'country': forms.Select(attrs={'class': 'form-control'}),
+            'delivery_address': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Ул Пушкина 40'}),
+            'name_address': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Дом, работа'}),
         }
 
     def __init__(self, *args, user=None, **kwargs):

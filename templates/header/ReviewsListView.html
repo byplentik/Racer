@@ -40,19 +40,19 @@
 
     <form method="post" enctype="multipart/form-data" class="custom-form">
         {% csrf_token %}
-        <div class="form-group">
+        <p>
           <label for="id_username">Имя пользователя:</label>
-          <input class="input-form" type="text" name="username" maxlength="255" required="" id="id_username">
-        </div>
-        <div class="form-group">
+          <input class="form-control" type="text" name="username" maxlength="255" required="" id="id_username">
+        </p>
+        <p>
           <label for="id_avatar">Аватар:</label>
-          <input class="input-form" type="file" name="avatar" accept="image/*" required="" id="id_avatar"> 
-        </div>
-        <div class="form-group">
+          <input class="form-control" type="file" name="avatar" accept="image/*" required="" id="id_avatar"> 
+        </p>
+        <p>
           <label for="id_review">Отзыв:</label>
-          <textarea class="input-form" name="review" cols="40" rows="10" required="" id="id_review"></textarea>
-        </div>
-        <input type="submit" id="edit-submit" name="op" value="Сохранить" class="form-submit">
+          <textarea class="form-control" name="review" cols="40" rows="10" required="" id="id_review"></textarea>
+        </p>
+        <input style="margin-top: 15px;" type="submit" id="edit-submit" name="op" value="Сохранить" class="form-submit">
       </form>
 </div>
 
@@ -75,15 +75,6 @@
         font-weight: bold;
         margin-bottom: 5px;
       }
-      
-      .input-form {
-        width: 100%;
-        padding: 8px;
-        box-sizing: border-box;
-        border: 1px solid #ccc;
-        border-radius: 4px;
-        margin-top: 5px;
-        margin-bottom: 10px;
-      }
+    
 </style>
 {% endblock content %}

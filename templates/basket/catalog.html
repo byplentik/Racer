@@ -17,7 +17,7 @@
           <p class="name-category">{{ category.name }}</p>
           {% for motorcycle in category.motorcycle_set.all %}
             <li style="margin-bottom: 20px;">
-              <a class="" href="{{ motorcycle.get_absolute_url }}">{{ motorcycle.name }}</a>
+              <a class="link-part" href="{{ motorcycle.get_absolute_url }}">{{ motorcycle.name }}</a>
             </li>
           {% endfor %}
         </div>
@@ -39,7 +39,7 @@
       margin-bottom: 10px;
     }
 
-    a:hover{
+    .link-part:hover{
       color: blue;
     }
   </style>

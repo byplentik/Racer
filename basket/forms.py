@@ -5,16 +5,16 @@ from users.models import DeliveryAddressModel
 
 
 class CheckoutFromCartForm(forms.Form):
-    full_name = forms.CharField(widget=forms.TextInput(attrs={'class': 'input-custom-form', 'placeholder': 'Фамилия Имя Отчество'}), max_length=455, required=True)
-    phone_number = forms.IntegerField(widget=forms.NumberInput(attrs={'class': 'input-custom-form', 'placeholder': '79008008080'}), required=True)
-    postal_code = forms.IntegerField(widget=forms.NumberInput(attrs={'class': 'input-custom-form', 'placeholder': '600900'}), required=True)
+    full_name = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Фамилия Имя Отчество'}), max_length=455, required=True)
+    phone_number = forms.IntegerField(widget=forms.NumberInput(attrs={'class': 'form-control', 'placeholder': '79008008080'}), required=True)
+    postal_code = forms.IntegerField(widget=forms.NumberInput(attrs={'class': 'form-control', 'placeholder': '600900'}), required=True)
     country = forms.ChoiceField(
         choices=DeliveryAddressModel.COUNTRIES_CHOICES,
-        widget=forms.Select(attrs={'class': 'input-custom-form'}),
+        widget=forms.Select(attrs={'class': 'form-control'}),
         required=True
     )
-    delivery_address = forms.CharField(widget=forms.TextInput(attrs={'class': 'input-custom-form', 'placeholder': 'Ул Пушкина 40'}), max_length=455, required=True)
-    comment = forms.CharField(widget=forms.TextInput(attrs={'class': 'input-custom-form', 'placeholder': 'Например: цвет, способ доставки, дополнение или вопрос.'}), required=False)
+    delivery_address = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Ул Пушкина 40'}), max_length=455, required=True)
+    comment = forms.CharField(widget=forms.Textarea(attrs={'class': 'form-control', 'placeholder': 'Например: цвет, способ доставки, дополнение или вопрос.'}), required=False)
 
     def __init__(self, *args, **kwargs):
         user = kwargs.pop('user', False)
@@ -22,13 +22,13 @@ class CheckoutFromCartForm(forms.Form):
 
         # Если не авторизован
         if not user.is_authenticated:
-            self.fields['email'] = forms.EmailField(required=True, widget=forms.TextInput(attrs={'class': 'input-custom-form', 'placeholder': 'Например: Email.com'}))
+            self.fields['email'] = forms.EmailField(required=True, widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Например: Email.com'}))
 
         if user.is_authenticated and DeliveryAddressModel.objects.filter(user=user).exists():
             self.fields['name_address'] = forms.ModelChoiceField(
                 queryset=DeliveryAddressModel.objects.none(),
                 empty_label=None,
-                widget=forms.Select(attrs={'class': 'input-custom-form'}),
+                widget=forms.Select(attrs={'class': 'form-control'}),
                 required=False,
             )
             self.fields['name_address'].label = 'Выбрать адрес'
