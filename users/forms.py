@@ -119,6 +119,9 @@ class DeliveryAddressAddForm(forms.ModelForm):
         super().__init__(*args, **kwargs)
         self.user = user
 
+        for field_name in self.fields:
+            self.fields[field_name].required = True
+
     def save(self, commit=True):
         instance = super().save(commit=False)
         instance.user = self.user
