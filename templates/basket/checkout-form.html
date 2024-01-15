@@ -38,9 +38,9 @@
       {% csrf_token %}
 
       {% if form.fields.email %}
-        <p>{{ form.email.label_tag }}
-          {{ form.email.errors }}
-          {{ form.email }}</p>
+      <p style="min-width: 250px;">{{ form.email.label_tag }}
+        {{ form.email.errors }}
+        {{ form.email }}</p>
       {% endif %}
 
       {% if form.fields.name_address %}
@@ -65,29 +65,35 @@
         })
       </script>
 
-      <p>{{ form.full_name.label_tag }}
+      <p style="min-width: 250px;">{{ form.full_name.label_tag }}
         {{ form.full_name.errors }}
         {{ form.full_name }}</p>
 
-      <p>{{ form.phone_number.label_tag }}
-        {{ form.phone_number.errors }}
-        {{ form.phone_number }}</p>
-
-      <p>{{ form.postal_code.label_tag }}
-        {{ form.postal_code.errors }}
-        {{ form.postal_code }}</p>
-
-      <p>{{ form.country.label_tag }}
-        {{ form.country.errors }}
-        {{ form.country }}</p>
-
-      <p>{{ form.delivery_address.label_tag }}
-        {{ form.delivery_address.errors }}
-        {{ form.delivery_address }}</p>
-
-      <p>{{ form.comment.label_tag }}
-        {{ form.comment.errors }}
-        {{ form.comment }}</p>
+        <p style="min-width: 250px;">{{ form.phone_number.label_tag }}
+          {{ form.phone_number.errors }}
+          {{ form.phone_number }}</p>
+  
+        <p style="min-width: 250px;">{{ form.postal_code.label_tag }}
+          {{ form.postal_code.errors }}
+          {{ form.postal_code }}</p>
+  
+        <div class="combined-fields" style="min-width: 250px;">
+          <div class="width-coutry">
+            <p>{{ form.country.label_tag }}
+              {{ form.country.errors }}
+              {{ form.country }}</p>
+          </div>
+  
+          <div class="width-delivery_address">
+            <p>{{ form.delivery_address.label_tag }}
+              {{ form.delivery_address.errors }}
+              {{ form.delivery_address }}</p>
+          </div>
+        </div>
+  
+        <p style="min-width: 250px;">{{ form.comment.label_tag }}
+          {{ form.comment.errors }}
+          {{ form.comment }}</p>
 
       <div class="form-actions form-wrapper" id="edit-actions">
         <input type="submit" id="edit-submit" name="op" value="Подтвердить" class="form-submit" />
@@ -96,6 +102,20 @@
   </div>
 
   <style>
+    .combined-fields {
+      display: flex;
+      justify-content: space-between;
+    }
+    
+    .width-coutry {
+      min-width: 114px;
+      flex-shrink: 0;
+    }
+    
+    .width-delivery_address {
+      width: 84%;
+    }
+
     .alert-danger {
       color: #842029;
       background-color: #f8d7da;
