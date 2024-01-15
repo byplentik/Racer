@@ -4423,7 +4423,6 @@ body.no-touch .side-nav__item-title a:hover {
     flex-flow: column nowrap;
     -ms-flex-align: start;
     align-items: flex-start;
-    /* height: 970px; */
     min-height: calc(100vh - 70px)
 }
 

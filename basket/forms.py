@@ -8,7 +8,11 @@ class CheckoutFromCartForm(forms.Form):
     full_name = forms.CharField(widget=forms.TextInput(attrs={'class': 'input-custom-form', 'placeholder': 'Фамилия Имя Отчество'}), max_length=455, required=True)
     phone_number = forms.IntegerField(widget=forms.NumberInput(attrs={'class': 'input-custom-form', 'placeholder': '79008008080'}), required=True)
     postal_code = forms.IntegerField(widget=forms.NumberInput(attrs={'class': 'input-custom-form', 'placeholder': '600900'}), required=True)
-    country_and_city = forms.CharField(widget=forms.TextInput(attrs={'class': 'input-custom-form', 'placeholder': 'Россия, Москва'}), max_length=455, required=True)
+    country = forms.ChoiceField(
+        choices=DeliveryAddressModel.COUNTRIES_CHOICES,
+        widget=forms.Select(attrs={'class': 'input-custom-form'}),
+        required=True
+    )
     delivery_address = forms.CharField(widget=forms.TextInput(attrs={'class': 'input-custom-form', 'placeholder': 'Ул Пушкина 40'}), max_length=455, required=True)
     comment = forms.CharField(widget=forms.TextInput(attrs={'class': 'input-custom-form', 'placeholder': 'Например: цвет, способ доставки, дополнение или вопрос.'}), required=False)
 
@@ -33,7 +37,7 @@ class CheckoutFromCartForm(forms.Form):
         self.fields['full_name'].label = 'ФИО'
         self.fields['phone_number'].label = 'Номер телефона'
         self.fields['postal_code'].label = 'Почтовый код'
-        self.fields['country_and_city'].label = 'Страна и город'
+        self.fields['country'].label = 'Страна'
         self.fields['delivery_address'].label = 'Адрес доставки'
         self.fields['comment'].label = 'Комментарий к заказу'
 

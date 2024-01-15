@@ -105,12 +105,12 @@ class UserChangePasswordForm(PasswordChangeForm):
 class DeliveryAddressAddForm(forms.ModelForm):
     class Meta:
         model = DeliveryAddressModel
-        fields = ['full_name', 'phone_number', 'postal_code', 'country_and_city', 'delivery_address', 'name_address']
+        fields = ['full_name', 'phone_number', 'postal_code', 'country', 'delivery_address', 'name_address']
         widgets = {
             'full_name': forms.TextInput(attrs={'class': 'input-custom-form', 'placeholder': 'Фамилия Имя Отчество'}),
             'phone_number': forms.TextInput(attrs={'class': 'input-custom-form', 'placeholder': '79008008080'}),
             'postal_code': forms.TextInput(attrs={'class': 'input-custom-form', 'placeholder': '600900'}),
-            'country_and_city': forms.TextInput(attrs={'class': 'input-custom-form', 'placeholder': 'Россия, Москва'}),
+            'country': forms.Select(attrs={'class': 'input-custom-form'}),
             'delivery_address': forms.TextInput(attrs={'class': 'input-custom-form', 'placeholder': 'Ул Пушкина 40'}),
             'name_address': forms.TextInput(attrs={'class': 'input-custom-form', 'placeholder': 'Дом, работа'}),
         }
@@ -125,5 +125,4 @@ class DeliveryAddressAddForm(forms.ModelForm):
 
         if commit:
             instance.save()
-
         return instance

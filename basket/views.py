@@ -169,7 +169,7 @@ class CheckoutFromCartView(CreateSessionKeyMixin, generic.FormView):
                     full_name=cleaned_data['full_name'],
                     phone_number=cleaned_data['phone_number'],
                     postal_code=cleaned_data['postal_code'],
-                    country_and_city=cleaned_data['country_and_city'],
+                    country=cleaned_data['country'],
                     delivery_address=cleaned_data['delivery_address'],
                     user=user,
                 )
@@ -206,7 +206,7 @@ class CheckoutFromCartView(CreateSessionKeyMixin, generic.FormView):
             full_name=cleaned_data['full_name'],
             phone_number=cleaned_data['phone_number'],
             postal_code=cleaned_data['postal_code'],
-            country_and_city=cleaned_data['country_and_city'],
+            country=cleaned_data['country'],
             delivery_address=cleaned_data['delivery_address'],
             user=user,
         )
@@ -233,7 +233,7 @@ class CheckoutFromCartView(CreateSessionKeyMixin, generic.FormView):
             address_from_db.full_name == cleaned_data['full_name'] and
             address_from_db.phone_number == cleaned_data['phone_number'] and
             address_from_db.postal_code == cleaned_data['postal_code'] and
-            address_from_db.country_and_city == cleaned_data['country_and_city'] and
+            address_from_db.country == cleaned_data['country'] and
             address_from_db.delivery_address == cleaned_data['delivery_address']
         )
 
@@ -241,7 +241,7 @@ class CheckoutFromCartView(CreateSessionKeyMixin, generic.FormView):
         address_from_db.full_name = cleaned_data['full_name']
         address_from_db.phone_number = cleaned_data['phone_number']
         address_from_db.postal_code = cleaned_data['postal_code']
-        address_from_db.country_and_city = cleaned_data['country_and_city']
+        address_from_db.country = cleaned_data['country']
         address_from_db.delivery_address = cleaned_data['delivery_address']
         address_from_db.save()
 
@@ -254,7 +254,7 @@ class CheckoutFromCartView(CreateSessionKeyMixin, generic.FormView):
                 initial['full_name'] = address.full_name
                 initial['phone_number'] = address.phone_number
                 initial['postal_code'] = address.postal_code
-                initial['country_and_city'] = address.country_and_city
+                initial['country'] = address.country
                 initial['delivery_address'] = address.delivery_address
         return initial
 
@@ -267,7 +267,7 @@ def get_address_details(request):
         'full_name': address.full_name,
         'phone_number': address.phone_number,
         'postal_code': address.postal_code,
-        'country_and_city': address.country_and_city,
+        'country': address.country,
         'delivery_address': address.delivery_address,
     }
     return JsonResponse(data)

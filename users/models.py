@@ -56,10 +56,16 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
 
 
 class DeliveryAddressModel(models.Model):
+    COUNTRIES_CHOICES = [
+        ("RUSSIA", "Россия"),
+        ("BELARUS", "Беларусь"),
+        ("KAZAKHSTAN", "Казахстан"),
+    ]
+
     full_name = models.CharField(verbose_name='ФИО', max_length=455)
     phone_number = models.IntegerField(verbose_name='Номер телефона')
-    postal_code = models.IntegerField(verbose_name='Почтовый код')
-    country_and_city = models.CharField(verbose_name='Страна и город', max_length=455)
+    postal_code = models.IntegerField(verbose_name='Почтовый код', max_length=6)
+    country = models.CharField(verbose_name='Страна', max_length=20, choices=COUNTRIES_CHOICES, blank=True, null=True)
     delivery_address = models.CharField(verbose_name='Адрес доставки', max_length=455)
     name_address = models.CharField(verbose_name='Сохранить как', max_length=455, blank=True)
     user = models.ForeignKey(CustomUser, on_delete=models.CASCADE, verbose_name='Пользователь')
