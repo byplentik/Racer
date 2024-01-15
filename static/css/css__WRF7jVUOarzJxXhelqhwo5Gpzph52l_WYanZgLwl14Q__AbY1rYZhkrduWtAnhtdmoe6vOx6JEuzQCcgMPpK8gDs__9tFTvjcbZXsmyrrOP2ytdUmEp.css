@@ -6535,3 +6535,7 @@ input:focus{
 a:hover{
     color: white;
 }
+
+button, input, optgroup, select, textarea {
+    line-height: initial;
+}
