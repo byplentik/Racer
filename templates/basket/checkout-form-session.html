@@ -66,8 +66,48 @@
         {{ form.comment.errors }}
         {{ form.comment }}</p>
 
-      <div class="form-actions form-wrapper" id="edit-actions">
-        <input type="submit" id="edit-submit" name="op" value="Подтвердить" class="form-submit" />
+      <!-- Button trigger modal -->
+      <input data-bs-toggle="modal" data-bs-target="#staticBackdrop" type="button" value="Подтвердить" class="btn-order" />
+
+      <!-- Modal -->
+      <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="custom-table-title modal-title" id="staticBackdropLabel">Проверьте заказ!</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              Уважаемый пользователь, перед оформлением заказа, пожалуйста проверьте все введенные данные!
+              После оформления заказа, мы вышлем вам данные об оплате на вашу электронную почту.
+              <div class="table-wrapper">
+                <table class="table table-striped">
+                  <thead>
+                    <tr>
+                      <th scope="col">Наименование</th>
+                      <th style="white-space: nowrap;" scope="col">Кол-во</th>
+                      <th scope="col">Цена</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {% for item_id, item_data in cart_items.items %}
+                      <tr>
+                        <td>{{item_data.name}}</td>
+                        <td>{{item_data.quantity}}</td>
+                        <td>{{item_data.price}}р</td>
+                      </tr>
+                    {% endfor %}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть и проверить</button>
+              <!-- Кнопка для отправки формы -->
+              <button type="submit" class="btn btn-danger">Оформить заказ</button>
+            </div>
+          </div>
+        </div>
       </div>
     </form>
   </div>
@@ -150,7 +190,7 @@
     }
     
     input:focus {
-      color: #000;
+      color: white;
     }
   </style>
 {% endblock %}

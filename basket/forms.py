@@ -22,7 +22,7 @@ class CheckoutFromCartForm(forms.Form):
 
         # Если не авторизован
         if not user.is_authenticated:
-            self.fields['email'] = forms.EmailField(required=True, widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Например: Email.com'}))
+            self.fields['email'] = forms.EmailField(required=True, widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Например: example@email.com'}))
 
         if user.is_authenticated and DeliveryAddressModel.objects.filter(user=user).exists():
             self.fields['name_address'] = forms.ModelChoiceField(

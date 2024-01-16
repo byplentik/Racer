@@ -40,7 +40,7 @@
         z-index: 9999;
       }
       
-      .overlay {
+      .custom-overlay {
         display: none;
         position: fixed;
         top: 0;
@@ -52,25 +52,14 @@
         align-items: center;
       }
       
-      .modal {
+      .custom-modal {
         background-color: #fff;
         padding: 20px;
         border-radius: 5px;
         text-align: center;
-
-
-        top: initial;
-        left: initial;
-        z-index: initial;
-        display: initial;
-        width: initial;
-        height: initial;
-        overflow-x: initial;
-        overflow-y: initial;
-        outline: initial;
       }
       
-      .btn-exit {
+      .custom-btn-exit {
         padding: 10px 20px;
         background-color: #d52121;
         color: #fff;
@@ -80,17 +69,7 @@
         margin-right: 10px;
       }
       
-      .btn-close {
-        box-sizing: initial;
-        width: initial;
-        height: initial;
-        padding: initial;
-        color: initial;
-        background: initial;
-        border: initial;
-        border-radius: initial;
-        opacity: initial;
-
+      .custom-btn-close {
         padding: 10px 20px;
         background-color: #5bc0de;
         color: #fff;
@@ -100,7 +79,7 @@
         
       }
 
-      .btn-close:hover {
+      .custom-btn-close:hover {
         color: white;
         text-decoration: none;
         opacity: initial;
@@ -275,33 +254,33 @@
     <script src="{% static 'js/side-nav.js' %}"></script>
 
     <!-- Код для всплывающего окна -->
-    <div class="overlay" id="overlay">
-      <div class="modal">
+    <div class="custom-overlay" id="custom-overlay">
+      <div class="custom-modal">
         <p style="margin-bottom: 15px;">Вы уверены, что хотите выйти?</p>
-        <button class="btn-exit" onclick="exit()">Выйти</button>
-        <button class="btn-close" onclick="closeModal()">Закрыть</button>
+        <button class="custom-btn-exit" onclick="exit()">Выйти</button>
+        <button class="custom-btn-close" onclick="closeModal()">Закрыть</button>
       </div>
     </div>
     <script>
       // Функция отображения всплывающего окна
       function showOverlay() {
-        document.getElementById('overlay').style.display = 'flex'
+        document.getElementById('custom-overlay').style.display = 'flex'
       
         // Добавим обработчик события для закрытия модального окна при клике за его пределами
-        document.getElementById('overlay').addEventListener('click', closeModalOnOverlayClick)
+        document.getElementById('custom-overlay').addEventListener('click', closeModalOnOverlayClick)
       }
       
       // Функция скрытия всплывающего окна
       function closeModal() {
-        document.getElementById('overlay').style.display = 'none'
+        document.getElementById('custom-overlay').style.display = 'none'
       
         // Удалим обработчик события после закрытия модального окна
-        document.getElementById('overlay').removeEventListener('click', closeModalOnOverlayClick)
+        document.getElementById('custom-overlay').removeEventListener('click', closeModalOnOverlayClick)
       }
       
-      // Функция для закрытия модального окна при клике на overlay
+      // Функция для закрытия модального окна при клике на custom-overlay
       function closeModalOnOverlayClick(event) {
-        if (event.target.id === 'overlay') {
+        if (event.target.id === 'custom-overlay') {
           closeModal()
         }
       }

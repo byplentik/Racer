@@ -78,7 +78,7 @@
       </tbody>
       {% else %}
       <div style="margin-top: 40px;margin-left: 10px;">
-        <a href="{% url "add-address" %}">Добавьте адрес в адресную книгу</a>
+        <a class="link-address" href="{% url "add-address" %}">Добавьте адрес в адресную книгу</a>
       </div>
       {% endif %}
     </table>
@@ -91,7 +91,7 @@
 {% endif %}
 
 <style>
-  a:hover{
+  .link-address:hover{
     color: blue;
   }
 

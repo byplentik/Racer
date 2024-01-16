@@ -6548,3 +6548,48 @@ button, input, optgroup, select, textarea {
 textarea.form-control {
     max-height: 150px;
 }
+
+.account__item .action-links a:hover, .account__item .address-link:hover, .cta-btn:hover, .link-more:hover, .product__item .basic-cart-cart-form .basic-cart-call-to-action input:hover, .product__item .basic-cart-cart-form .basic-cart-call-to-action:hover {
+    background: #c1101c;
+    color: white;
+}
+
+.btn-order {
+    margin-top: 20px;
+    width: 200px;
+    height: 45px;
+    color: white;
+    background-color: #ec1827;
+    border-radius: 10px;
+    display: block;
+    text-align: center;
+    line-height: 45px;
+    font-family: "Open Sans", sans-serif;
+  }
+  
+  .btn-order:active {
+    color: white;
+    background-color: #ba141f; /* Новый цвет фона при нажатии */
+    transform: translateY(2px); /* Смещение кнопки вниз для визуального эффекта */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Тень для создания визуального эффекта поднятия */
+  }
+  
+  .btn-order:hover {
+    color: white;
+    background-color: #d61a2f; /* Новый цвет фона при наведении */
+    cursor: pointer; /* Изменение формы курсора для обозначения активности */
+    transition: background .2s;
+  }
+
+  .table-wrapper{
+    margin-top: 40px;
+  }
+
+  .custom-table-title{
+    color: red;
+    font-size: 23px;
+  }
+
+  .btn-danger{
+    background-color: #ec1827;
+  }
