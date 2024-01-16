@@ -1,0 +1,78 @@
+{% extends 'personal-cabinet.html' %}
+{% load static %}
+
+{% block title %}
+  Мои заказы | Racer
+{% endblock %}
+
+{% block content %}
+  <div class="product">
+    <div class="product__logo">
+      <img src="{% static 'images/logo.webp' %}" />
+    </div>
+    <h3 class="product__name">Мои заказы</h3>
+
+    <div class="orders">
+      <div class="accordion" id="accordionExample">
+        {% for order in orders %}
+          <div class="accordion-item">
+            <h2 class="accordion-header" id="heading{{ forloop.counter }}"><button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse{{ forloop.counter }}" aria-expanded="false" aria-controls="collapse{{ forloop.counter }}">Заказ №{{ order.id }}</button></h2>
+            <div id="collapse{{ forloop.counter }}" class="accordion-collapse collapse" aria-labelledby="heading{{ forloop.counter }}" data-bs-parent="#accordionExample">
+              <div class="accordion-body">
+                <p style="color: red;">Полный адрес доставки:</p>
+                <div class="card" style="width: 100%;">
+                  <ul class="list-group">
+                    <li class="list-group-item">
+                      <span class="fw-bold">ФИО:</span> <span class="ms-2">{{ order.delivery_address.full_name }}</span>
+                    </li>
+                    <li class="list-group-item">
+                      <span class="fw-bold">Номер телефона:</span> <span class="ms-2">{{ order.delivery_address.phone_number }}</span>
+                    </li>
+                    <li class="list-group-item">
+                      <span class="fw-bold">Почтовый код:</span> <span class="ms-2">{{ order.delivery_address.postal_code }}</span>
+                    </li>
+                    <li class="list-group-item">
+                      <span class="fw-bold">Страна:</span> <span class="ms-2">{{ order.delivery_address.get_country_display }}</span>
+                    </li>
+                    <li class="list-group-item">
+                      <span class="fw-bold">Адрес:</span> <span class="ms-2">{{ order.delivery_address.delivery_address }}</span>
+                    </li>
+                  </ul>
+                  <div class="card-footer">
+                    <span class="fw-bold">Статус заказа:</span> <span class="ms-2">{{ order.get_order_status_display }}</span>
+                  </div>
+                </div>
+                <hr>
+                <div class="table-wrapper">
+                  <p style="color: red;">Товары:</p>
+                  <table class="table table-striped">
+                    <thead>
+                      <tr>
+                        <th scope="col">Наименование</th>
+                        <th style="white-space: nowrap;" scope="col">Кол-во</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {% for ordered_part in order.ordered_parts.all %}
+                        <tr>
+                          <td>{{ordered_part.part.name}}</td>
+                          <td>{{ordered_part.quantity}}</td>
+                        </tr>
+                      {% endfor %}
+                    </tbody>
+                  </table>
+                </div>
+                <p style="color: black;">Итогавая сумма без учета доставки: {{order.total_price}} рублей</p>
+              </div>
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+  <style>
+    .table-wrapper {
+      margin-top: 0
+  }
+  </style>
+{% endblock %}

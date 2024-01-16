@@ -123,7 +123,7 @@ class CartSessionDetailView(CreateSessionKeyMixin, generic.TemplateView):
 class CheckoutFromCartView(CreateSessionKeyMixin, generic.FormView):
     template_name = 'basket/checkout-form.html'
     form_class = CheckoutFromCartForm
-    success_url = reverse_lazy('home')
+    success_url = reverse_lazy('order-list')
 
     def get(self, request, *args, **kwargs):
         if not request.user.is_authenticated:
@@ -271,5 +271,17 @@ def get_address_details(request):
         'delivery_address': address.delivery_address,
     }
     return JsonResponse(data)
+
+
+class CreatedOrdersUserListView(generic.ListView):
+    model = CheckoutCart
+    template_name = 'basket/CreatedOrdersUserListView.html'
+    context_object_name = 'orders'
+
+    def get_queryset(self):
+        user = self.request.user
+        queryset = CheckoutCart.objects.filter(user=user).order_by('-created_at')
+        return queryset
+
 
 

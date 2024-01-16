@@ -10,6 +10,6 @@ urlpatterns = [
     path('catalog/<slug:slug>/', views.MotorcycleDetailView.as_view(), name='motorcycle-detail'),
     path('catalog/', views.CatalogListView.as_view(), name='catalog'),
     path('checkout/', views.CheckoutFromCartView.as_view(), name='checkout-form'),
+    path('orders/', views.CreatedOrdersUserListView.as_view(), name='order-list'),
     path('get_address_details/', views.get_address_details, name='get_address_details'),
-
 ]

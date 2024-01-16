@@ -180,7 +180,7 @@
             <li>
               <a href="{% url 'edit-user' %}">Сменить логин/пароль</a>
               <a href="{% url 'addresses-list' %}">Адрес доставки</a>
-              <a href="#">Мои заказы</a>
+              <a href="{% url "order-list" %}">Мои заказы</a>
               <a href="{% url 'cart-session' %}">Корзина заказов</a><hr />
               <a href="#" id="logout-btn">Выход</a>
             </li>
