@@ -167,7 +167,7 @@
                         <div>
                           <span>Оригинальные детали RACER &gt;&gt;</span>
                         </div>
-                      </div><a class="link-more welcome-slider__link" href="#contacts">Заказать сейчас</a><a class="autodialog link-more welcome-slider__link welcome-slider__link_dark autodialog-processed" data-dialog-width="60%" href="{% url "catalog" %}" id="autodialog-2">Выбрать в каталоге</a>
+                      </div><a class="link-more welcome-slider__link" href="#contacts">Заказать сейчас</a><a class="bgc autodialog link-more welcome-slider__link welcome-slider__link_dark autodialog-processed" data-dialog-width="60%" href="{% url "catalog" %}" id="autodialog-2">Выбрать в каталоге</a>
                     </div>
                   </div>
                 </div>
@@ -680,5 +680,37 @@
         </div>
       </section>
     </main>
+    <script>
+      document.addEventListener("DOMContentLoaded", function() {
+        var navMobButton = document.querySelector('.nav__mob-button');
+        var navMobButtonMobile = document.querySelector('.nav-mob-button');
+        var navListWrap = document.querySelector('.nav__list-wrap');
+      
+        function toggleAnimateClass() {
+          navListWrap.classList.toggle('animate');
+        }
+      
+        function addAnimateClassIfOutsideNavList(event) {
+          var isClickInsideNavList = navListWrap.contains(event.target) || navMobButton.contains(event.target) || navMobButtonMobile.contains(event.target);
+          
+          if (!isClickInsideNavList) {
+            // Clicked outside, add the 'animate' class
+            navListWrap.classList.add('animate');
+          }
+        }
+      
+        navMobButton.addEventListener('click', toggleAnimateClass);
+        navMobButtonMobile.addEventListener('click', toggleAnimateClass);
+      
+        // Add event listener for clicks outside the 'nav__list-wrap'
+        document.addEventListener('click', addAnimateClassIfOutsideNavList);
+      });
+    </script>
+    <style>
+      .bgc:hover {
+        background: black;
+        color: white;
+    }
+    </style>
   </body>
 </html>

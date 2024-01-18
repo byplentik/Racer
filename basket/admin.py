@@ -3,6 +3,7 @@ from django.contrib import admin, messages
 from openpyxl import load_workbook, Workbook
 
 from basket import models
+from basket.forms import MotorcycleAdminForm
 
 
 @admin.register(models.Category)
@@ -14,16 +15,20 @@ class AdminCategory(admin.ModelAdmin):
 class AdminMotorcycle(admin.ModelAdmin):
     list_display = ['name', 'category']
     prepopulated_fields = {'slug': ['name']}
+
+    def get_form(self, request, obj=None, change=False, **kwargs):
+        kwargs['form'] = MotorcycleAdminForm
+        return super().get_form(request, obj, **kwargs)
     
     def save_model(self, request, obj, form, change):
         super().save_model(request, obj, form, change)
+        mainparts = []
 
         if obj.excel_file:
             try:
                 wb: Workbook = load_workbook(obj.excel_file)
                 ws = wb[wb.sheetnames[0]]
 
-                mainparts = []
                 counter_mainparts = -1
                 previous_value = 0
 
@@ -54,10 +59,15 @@ class AdminMotorcycle(admin.ModelAdmin):
                             counter_mainparts += 1
                             previous_value = 0
                             mainparts.append(mainpart_obj)
-
             except Exception as ex:
                 obj.delete()
                 messages.error(request, "Не удалось получить данные с excel файла")
+
+            if mainparts:
+                imgs_for_mainparts_list = request.FILES.getlist('imgs_for_mainparts')
+                for i in range(0, len(mainparts)):
+                    mainparts[i].image = imgs_for_mainparts_list[i]
+                    mainparts[i].save()
 
 
 @admin.register(models.MainPart)
@@ -87,7 +97,6 @@ admin.site.register(models.OrderedPart)
 
 @admin.register(models.ExcelFileCatalog)
 class AdminExcelFileCatalog(admin.ModelAdmin):
-
         def save_model(self, request, obj, form, change):
             super().save_model(request, obj, form, change)
             parts = []

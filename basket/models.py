@@ -20,7 +20,7 @@ class Motorcycle(models.Model):
     name = models.CharField(max_length=255, verbose_name='Мото/Двигатели')
     category = models.ForeignKey(Category, on_delete=models.CASCADE, verbose_name='Категория')
     slug = models.SlugField(max_length=300, verbose_name='URL', unique=True)
-    excel_file = models.FileField(verbose_name='Excel файл', blank=True)
+    excel_file = models.FileField(verbose_name='Excel файл для загрузки данных', blank=True, upload_to='excel_moto/')
 
     def __str__(self):
         return self.name
@@ -88,5 +88,5 @@ class OrderedPart(models.Model):
 
 class ExcelFileCatalog(models.Model):
     excel_file = models.FileField(verbose_name='Каталог',
-                                  help_text='Загрузите Excel файл для обновления каталога запчастей')
+                                  help_text='Загрузите Excel файл для обновления каталога запчастей', upload_to='files_main_price/')
     created_at = models.DateField(auto_now_add=True)

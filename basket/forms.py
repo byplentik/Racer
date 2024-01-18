@@ -2,6 +2,7 @@ from django import forms
 from django.contrib.auth import get_user_model
 
 from users.models import DeliveryAddressModel
+from basket.models import Motorcycle
 
 
 class CheckoutFromCartForm(forms.Form):
@@ -43,6 +44,14 @@ class CheckoutFromCartForm(forms.Form):
 
     class Meta:
         fields = ['full_name', 'phone_number', 'postal_code', 'country_and_city', 'delivery_address']
+
+
+class MotorcycleAdminForm(forms.ModelForm):
+    imgs_for_mainparts = forms.FileField(widget=forms.ClearableFileInput(attrs={'multiple': True}), label='Загрузите изображения для запчастей', required=False)
+
+    class Meta:
+        model = Motorcycle
+        fields = '__all__'
 
 
 
