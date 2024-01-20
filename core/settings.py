@@ -154,3 +154,17 @@ AUTH_USER_MODEL = 'users.CustomUser'
 API_KEY = os.getenv('API_KEY')
 EMAIL = os.getenv('EMAIL')
 URL_SMS_AERO = os.getenv('URL_SMS_AERO')
+
+# # SMPT
+# EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+# EMAIL_HOST = 'imap.yandex.ru'
+# EMAIL_PORT = 993
+# EMAIL_USE_SSL = True
+#
+# EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER')
+# EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD')
+#
+# DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+# SERVER_EMAIL = EMAIL_HOST_USER
+# EMAIL_ADMIN = EMAIL_HOST_USER
+
