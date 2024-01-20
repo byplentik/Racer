@@ -22,6 +22,10 @@ class Motorcycle(models.Model):
     slug = models.SlugField(max_length=300, verbose_name='URL', unique=True)
     excel_file = models.FileField(verbose_name='Excel файл для загрузки данных', blank=True, upload_to='excel_moto/')
 
+    class Meta:
+        verbose_name = 'Мотоцикл | Двигатель'
+        verbose_name_plural = 'Мотоциклы | Двигатели'
+
     def __str__(self):
         return self.name
 
@@ -34,6 +38,10 @@ class MainPart(models.Model):
     name = models.CharField(max_length=255, verbose_name='Основная запчасть')
     image = models.ImageField(upload_to='mainpart/', blank=True)
 
+    class Meta:
+        verbose_name = 'Основная запчасть'
+        verbose_name_plural = 'Основные запчасти'
+
     def __str__(self):
         return self.name
 
@@ -44,6 +52,9 @@ class Part(models.Model):
     code = models.CharField(max_length=150, verbose_name='Уникальный код', blank=True)
     name = models.CharField(max_length=300, verbose_name='Наименование')
     price = models.IntegerField(default=0, verbose_name='Цена')
+
+    class Meta:
+        verbose_name = 'Запчасть'
 
     class Meta:
         ordering = ['number']
@@ -66,6 +77,10 @@ class CheckoutCart(models.Model):
     created_at = models.DateTimeField(auto_now_add=True, verbose_name='Дата создания')
     comment = models.TextField(blank=True, null=True, verbose_name='Комментарий к заказу')
 
+    class Meta:
+        verbose_name = 'Оформленный заказ'
+        verbose_name_plural = 'Оформленные заказы'
+
     order_status = models.CharField(
         max_length=50,
         choices=OrderStatus.choices,
@@ -82,6 +97,10 @@ class OrderedPart(models.Model):
     part = models.ForeignKey('Part', on_delete=models.CASCADE, verbose_name='Запчасть')
     quantity = models.PositiveIntegerField(default=1, verbose_name='Количество')
 
+    class Meta:
+        verbose_name = 'Оформленная запчасть'
+        verbose_name_plural = 'Оформленные запчасти'
+
     def __str__(self):
         return f'{self.cart}'
 
@@ -90,3 +109,7 @@ class ExcelFileCatalog(models.Model):
     excel_file = models.FileField(verbose_name='Каталог',
                                   help_text='Загрузите Excel файл для обновления каталога запчастей', upload_to='files_main_price/')
     created_at = models.DateField(auto_now_add=True)
+
+    class Meta:
+        verbose_name = 'Excel файлы для загрузки цен'
+        verbose_name_plural = 'Excel файлы для загрузки цен'
