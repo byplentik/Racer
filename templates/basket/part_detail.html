@@ -255,6 +255,14 @@
           </footer>
         </div>
       </div>
+      
+      <div class="position-fixed bottom-0 end-0 p-3" style="z-index: 11">
+        <div class="toast-container">
+          <div id="notification-data" data-cart-url="{% url 'cart-session' %}" style="display: none;"></div>
+        </div>
+      </div>
+      
+
     </main>
     <script src="{% static 'js/script.js' %}"></script>
     <script src="{% static 'js/side-nav.js' %}"></script>

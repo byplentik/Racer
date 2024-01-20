@@ -6609,3 +6609,7 @@ textarea.form-control {
 .img-part{
     max-height: 340px;
 }
+
+.toast:not(.showing):not(.show) {
+    opacity: 1;
+}

@@ -122,7 +122,7 @@
                 </li>
                 {% if user.is_authenticated %}
                   <li class="menu-3522 last">
-                    <a href="#" title="">Личный кабинет</a>
+                    <a href="{% url "user-detail" slug=user.username %}" title="">Личный кабинет</a>
                   </li>
                 {% else %}
                   <li class="menu-3522 last">

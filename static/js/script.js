@@ -5,16 +5,35 @@ function updateNumOfItems(newCount) {
 }
 
 function showNotification(partName) {
-  var notification = $('<div class="notification">Товар ' + partName + ' успешно был добавлен в корзину</div>');
+  var cartUrl = $('#notification-data').data('cart-url');
+  var toastContainer = $('.toast-container');
+  var notification = $(
+    '<div class="toast" role="alert" aria-live="assertive" aria-atomic="true">' +
+      '<div class="toast-header">' +
+      '<strong class="me-auto">Товар успешно добавлен в корзину!</strong>' +
+      '</div>' +
+      '<div class="toast-body">' +
+        'Товар ' + '<strong style="color: #2cbf2cad;">' + partName + '</strong>' + ' успешно был добавлен в корзину' +
+        '<div class="mt-2 pt-2 border-top">' +
+        '<a href="' + cartUrl + '"><button type="button" class="btn btn-danger btn-sm">В корзину</button></a>' +
+        '</div>' +
+      '</div>' +
+    '</div>'
+  );
 
-  $('body').append(notification);
+    toastContainer.append(notification);
 
+  // Отображение тоста
+  notification.fadeIn();
+
+  // Автоматическое скрытие тоста через 2 секунды
   setTimeout(function () {
     notification.fadeOut('slow', function () {
       notification.remove();
     });
-  }, 1000); 
+  }, 2000);
 }
+
 
 function addToCart(partId, quantity) {
   // Получаем данные формы
