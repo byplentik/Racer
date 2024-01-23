@@ -54,10 +54,9 @@ class Part(models.Model):
     price = models.IntegerField(default=0, verbose_name='Цена')
 
     class Meta:
-        verbose_name = 'Запчасть'
-
-    class Meta:
         ordering = ['number']
+        verbose_name = 'Запчасть'
+        verbose_name_plural = 'Запчасти'
 
     def __str__(self):
         return self.name

@@ -5,6 +5,7 @@ from openpyxl import load_workbook, Workbook
 from basket import models
 from basket.forms import MotorcycleAdminForm
 
+import logging
 
 @admin.register(models.Category)
 class AdminCategory(admin.ModelAdmin):
@@ -114,7 +115,7 @@ class AdminExcelFileCatalog(admin.ModelAdmin):
                                 part = models.Part.objects.filter(
                                     code=code_value
                                 ).update(price=price_value)
-                            except:
-                                pass
-                except:
-                    pass
+                            except models.Part.DoesNotExist as ex:
+                                logging.error(f'An error occurred while updating the price: {ex}')
+                except FileNotFoundError as ex:
+                    logging.error(f'Произошла ошибка при загрузке файла Excel: {ex}')

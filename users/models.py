@@ -64,7 +64,7 @@ class DeliveryAddressModel(models.Model):
 
     full_name = models.CharField(verbose_name='ФИО', max_length=455)
     phone_number = models.IntegerField(verbose_name='Номер телефона')
-    postal_code = models.IntegerField(verbose_name='Почтовый код', max_length=6)
+    postal_code = models.IntegerField(verbose_name='Почтовый код')
     country = models.CharField(verbose_name='Страна', max_length=20, choices=COUNTRIES_CHOICES, blank=True, null=True)
     delivery_address = models.CharField(verbose_name='Адрес доставки', max_length=455)
     name_address = models.CharField(verbose_name='Сохранить как', max_length=455, blank=True)

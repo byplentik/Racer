@@ -5,12 +5,14 @@ from django.shortcuts import redirect, render
 from header.models import QuestionsModel, ReviewsModel
 from header.forms import AskQuestionForm, ReviewForm
 
+from basket.mixins import CreateSessionKeyMixin
 
-class HomePageTemplateView(generic.TemplateView):
+
+class HomePageTemplateView(CreateSessionKeyMixin, generic.TemplateView):
     template_name = 'header/home.html'
 
 
-class QuestionsListView(generic.ListView):
+class QuestionsListView(CreateSessionKeyMixin, generic.ListView):
     template_name = 'header/QuestionsListView.html'
     model = QuestionsModel
     paginate_by = 20
@@ -26,7 +28,7 @@ class QuestionsListView(generic.ListView):
         return context
 
 
-class AskQuestionFormView(generic.FormView):
+class AskQuestionFormView(CreateSessionKeyMixin, generic.FormView):
     form_class = AskQuestionForm
     template_name = 'header/AskQuestionFormView.html'
     success_url = reverse_lazy('zadat_question')
@@ -36,7 +38,7 @@ class AskQuestionFormView(generic.FormView):
         return super().form_valid(form)
 
 
-class ReviewsListView(generic.ListView):
+class ReviewsListView(CreateSessionKeyMixin, generic.ListView):
     model = ReviewsModel
     template_name = 'header/ReviewsListView.html'
 
@@ -55,9 +57,9 @@ class ReviewsListView(generic.ListView):
             return render(request, self.template_name, {'review_form': review_form, 'object_list': self.get_queryset()})
 
 
-class VideoTemplateView(generic.TemplateView):
+class VideoTemplateView(CreateSessionKeyMixin, generic.TemplateView):
     template_name = 'header/VideoTemplateView.html'
 
 
-class ContactsTemplateView(generic.TemplateView):
+class ContactsTemplateView(CreateSessionKeyMixin, generic.TemplateView):
     template_name = 'header/ContactsTemplateView.html'

@@ -8,17 +8,19 @@ from django.contrib import messages
 from django.contrib.auth.views import PasswordChangeView
 from django.views.decorators.http import require_POST
 
+from basket.mixins import CreateSessionKeyMixin
+
 from users.models import DeliveryAddressModel
 from users.forms import UserCreationForm, DeliveryAddressAddForm, \
     LoginForm, EditUserForm, UserChangePasswordForm
 
 
-class FormViewCustom(generic.FormView):
+class FormViewCustom(CreateSessionKeyMixin, generic.FormView):
     def get_success_url(self):
         return reverse_lazy('user-detail', kwargs={'slug': self.request.user.slug})
 
 
-class LogoutView(LoginRequiredMixin, generic.View):
+class LogoutView(CreateSessionKeyMixin, LoginRequiredMixin, generic.View):
     def post(self, request):
         if self.request.user.is_authenticated:
             logout(request)
@@ -57,7 +59,7 @@ class LoginFormView(FormViewCustom):
         return super().form_invalid(form)
 
 
-class PersonalCabinetUserDetailView(LoginRequiredMixin, generic.DetailView):
+class PersonalCabinetUserDetailView(CreateSessionKeyMixin, LoginRequiredMixin, generic.DetailView):
     model = get_user_model()
     template_name = 'users/user-detail.html'
     slug_field = 'slug'
@@ -91,7 +93,7 @@ class EditUserFormView(LoginRequiredMixin, FormViewCustom):
         return super().form_valid(form)
 
 
-class UserChangePasswordFormView(LoginRequiredMixin, PasswordChangeView):
+class UserChangePasswordFormView(CreateSessionKeyMixin, LoginRequiredMixin, PasswordChangeView):
     template_name = 'users/UserChangePasswordFormView.html'
     form_class = UserChangePasswordForm
 
@@ -104,7 +106,7 @@ class UserChangePasswordFormView(LoginRequiredMixin, PasswordChangeView):
         return reverse_lazy('user-detail', kwargs={'slug': self.request.user.slug})
 
 
-class DeliveryAddressUserListView(LoginRequiredMixin, generic.ListView):
+class DeliveryAddressUserListView(CreateSessionKeyMixin, LoginRequiredMixin, generic.ListView):
     model = DeliveryAddressModel
     template_name = 'users/DeliveryAddressUserListView.html'
     context_object_name = 'addresses'
@@ -115,7 +117,7 @@ class DeliveryAddressUserListView(LoginRequiredMixin, generic.ListView):
         return queryset
 
 
-class DeliveryAddressAddFormView(LoginRequiredMixin, generic.FormView):
+class DeliveryAddressAddFormView(CreateSessionKeyMixin, LoginRequiredMixin, generic.FormView):
     form_class = DeliveryAddressAddForm
     template_name = 'users/DeliveryAddressAddFormView.html'
     success_url = reverse_lazy('addresses-list')

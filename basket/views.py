@@ -1,19 +1,16 @@
 from importlib import import_module
 
 from django.conf import settings
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth import get_user_model as User
 from django.http import JsonResponse
-from django.shortcuts import redirect, render, get_object_or_404
+from django.shortcuts import get_object_or_404
 from django.urls import reverse_lazy
 from django.views import generic
-from django.contrib.auth import get_user_model as User
-
-
-from .mixins import CreateSessionKeyMixin
-from .models import Category, Part, CheckoutCart, OrderedPart, Motorcycle
-from .forms import CheckoutFromCartForm
 
 from users.models import DeliveryAddressModel
+from .forms import CheckoutFromCartForm
+from .mixins import CreateSessionKeyMixin
+from .models import Category, Part, CheckoutCart, OrderedPart, Motorcycle
 
 
 class CatalogListView(CreateSessionKeyMixin, generic.ListView):
@@ -123,7 +120,11 @@ class CartSessionDetailView(CreateSessionKeyMixin, generic.TemplateView):
 class CheckoutFromCartView(CreateSessionKeyMixin, generic.FormView):
     template_name = 'basket/checkout-form.html'
     form_class = CheckoutFromCartForm
-    success_url = reverse_lazy('order-list')
+
+    def get_success_url(self):
+        if self.request.user.is_authenticated:
+            return reverse_lazy('order-list')
+        return reverse_lazy('register')
 
     def get(self, request, *args, **kwargs):
         if not request.user.is_authenticated:
@@ -273,7 +274,7 @@ def get_address_details(request):
     return JsonResponse(data)
 
 
-class CreatedOrdersUserListView(generic.ListView):
+class CreatedOrdersUserListView(CreateSessionKeyMixin, generic.ListView):
     model = CheckoutCart
     template_name = 'basket/CreatedOrdersUserListView.html'
     context_object_name = 'orders'
