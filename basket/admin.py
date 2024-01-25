@@ -1,11 +1,12 @@
-from django.contrib import admin, messages
+import logging
+import re
 
+from django.contrib import admin, messages
 from openpyxl import load_workbook, Workbook
 
 from basket import models
 from basket.forms import MotorcycleAdminForm
 
-import logging
 
 @admin.register(models.Category)
 class AdminCategory(admin.ModelAdmin):
@@ -53,13 +54,19 @@ class AdminMotorcycle(admin.ModelAdmin):
                     except:
                         mainpart_value = str(value_mainpart_or_number)
                         if mainpart_value != 'None' and any(mainpart_value.startswith(str(i) + '.') for i in range(1, 101)):
-                            mainpart_obj, created = models.MainPart.objects.get_or_create(
-                                motorcycle=obj,
-                                name=mainpart_value
-                            )
-                            counter_mainparts += 1
-                            previous_value = 0
-                            mainparts.append(mainpart_obj)
+                            # Извлечение номера с помощью regex
+                            match = re.match(r'^(\d+)\.', mainpart_value)
+
+                            if match:
+                                number_mainpart = int(match.group(1))
+                                mainpart_obj, created = models.MainPart.objects.get_or_create(
+                                    motorcycle=obj,
+                                    name=mainpart_value,
+                                    ordering=number_mainpart,
+                                )
+                                counter_mainparts += 1
+                                previous_value = 0
+                                mainparts.append(mainpart_obj)
             except Exception as ex:
                 obj.delete()
                 messages.error(request, "Не удалось получить данные с excel файла")
@@ -73,7 +80,7 @@ class AdminMotorcycle(admin.ModelAdmin):
 
 @admin.register(models.MainPart)
 class AdminMainPart(admin.ModelAdmin):
-    list_display = ['name', 'motorcycle']
+    list_display = ['name', 'motorcycle', 'ordering']
 
 
 @admin.register(models.Part)
@@ -90,6 +97,7 @@ class OrderedPartInline(admin.TabularInline):
 @admin.register(models.CheckoutCart)
 class CheckoutCartAdmin(admin.ModelAdmin):
     list_display = ('id', 'user', 'total_price', 'created_at')
+    date_hierarchy = 'created_at'
     inlines = (OrderedPartInline,)
 
 
@@ -119,3 +127,11 @@ class AdminExcelFileCatalog(admin.ModelAdmin):
                                 logging.error(f'An error occurred while updating the price: {ex}')
                 except FileNotFoundError as ex:
                     logging.error(f'Произошла ошибка при загрузке файла Excel: {ex}')
+
+
+@admin.register(models.ProxyCheckoutCartModel)
+class AdminProxyCheckoutCartModel(admin.ModelAdmin):
+    list_display = ('id', 'user', 'total_price', 'created_at')
+
+    def get_changelist(self, request, **kwargs):
+        return super().get_changelist()

@@ -37,10 +37,12 @@ class MainPart(models.Model):
     motorcycle = models.ForeignKey(Motorcycle, on_delete=models.CASCADE, verbose_name='Мото/Двигатель')
     name = models.CharField(max_length=255, verbose_name='Основная запчасть')
     image = models.ImageField(upload_to='mainpart/', blank=True)
+    ordering = models.IntegerField(db_index=True, verbose_name='Сортировка')
 
     class Meta:
         verbose_name = 'Основная запчасть'
         verbose_name_plural = 'Основные запчасти'
+        ordering = ['ordering']
 
     def __str__(self):
         return self.name
@@ -112,3 +114,10 @@ class ExcelFileCatalog(models.Model):
     class Meta:
         verbose_name = 'Excel файлы для загрузки цен'
         verbose_name_plural = 'Excel файлы для загрузки цен'
+
+
+class ProxyCheckoutCartModel(CheckoutCart):
+    class Meta:
+        proxy = True
+        verbose_name = 'Proxy Оформленный заказ'
+        verbose_name_plural = 'Proxy Оформленные заказы'
