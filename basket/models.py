@@ -1,6 +1,8 @@
 from django.db import models
 from django.urls import reverse
 from django.contrib.auth import get_user_model
+from django.contrib import admin
+from django.utils.html import format_html
 
 from users.models import DeliveryAddressModel
 
@@ -77,11 +79,6 @@ class CheckoutCart(models.Model):
     total_price = models.DecimalField(max_digits=10, decimal_places=2, default=0, verbose_name='Общая цена')
     created_at = models.DateTimeField(auto_now_add=True, verbose_name='Дата создания')
     comment = models.TextField(blank=True, null=True, verbose_name='Комментарий к заказу')
-
-    class Meta:
-        verbose_name = 'Оформленный заказ'
-        verbose_name_plural = 'Оформленные заказы'
-
     order_status = models.CharField(
         max_length=50,
         choices=OrderStatus.choices,
@@ -89,8 +86,20 @@ class CheckoutCart(models.Model):
         verbose_name='Статус заказа'
     )
 
+    class Meta:
+        verbose_name = 'Оформленный заказ'
+        verbose_name_plural = 'Оформленные заказы'
+
     def __str__(self):
-        return f'{self.user}'
+        return f'Номер заказа: {self.pk}'
+
+    @admin.display(description='Номер заказа', ordering='pk')
+    def id_as_order_number(self):
+        return int(self.pk)
+
+    @admin.display(description='Заказчик')
+    def client(self):
+        return f'{self.delivery_address.full_name}'
 
 
 class OrderedPart(models.Model):
@@ -116,8 +125,3 @@ class ExcelFileCatalog(models.Model):
         verbose_name_plural = 'Excel файлы для загрузки цен'
 
 
-class ProxyCheckoutCartModel(CheckoutCart):
-    class Meta:
-        proxy = True
-        verbose_name = 'Proxy Оформленный заказ'
-        verbose_name_plural = 'Proxy Оформленные заказы'

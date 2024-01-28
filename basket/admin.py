@@ -2,6 +2,8 @@ import logging
 import re
 
 from django.contrib import admin, messages
+from django.contrib.admin.sites import AdminSite
+from django.contrib.admin.views.main import ChangeList
 from openpyxl import load_workbook, Workbook
 
 from basket import models
@@ -90,18 +92,16 @@ class AdminPart(admin.ModelAdmin):
 
 class OrderedPartInline(admin.TabularInline):
     model = models.OrderedPart
-    extra = 0
-    readonly_fields = ('part', 'quantity')
 
 
 @admin.register(models.CheckoutCart)
 class CheckoutCartAdmin(admin.ModelAdmin):
-    list_display = ('id', 'user', 'total_price', 'created_at')
+    list_display = ('id_as_order_number', 'client', 'total_price', 'created_at')
+    list_display_links = ['id_as_order_number', 'client']
+    list_filter = ['order_status', 'created_at']
+    search_fields = ['id']
     date_hierarchy = 'created_at'
     inlines = (OrderedPartInline,)
-
-
-admin.site.register(models.OrderedPart)
 
 
 @admin.register(models.ExcelFileCatalog)
@@ -129,9 +129,6 @@ class AdminExcelFileCatalog(admin.ModelAdmin):
                     logging.error(f'Произошла ошибка при загрузке файла Excel: {ex}')
 
 
-@admin.register(models.ProxyCheckoutCartModel)
-class AdminProxyCheckoutCartModel(admin.ModelAdmin):
-    list_display = ('id', 'user', 'total_price', 'created_at')
-
-    def get_changelist(self, request, **kwargs):
-        return super().get_changelist()
+# @admin.register(models.ProxyCheckoutCartModel)
+# class AdminProxyCheckoutCartModel(admin.ModelAdmin):
+#     list_display = ('id', 'user', 'total_price', 'created_at')
