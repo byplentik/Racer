@@ -1,0 +1,85 @@
+{% extends 'admin/basket/CheckoutCart/change_form_base.html' %}
+{% load static %}
+
+{% block custom-content %}
+
+<div class="main-info">
+  <div class="info-container">
+    <table style="width: 45%;margin-bottom: 0;" class="table caption-top">
+      <thead>
+        <tr>
+          <th scope="col">Наименование</th>
+          <th scope="col">Кол-во</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for orderpart in original.ordered_parts.all %}
+        <tr>
+          <td>{{ orderpart.part.name }}</td>
+          <td>{{ orderpart.quantity }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+
+    <div class="card" style="width: 50%;border: 0;">
+      <ul class="list-group">
+        <li class="list-group-item lgi" onclick="copyData('{{ original.delivery_address.full_name }}')">
+          <span class="fw-bold">ФИО:</span> <span class="ms-2">{{ original.delivery_address.full_name }}</span>
+        </li>
+        <li class="list-group-item lgi" onclick="copyData('{{ original.delivery_address.phone_number }}')">
+          <span class="fw-bold">Номер телефона:</span> <span class="ms-2">{{ original.delivery_address.phone_number }}</span>
+        </li>
+        <li class="list-group-item lgi" onclick="copyData('{{ original.delivery_address.postal_code }}')">
+          <span class="fw-bold">Почтовый код:</span> <span class="ms-2">{{ original.delivery_address.postal_code }}</span>
+        </li>
+        <li class="list-group-item lgi" onclick="copyData('{{ original.delivery_address.get_country_display }}')">
+          <span class="fw-bold">Страна:</span> <span class="ms-2">{{ original.delivery_address.get_country_display }}</span>
+        </li>
+        <li class="list-group-item lgi" onclick="copyData('{{ original.delivery_address.delivery_address }}')">
+          <span class="fw-bold">Адрес:</span> <span class="ms-2">{{ original.delivery_address.delivery_address }}</span>
+        </li>
+      </ul>
+      <div class="card-footer" style="border: 1px solid rgba(0, 0, 0, .125);">
+        <span class="fw-bold">Статус заказа:</span> <span class="ms-2">{{ original.get_order_status_display }}</span>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+  function copyData(data) {
+      const textarea = document.createElement('textarea');
+      textarea.value = data;
+
+      document.body.appendChild(textarea);
+
+      textarea.select();
+
+      document.execCommand('copy');
+
+      document.body.removeChild(textarea);
+  }
+</script>
+
+<style>
+  .main-info {
+  justify-content: space-between;
+}
+
+.info-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.lgi{
+  cursor: pointer;
+}
+
+.lgi:hover{
+  color: blue;
+}
+</style>
+{% endblock custom-content %}

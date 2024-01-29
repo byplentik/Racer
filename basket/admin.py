@@ -96,12 +96,17 @@ class OrderedPartInline(admin.TabularInline):
 
 @admin.register(models.CheckoutCart)
 class CheckoutCartAdmin(admin.ModelAdmin):
-    list_display = ('id_as_order_number', 'client', 'total_price', 'created_at')
+    list_display = ('id_as_order_number', 'client', 'total_price', 'created_at', 'order_status')
     list_display_links = ['id_as_order_number', 'client']
     list_filter = ['order_status', 'created_at']
     search_fields = ['id']
     date_hierarchy = 'created_at'
     inlines = (OrderedPartInline,)
+    change_form_template = 'admin/basket/CheckoutCart/change_form_custom.html'
+
+    # def changeform_view(self, request, object_id=None, form_url='', extra_context=None):
+    #     response = super().changeform_view(request, object_id, form_url, extra_context)
+    #     return response
 
 
 @admin.register(models.ExcelFileCatalog)
