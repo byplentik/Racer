@@ -109,12 +109,7 @@ class AddOnePartFromCartView(CreateSessionKeyMixin, generic.View):
 
 
 class CartSessionDetailView(CreateSessionKeyMixin, generic.TemplateView):
-    template_name = 'basket/cart-session-detail.html'
-
-    def get(self, request, *args, **kwargs):
-        if request.user.is_authenticated:
-            self.template_name = 'basket/cart-user-detail.html'
-        return super().get(request, *args, **kwargs)
+    template_name = 'basket/cart-user-detail.html'
 
 
 class CheckoutFromCartView(CreateSessionKeyMixin, generic.FormView):
@@ -125,11 +120,6 @@ class CheckoutFromCartView(CreateSessionKeyMixin, generic.FormView):
         if self.request.user.is_authenticated:
             return reverse_lazy('order-list')
         return reverse_lazy('register')
-
-    def get(self, request, *args, **kwargs):
-        if not request.user.is_authenticated:
-            self.template_name = 'basket/checkout-form-session.html'
-        return super().get(request, *args, **kwargs)
 
     def get_form(self, form_class=None):
         form = super().get_form(form_class)
@@ -285,4 +275,6 @@ class CreatedOrdersUserListView(CreateSessionKeyMixin, generic.ListView):
         return queryset
 
 
+class ThankYouPageTemplateView(generic.TemplateView):
+    template_name = 'basket/ThankYouPageTemplateView.html'
 

@@ -1,0 +1,26 @@
+{% if request.user.is_authenticated and auth_path %}
+<section class="side-nav" style="height: 1125px;">
+    <h2 class="side-nav__item-title"><a href="{% url 'user-detail' slug=request.user.slug %}">ЛИЧНЫЙ КАБИНЕТ</a></h2><ul class="side-nav__links">
+      <li>
+        <a href="{% url 'edit-user' %}">Сменить логин/пароль</a>
+        <a href="{% url 'addresses-list' %}">Адрес доставки</a>
+        <a href="{% url "order-list" %}">Мои заказы</a>
+        <a href="{% url 'cart-session' %}">Корзина заказов</a><hr />
+        <a href="#" id="logout-btn">Выход</a>
+      </li>
+    </ul>
+  </section>
+{% else %}
+<section class="side-nav" style="height: 3484px;">
+    <h2 class="side-nav__item-title">Каталог</h2>
+    <div class="attachment attachment-before"></div>
+    <ul class="side-nav__list">
+      {% for category in categories %}
+        <li>
+          <a class="autodialog autodialog-processed" href="{% url "catalog" %}" data-dialog-width="60%" id="autodialog-1">{{category.name}}</a>
+        </li>
+      {% endfor %}
+    </ul>
+    <div class="attachment attachment-after"></div>
+  </section>
+{% endif %}
