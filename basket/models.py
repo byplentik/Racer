@@ -123,5 +123,3 @@ class ExcelFileCatalog(models.Model):
     class Meta:
         verbose_name = 'Excel файлы для загрузки цен'
         verbose_name_plural = 'Excel файлы для загрузки цен'
-
-
