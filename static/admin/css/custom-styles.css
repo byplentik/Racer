@@ -1,0 +1,19 @@
+.submit-row{
+    margin-top: 50px;
+}
+
+td.original p{
+    display: none;
+}
+
+.inline_field_sets{
+    margin-top: 40px;
+}
+
+.comment-block{
+    margin-top: 25px;
+}
+
+.non-padding {
+    padding: 0 !important;
+}

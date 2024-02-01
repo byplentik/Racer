@@ -10,6 +10,7 @@
         <tr>
           <th scope="col">Наименование</th>
           <th scope="col">Кол-во</th>
+          <th scope="col">Цена</th>
         </tr>
       </thead>
       <tbody>
@@ -17,8 +18,19 @@
         <tr>
           <td>{{ orderpart.part.name }}</td>
           <td>{{ orderpart.quantity }}</td>
+          <td>{{ orderpart.part.price }} р.</td>
         </tr>
         {% endfor %}
+
+        {% if original.additional_item.all %}
+        {% for item in original.additional_item.all %}
+        <tr class="table-danger">
+          <td style="font-weight: 700;">{{ item.name }}</td>
+          <td>1</td>
+          <td>{{ item.price }} р.</td>
+        </tr>
+        {% endfor %}
+        {% endif %}
       </tbody>
     </table>
 
@@ -42,6 +54,22 @@
       </ul>
       <div class="card-footer" style="border: 1px solid rgba(0, 0, 0, .125);">
         <span class="fw-bold">Статус заказа:</span> <span class="ms-2">{{ original.get_order_status_display }}</span>
+      </div>
+    </div>
+    
+    <div class="general-data">
+      <div class="card">
+        <div class="card-body non-padding">
+          Итоговая сумма всех товаров: <strong>{{ original.total_price}} р.</strong>
+        </div>
+      </div>
+
+      <div class="comment-block">
+        {% if original.comment %}
+          <p><strong>Комментарий пользователя к заказу:</strong> {{ original.comment }}</p>
+        {% else %}
+          <p><strong>Пользователь не оставил комментарий к заказу</strong></p>
+        {% endif %}
       </div>
     </div>
 

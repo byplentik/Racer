@@ -50,19 +50,31 @@
                       <tr>
                         <th scope="col">Наименование</th>
                         <th style="white-space: nowrap;" scope="col">Кол-во</th>
+                        <th scope="col">Цена</th>
                       </tr>
                     </thead>
                     <tbody>
                       {% for ordered_part in order.ordered_parts.all %}
                         <tr>
-                          <td>{{ordered_part.part.name}}</td>
-                          <td>{{ordered_part.quantity}}</td>
+                          <td>{{ ordered_part.part.name }}</td>
+                          <td>{{ ordered_part.quantity }}</td>
+                          <td>{{ ordered_part.part.price }} р.</td>
                         </tr>
                       {% endfor %}
+
+                      {% if order.additional_item.all %}
+                      {% for item in order.additional_item.all %}
+                      <tr>
+                        <td>{{ item.name }}</td>
+                        <td>1</td>
+                        <td>{{ item.price }} р.</td>
+                      </tr>
+                      {% endfor %}
+                      {% endif %}
                     </tbody>
                   </table>
                 </div>
-                <p style="color: black;">Итогавая сумма без учета доставки: {{order.total_price}} рублей</p>
+                <p style="color: black;">Итогавая цена всех товаров: {{order.total_price}} рублей</p>
               </div>
             </div>
           </div>

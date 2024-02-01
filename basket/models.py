@@ -123,3 +123,25 @@ class ExcelFileCatalog(models.Model):
     class Meta:
         verbose_name = 'Excel файлы для загрузки цен'
         verbose_name_plural = 'Excel файлы для загрузки цен'
+
+
+class AdditionalItemToCheckoutCart(models.Model):
+    name = models.CharField(max_length=255, verbose_name='Наименование')
+    price = models.IntegerField(verbose_name='Цена')
+    cart = models.ForeignKey(CheckoutCart, on_delete=models.SET_NULL, related_name='additional_item', blank=True, null=True)
+
+    class Meta:
+        verbose_name = 'Добавить пустое поле'
+        verbose_name_plural = 'Добавить пустое поле'
+
+    def __str__(self):
+        return f'{self.name} - {self.price}'
+
+
+class CommentAdministratorForCheckoutCart(models.Model):
+    comment = models.TextField(verbose_name='Комментарий')
+    cart = models.ForeignKey(CheckoutCart, on_delete=models.SET_NULL, blank=True, null=True)
+
+    class Meta:
+        verbose_name = 'Комментарий администратора'
+        verbose_name_plural = 'Комментарий администратора'

@@ -92,6 +92,20 @@ class AdminPart(admin.ModelAdmin):
 
 class OrderedPartInline(admin.TabularInline):
     model = models.OrderedPart
+    extra = 1
+    classes = ['collapse']
+
+
+class AdditionalItemInline(admin.TabularInline):
+    model = models.AdditionalItemToCheckoutCart
+    extra = 1
+    classes = ['collapse']
+
+
+class CommentAdministratorForCheckoutCartInline(admin.TabularInline):
+    model = models.CommentAdministratorForCheckoutCart
+    extra = 1
+    classes = ['collapse']
 
 
 @admin.register(models.CheckoutCart)
@@ -101,12 +115,31 @@ class CheckoutCartAdmin(admin.ModelAdmin):
     list_filter = ['order_status', 'created_at']
     search_fields = ['id']
     date_hierarchy = 'created_at'
-    inlines = (OrderedPartInline,)
+    inlines = (CommentAdministratorForCheckoutCartInline, AdditionalItemInline, OrderedPartInline)
     change_form_template = 'admin/basket/CheckoutCart/change_form_custom.html'
 
-    # def changeform_view(self, request, object_id=None, form_url='', extra_context=None):
-    #     response = super().changeform_view(request, object_id, form_url, extra_context)
-    #     return response
+    def changeform_view(self, request, object_id=None, form_url='', extra_context=None):
+        response = super().changeform_view(request, object_id, form_url, extra_context)
+        if request.method == 'POST':
+            obj = self.model.objects.get(pk=object_id)
+            price_from_obj = 0
+
+            for order_part in obj.ordered_parts.all():
+                price_part = order_part.part.price
+                quantity_part = order_part.quantity
+                price_with_quantity_and_part = price_part * quantity_part
+                price_from_obj += price_with_quantity_and_part
+
+            for item in obj.additional_item.all():
+                if item:
+                    price_from_obj += item.price
+
+            if obj.total_price != price_from_obj:
+                obj.total_price = price_from_obj
+                obj.save()
+
+        return response
+
 
 
 @admin.register(models.ExcelFileCatalog)
@@ -134,6 +167,10 @@ class AdminExcelFileCatalog(admin.ModelAdmin):
                     logging.error(f'Произошла ошибка при загрузке файла Excel: {ex}')
 
 
-# @admin.register(models.ProxyCheckoutCartModel)
-# class AdminProxyCheckoutCartModel(admin.ModelAdmin):
-#     list_display = ('id', 'user', 'total_price', 'created_at')
+# @admin.register(models.AdditionalItemToCheckoutCart)
+# class AdminAdditionalItemToCheckoutCart(admin.ModelAdmin):
+#     list_display = ['name', 'price', 'cart']
+
+@admin.register(models.AdditionalItemToCheckoutCart)
+class AdminAdditionalItemToCheckoutCart(admin.ModelAdmin):
+    list_display = ['cart']

@@ -7,6 +7,10 @@ class QuestionsModel(models.Model):
     response = models.TextField(verbose_name='Ответ', blank=True)
     answered = models.BooleanField(default=False, verbose_name='Ответить')
 
+    class Meta:
+        verbose_name = 'Вопрос'
+        verbose_name_plural = 'Вопросы'
+
     def __str__(self):
         return str(self.title)
 
@@ -16,6 +20,10 @@ class ReviewsModel(models.Model):
     username = models.CharField(max_length=255, verbose_name='Имя пользователя')
     avatar = models.ImageField(upload_to='images_avatars/', verbose_name='Аватар')
     review = models.TextField(verbose_name='Отзыв')
+
+    class Meta:
+        verbose_name = 'Отзыв'
+        verbose_name_plural = 'Отзывы'
 
     def __str__(self):
         return str(self.username)
