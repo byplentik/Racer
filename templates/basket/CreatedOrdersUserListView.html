@@ -71,10 +71,21 @@
                       </tr>
                       {% endfor %}
                       {% endif %}
+
+                      {% if order.delivery_method %}
+                      <tr class="table-info">
+                        <td style="font-weight: 700;">{{ order.delivery_method.name }}</td>
+                        <td></td>
+                        <td>{{ order.delivery_method.price }} р.</td>
+                      </tr>        
+                      {% endif %}
                     </tbody>
                   </table>
                 </div>
                 <p style="color: black;">Итогавая цена всех товаров: {{order.total_price}} рублей</p>
+                {% if order.delivery_method %}
+                <p style="color: black;">Итогавая цена c учетом доставки: {{ order.delivery_method.total_price_with_delivery }} рублей</p>
+                {% endif %}
               </div>
             </div>
           </div>

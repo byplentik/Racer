@@ -108,6 +108,12 @@ class CommentAdministratorForCheckoutCartInline(admin.TabularInline):
     classes = ['collapse']
 
 
+class DeliveryMethodInline(admin.TabularInline):
+    model = models.DeliveryMethod
+    classes = ['collapse']
+    fields = ['name', 'price']
+
+
 @admin.register(models.CheckoutCart)
 class CheckoutCartAdmin(admin.ModelAdmin):
     list_display = ('id_as_order_number', 'client', 'total_price', 'created_at', 'order_status')
@@ -115,13 +121,14 @@ class CheckoutCartAdmin(admin.ModelAdmin):
     list_filter = ['order_status', 'created_at']
     search_fields = ['id']
     date_hierarchy = 'created_at'
-    inlines = (CommentAdministratorForCheckoutCartInline, AdditionalItemInline, OrderedPartInline)
+    inlines = (CommentAdministratorForCheckoutCartInline, DeliveryMethodInline, AdditionalItemInline, OrderedPartInline)
     change_form_template = 'admin/basket/CheckoutCart/change_form_custom.html'
 
     def changeform_view(self, request, object_id=None, form_url='', extra_context=None):
         response = super().changeform_view(request, object_id, form_url, extra_context)
+        obj = self.get_object(request, object_id)
+
         if request.method == 'POST':
-            obj = self.model.objects.get(pk=object_id)
             price_from_obj = 0
 
             for order_part in obj.ordered_parts.all():
@@ -137,9 +144,12 @@ class CheckoutCartAdmin(admin.ModelAdmin):
             if obj.total_price != price_from_obj:
                 obj.total_price = price_from_obj
                 obj.save()
-
+        elif request.method == 'GET' and hasattr(obj, 'delivery_method'):
+            price_with_delivery_method = obj.total_price + obj.delivery_method.price
+            if obj.delivery_method.total_price_with_delivery != price_with_delivery_method:
+                obj.delivery_method.total_price_with_delivery = price_with_delivery_method
+                obj.delivery_method.save()
         return response
-
 
 
 @admin.register(models.ExcelFileCatalog)
@@ -165,12 +175,3 @@ class AdminExcelFileCatalog(admin.ModelAdmin):
                                 logging.error(f'An error occurred while updating the price: {ex}')
                 except FileNotFoundError as ex:
                     logging.error(f'Произошла ошибка при загрузке файла Excel: {ex}')
-
-
-# @admin.register(models.AdditionalItemToCheckoutCart)
-# class AdminAdditionalItemToCheckoutCart(admin.ModelAdmin):
-#     list_display = ['name', 'price', 'cart']
-
-@admin.register(models.AdditionalItemToCheckoutCart)
-class AdminAdditionalItemToCheckoutCart(admin.ModelAdmin):
-    list_display = ['cart']

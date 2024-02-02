@@ -145,3 +145,14 @@ class CommentAdministratorForCheckoutCart(models.Model):
     class Meta:
         verbose_name = 'Комментарий администратора'
         verbose_name_plural = 'Комментарий администратора'
+
+
+class DeliveryMethod(models.Model):
+    name = models.CharField(max_length=255, verbose_name='Название')
+    price = models.IntegerField(verbose_name='Цена')
+    cart = models.OneToOneField(CheckoutCart, on_delete=models.SET_NULL, related_name='delivery_method', blank=True, null=True)
+    total_price_with_delivery = models.IntegerField(verbose_name='Цена', blank=True, null=True)
+
+
+    class Meta:
+        verbose_name = 'Добавить способ доставки'
