@@ -14,7 +14,7 @@ class CheckoutFromCartForm(forms.Form):
         widget=forms.Select(attrs={'class': 'form-control'}),
         required=True
     )
-    delivery_address = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Ул Пушкина 40'}), max_length=455, required=True)
+    delivery_address = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Московская область, Г. Одинцово, ул Пушкина 40'}), max_length=455, required=True)
     comment = forms.CharField(widget=forms.Textarea(attrs={'class': 'form-control', 'placeholder': 'Например: цвет, способ доставки, дополнение или вопрос.'}), required=False)
 
     def __init__(self, *args, **kwargs):
@@ -28,7 +28,6 @@ class CheckoutFromCartForm(forms.Form):
         if user.is_authenticated and DeliveryAddressModel.objects.filter(user=user).exists():
             self.fields['name_address'] = forms.ModelChoiceField(
                 queryset=DeliveryAddressModel.objects.none(),
-                empty_label=None,
                 widget=forms.Select(attrs={'class': 'form-control'}),
                 required=False,
             )
@@ -37,7 +36,7 @@ class CheckoutFromCartForm(forms.Form):
         # Меняю значение label у полей
         self.fields['full_name'].label = 'ФИО'
         self.fields['phone_number'].label = 'Номер телефона'
-        self.fields['postal_code'].label = 'Почтовый код'
+        self.fields['postal_code'].label = 'Почтовый код (индекс)'
         self.fields['country'].label = 'Страна'
         self.fields['delivery_address'].label = 'Адрес доставки'
         self.fields['comment'].label = 'Комментарий к заказу'

@@ -44,6 +44,9 @@
 
     <div class="card" style="width: 50%;border: 0;">
       <ul class="list-group">
+        <li class="list-group-item lgi" onclick="copyData('{{ original.user.email }}')">
+          <span class="fw-bold">Email:</span> <span class="ms-2">{{ original.user.email }}</span>
+        </li>
         <li class="list-group-item lgi" onclick="copyData('{{ original.delivery_address.full_name }}')">
           <span class="fw-bold">ФИО:</span> <span class="ms-2">{{ original.delivery_address.full_name }}</span>
         </li>

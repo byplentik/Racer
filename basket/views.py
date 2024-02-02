@@ -10,7 +10,7 @@ from django.views import generic
 from users.models import DeliveryAddressModel
 from .forms import CheckoutFromCartForm
 from .mixins import CreateSessionKeyMixin
-from .models import Category, Part, CheckoutCart, OrderedPart, Motorcycle
+from .models import Category, Part, CheckoutCart, OrderedPart, Motorcycle, SpecifiedDeliveryAddressModel
 
 
 class CatalogListView(CreateSessionKeyMixin, generic.ListView):
@@ -148,15 +148,31 @@ class CheckoutFromCartView(CreateSessionKeyMixin, generic.FormView):
 
                 # Если данные из формы верны с cleaned_data
                 if self._is_address_valid(address_from_db, cleaned_data):
-                    checkout_cart = self._create_checkout_cart(user, total_price, address_from_db, cleaned_data)
+                    address = SpecifiedDeliveryAddressModel.objects.create(
+                        full_name=address_from_db.full_name,
+                        phone_number=address_from_db.phone_number,
+                        postal_code=address_from_db.postal_code,
+                        country=address_from_db.country,
+                        delivery_address=address_from_db.delivery_address,
+                        user=address_from_db.user,
+                    )
+                    checkout_cart = self._create_checkout_cart(user, total_price, address, cleaned_data)
                 else:
                     # Обновляем адрес и сохраняем экземпляр
                     self._update_address(address_from_db, cleaned_data)
-                    checkout_cart = self._create_checkout_cart(user, total_price, address_from_db, cleaned_data)
+                    address = SpecifiedDeliveryAddressModel.objects.create(
+                        full_name=address_from_db.full_name,
+                        phone_number=address_from_db.phone_number,
+                        postal_code=address_from_db.postal_code,
+                        country=address_from_db.country,
+                        delivery_address=address_from_db.delivery_address,
+                        user=address_from_db.user,
+                    )
+                    checkout_cart = self._create_checkout_cart(user, total_price, address, cleaned_data)
 
             # Если отсутствует cleaned_data['name_address'], то есть адреса у пользователя нет
             else:
-                address = DeliveryAddressModel.objects.create(
+                address = SpecifiedDeliveryAddressModel.objects.create(
                     full_name=cleaned_data['full_name'],
                     phone_number=cleaned_data['phone_number'],
                     postal_code=cleaned_data['postal_code'],
@@ -166,8 +182,6 @@ class CheckoutFromCartView(CreateSessionKeyMixin, generic.FormView):
                 )
 
                 checkout_cart = self._create_checkout_cart(user, total_price, address, cleaned_data)
-
-                address.name_address = f'Адрес из заказа №{checkout_cart.pk}'
                 address.save()
 
         # Если пользователь не авторизован
@@ -176,7 +190,6 @@ class CheckoutFromCartView(CreateSessionKeyMixin, generic.FormView):
             user, address = self._create_user_and_address(cleaned_data)
             checkout_cart = self._create_checkout_cart(user, total_price, address, cleaned_data)
 
-            address.name_address = f'Адрес из заказа №{checkout_cart.pk}'
             address.save()
 
         # Добавляем запчасти в корзину
@@ -189,11 +202,11 @@ class CheckoutFromCartView(CreateSessionKeyMixin, generic.FormView):
 
         if created:
             user.username = email.split('@')[0]
-            user.password = '1234'
+            user.set_password('1234')
             user.save()
 
         # Добавляем его адрес в бд
-        address = DeliveryAddressModel.objects.create(
+        address = SpecifiedDeliveryAddressModel.objects.create(
             full_name=cleaned_data['full_name'],
             phone_number=cleaned_data['phone_number'],
             postal_code=cleaned_data['postal_code'],
@@ -277,4 +290,3 @@ class CreatedOrdersUserListView(CreateSessionKeyMixin, generic.ListView):
 
 class ThankYouPageTemplateView(generic.TemplateView):
     template_name = 'basket/ThankYouPageTemplateView.html'
-

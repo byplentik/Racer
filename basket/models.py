@@ -75,7 +75,7 @@ class OrderStatus(models.TextChoices):
 
 class CheckoutCart(models.Model):
     user = models.ForeignKey(get_user_model(), on_delete=models.CASCADE, verbose_name='Пользователь')
-    delivery_address = models.ForeignKey(DeliveryAddressModel, on_delete=models.SET_NULL, verbose_name='Адрес доставки', blank=True, null=True)
+    delivery_address = models.ForeignKey('SpecifiedDeliveryAddressModel', on_delete=models.SET_NULL, verbose_name='Адрес доставки', blank=True, null=True)
     total_price = models.DecimalField(max_digits=10, decimal_places=2, default=0, verbose_name='Общая цена')
     created_at = models.DateTimeField(auto_now_add=True, verbose_name='Дата создания')
     comment = models.TextField(blank=True, null=True, verbose_name='Комментарий к заказу')
@@ -153,6 +153,20 @@ class DeliveryMethod(models.Model):
     cart = models.OneToOneField(CheckoutCart, on_delete=models.SET_NULL, related_name='delivery_method', blank=True, null=True)
     total_price_with_delivery = models.IntegerField(verbose_name='Цена', blank=True, null=True)
 
-
     class Meta:
         verbose_name = 'Добавить способ доставки'
+
+
+class SpecifiedDeliveryAddressModel(models.Model):
+    COUNTRIES_CHOICES = [
+        ("RUSSIA", "Россия"),
+        ("BELARUS", "Беларусь"),
+        ("KAZAKHSTAN", "Казахстан"),
+    ]
+
+    full_name = models.CharField(verbose_name='ФИО', max_length=455)
+    phone_number = models.IntegerField(verbose_name='Номер телефона')
+    postal_code = models.IntegerField(verbose_name='Почтовый код')
+    country = models.CharField(verbose_name='Страна', max_length=20, choices=COUNTRIES_CHOICES, blank=True, null=True)
+    delivery_address = models.CharField(verbose_name='Адрес доставки', max_length=455)
+    user = models.ForeignKey(get_user_model(), on_delete=models.CASCADE, verbose_name='Пользователь')

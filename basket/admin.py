@@ -175,3 +175,8 @@ class AdminExcelFileCatalog(admin.ModelAdmin):
                                 logging.error(f'An error occurred while updating the price: {ex}')
                 except FileNotFoundError as ex:
                     logging.error(f'Произошла ошибка при загрузке файла Excel: {ex}')
+
+
+@admin.register(models.SpecifiedDeliveryAddressModel)
+class AdminSpecifiedDeliveryAddressModel(admin.ModelAdmin):
+    list_display = ['full_name', 'phone_number', 'postal_code', 'country', 'delivery_address', 'user']
