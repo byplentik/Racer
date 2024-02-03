@@ -130,7 +130,7 @@
             <ul class="side-nav__list">
               {% for mainpart in main_parts %}
                 <li>
-                  <a class="autodialog autodialog-processed" href="#" data-dialog-width="60%" id="autodialog-1">{{mainpart.name}}</a>
+                  <a href="{% url 'motorcycle-detail' slug=motorcycle.slug %}#r{{ mainpart.pk }}">{{ mainpart.name }}</a>
                 </li>
               {% endfor %}
             </ul>
@@ -171,7 +171,7 @@
               <div class="product__items">
                 
                 {% for mainpart in main_parts %}
-                  <div class="product__item" id="r776">
+                  <div class="product__item" id="r{{ mainpart.pk }}">
                     <h4 class="product__item-title">{{ mainpart }}</h4>
                     {% if mainpart.image %}
                       <div class="product__item-photo">
@@ -285,7 +285,25 @@
               }
           });
       });
+
+      document.addEventListener('DOMContentLoaded', function() {
+        var links = document.querySelectorAll('a[href^="#r"]');
+    
+        links.forEach(function(link) {
+          link.addEventListener('click', function(event) {
+            event.preventDefault();
+            var targetId = this.getAttribute('href').substring(1);
+    
+            var targetElement = document.getElementById(targetId);
+    
+            if (targetElement) {
+              targetElement.scrollIntoView({ behavior: 'smooth' });
+            }
+          });
+        });
+      });
   </script>
+  
     <style>
       .notification {
         position: fixed;

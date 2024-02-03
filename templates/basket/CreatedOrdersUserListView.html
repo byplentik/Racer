@@ -11,7 +11,7 @@
       <img src="{% static 'images/logo.webp' %}" />
     </div>
     <h3 class="product__name">Мои заказы</h3>
-
+    {% if orders %}
     <div class="orders">
       <div class="accordion" id="accordionExample">
         {% for order in orders %}
@@ -92,6 +92,9 @@
         {% endfor %}
       </div>
     </div>
+    {% else %}
+    <p>У вас нет заказов</p>
+    {% endif %}
   </div>
   <style>
     .table-wrapper {

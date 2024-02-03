@@ -12,4 +12,5 @@ urlpatterns = [
     path('checkout/', views.CheckoutFromCartView.as_view(), name='checkout-form'),
     path('user/orders/', views.CreatedOrdersUserListView.as_view(), name='order-list'),
     path('get_address_details/', views.get_address_details, name='get_address_details'),
+    path('thankyou_page/', views.ThankYouPageTemplateView.as_view(), name='thank-you-page'),
 ]

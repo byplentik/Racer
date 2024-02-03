@@ -1,6 +1,7 @@
 from importlib import import_module
 
 from django.conf import settings
+from django.contrib import messages
 from django.contrib.auth import get_user_model as User
 from django.http import JsonResponse
 from django.shortcuts import get_object_or_404
@@ -115,11 +116,7 @@ class CartSessionDetailView(CreateSessionKeyMixin, generic.TemplateView):
 class CheckoutFromCartView(CreateSessionKeyMixin, generic.FormView):
     template_name = 'basket/checkout-form.html'
     form_class = CheckoutFromCartForm
-
-    def get_success_url(self):
-        if self.request.user.is_authenticated:
-            return reverse_lazy('order-list')
-        return reverse_lazy('register')
+    success_url = reverse_lazy('thank-you-page')
 
     def get_form(self, form_class=None):
         form = super().get_form(form_class)
@@ -194,6 +191,7 @@ class CheckoutFromCartView(CreateSessionKeyMixin, generic.FormView):
 
         # Добавляем запчасти в корзину
         self._create_ordered_parts(cart, checkout_cart)
+        messages.success(self.request, f'{checkout_cart.pk}')
         return super().form_valid(form)
 
     def _create_user_and_address(self, cleaned_data):

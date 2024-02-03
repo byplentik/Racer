@@ -1,2 +1,32 @@
 {% extends "base_racer.html" %}
+{% load static %}
 
+{% block content %}
+<div class="product">
+    <div class="product__logo">
+        <img src="{% static "images/logo.webp" %}">
+    </div>
+    {% if message %}
+    <h3 class="product__name">Ваш заказ успешно оформлен</h3>
+    {% endif %}
+
+    {% if messages %}
+      <ul class="messages">
+        {% for message in messages %}
+        <p>Ваш заказ завершен! Номер вашего заказа: {{message}}.</p>
+        <p>Спасибо за Ваш заказ на нашем сайте RACER.</p>
+        <p>Дальнейшие инструкции отправлены на e-mail указанный в заказе. Пожалуйста, проверьте почту и ожидайте сообщение от менеджера.</p>
+        <a class="redirect" href="{% url "home" %}">Вернуться на главную страницу</a>
+        {% endfor %}
+      </ul>
+    {% else %}
+        <p>Вы не оформили заказ</p>
+    {% endif %}
+</div>
+
+<style>
+    .redirect:hover{
+        color: blue;
+    }
+</style>
+{% endblock content %}
