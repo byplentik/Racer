@@ -88,6 +88,7 @@ TEMPLATES = [
                 'django.contrib.messages.context_processors.messages',
                 'basket.templatetags.context_processors.categories',
                 'basket.templatetags.context_processors.cart_context',
+                'basket.templatetags.context_processors.part_search_form',
             ],
         },
     },

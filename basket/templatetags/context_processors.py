@@ -1,4 +1,5 @@
 from basket.models import Category
+from basket.forms import PartSearchForm
 
 
 def categories(request):
@@ -16,3 +17,7 @@ def cart_context(request):
         'total_price': total_price,
         'get_num_of_items': get_num_of_items,
     }
+
+
+def part_search_form(request):
+    return {'part_search_form': PartSearchForm(request.GET)}

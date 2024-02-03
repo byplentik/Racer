@@ -1,0 +1,48 @@
+{% extends 'base_racer.html' %}
+{% load static %}
+
+{% block content %}
+  <div class="product">
+    <div class="product__logo">
+      <img src="{% static 'images/logo.webp' %}" />
+    </div>
+    <h3 class="product__name">Поиск по каталогу</h3>
+    <table class="product__item-desc">
+        <tbody>
+          <tr>
+            <th align="center">№</th>
+            <th>Наименование</th>
+            <th>Цена</th>
+            <th>К заказу</th>
+          </tr>
+          
+          {% for part in parts %}
+            {% if part.price > 0 %}
+              <tr>
+                <td align="left">{{ part.number }}</td>
+                <td style="text-align: justify;">{{ part.name }}</td>
+                <td>
+                  <span class="uc-price">{{ part.price }} р.</span>
+                </td>
+                <td class="product__item-add" id="p123784">
+                  <form class="addToCartForm" method="post" accept-charset="UTF-8" data-part-id="{{ part.id }}" data-quantity="1">
+                    {% csrf_token %}
+                    <div>
+                        <div class="form-actions form-wrapper">
+                            <input class="list-add-to-cart" type="button" value="В корзину" onclick="addToCart({{ part.id }}, 1)" />
+                        </div>
+                    </div>
+                </form>                                
+                </td>
+              </tr>
+            {% endif %}
+          {% endfor %}
+                                  
+        </tbody>
+      </table>
+
+      <script src="{% static 'js/script.js' %}"></script>
+      <script src="{% static 'js/side-nav.js' %}"></script>
+  </div>
+
+{% endblock %}

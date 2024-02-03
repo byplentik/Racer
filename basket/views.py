@@ -9,7 +9,7 @@ from django.urls import reverse_lazy
 from django.views import generic
 
 from users.models import DeliveryAddressModel
-from .forms import CheckoutFromCartForm
+from .forms import CheckoutFromCartForm, PartSearchForm
 from .mixins import CreateSessionKeyMixin
 from .models import Category, Part, CheckoutCart, OrderedPart, Motorcycle, SpecifiedDeliveryAddressModel
 
@@ -288,3 +288,17 @@ class CreatedOrdersUserListView(CreateSessionKeyMixin, generic.ListView):
 
 class ThankYouPageTemplateView(generic.TemplateView):
     template_name = 'basket/ThankYouPageTemplateView.html'
+
+
+class PartSearchListView(generic.ListView):
+    template_name = 'basket/PartSearchListView.html'
+    model = Part
+    context_object_name = 'parts'
+    form_class = PartSearchForm
+
+    def get_queryset(self):
+        form = self.form_class(self.request.GET)
+        if form.is_valid():
+            search_text = form.cleaned_data['text']
+            return Part.objects.filter(name__icontains=search_text)
+        return Part.objects.all()

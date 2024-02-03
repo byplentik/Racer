@@ -53,4 +53,9 @@ class MotorcycleAdminForm(forms.ModelForm):
         fields = '__all__'
 
 
+class PartSearchForm(forms.Form):
+    text = forms.CharField(
+        widget=forms.TextInput(attrs={'placeholder': 'Поиск по каталогу'}),
+    )
+
 
