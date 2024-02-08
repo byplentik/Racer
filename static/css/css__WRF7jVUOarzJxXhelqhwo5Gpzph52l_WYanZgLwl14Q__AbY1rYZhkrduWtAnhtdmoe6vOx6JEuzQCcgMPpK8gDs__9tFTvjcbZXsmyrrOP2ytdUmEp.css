@@ -6658,3 +6658,19 @@ textarea.form-control {
     text-decoration: none;
     opacity: initial;
 }
+
+.name-part-text{
+    text-align: justify !important;
+}
+
+@media screen and (max-width: 500px) {
+    .name-part-text {
+        text-align: center !important;
+    }
+}
+
+@media screen and (max-width: 500px){
+    .tr-table-part {
+        height: 70px;
+    }
+}

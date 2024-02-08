@@ -53,7 +53,6 @@ class ReviewsListView(CreateSessionKeyMixin, generic.ListView):
             review_form.save()
             return redirect('reviews_view')
         else:
-            print(review_form.errors)
             return render(request, self.template_name, {'review_form': review_form, 'object_list': self.get_queryset()})
 
 

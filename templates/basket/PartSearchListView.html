@@ -18,13 +18,13 @@
           
           {% for part in parts %}
             {% if part.price > 0 %}
-              <tr>
+              <tr class="tr-table-part">
                 <td align="left">{{ part.number }}</td>
-                <td style="text-align: justify;">{{ part.name }}</td>
+                <td class="name-part-text">{{ part.name }}</td>
                 <td>
                   <span class="uc-price">{{ part.price }} р.</span>
                 </td>
-                <td class="product__item-add" id="p123784">
+                <td class="product__item-add">
                   <form class="addToCartForm" method="post" accept-charset="UTF-8" data-part-id="{{ part.id }}" data-quantity="1">
                     {% csrf_token %}
                     <div>
