@@ -21,7 +21,7 @@ const removeFromCart = (partId) => {
   });
 };
 
-const addToCart = (partId) => {
+const addToCartOnePart = (partId) => {
   const formData = {
     part_id: partId,
     csrfmiddlewaretoken: $("input[name=csrfmiddlewaretoken]").val(),
@@ -60,13 +60,3 @@ const updateCartUI = (response) => {
     $("table, #total-price, #num-items, .hr, .btn-order").hide();
   }
 };
-
-$("body").on("click", ".button-remove-from-cart", () => {
-  const partId = $(this).closest("form").data("part-id");
-  removeFromCart(partId);
-});
-
-$("body").on("click", ".button-add-to-cart", () => {
-  const partId = $(this).closest("form").data("part-id");
-  addToCart(partId);
-});
