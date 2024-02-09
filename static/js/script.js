@@ -2,7 +2,7 @@
 
 const updateNumOfItems = (newCount) => {
   $("#num-of-items").text(newCount);
-}
+};
 
 const showNotification = (partName) => {
   const cartUrl = $("#notification-data").data("cart-url");
@@ -32,11 +32,11 @@ const showNotification = (partName) => {
   notification.fadeIn();
 
   setTimeout(() => {
-    notification.fadeOut("slow", function () {
+    notification.fadeOut("slow", () => {
       notification.remove();
     });
   }, 2000);
-}
+};
 
 const addToCart = (partId, quantity) => {
   const formData = {
@@ -47,11 +47,10 @@ const addToCart = (partId, quantity) => {
 
   $.ajax({
     type: "POST",
-    url: "/cart/add-to-cart/" + partId + "/" + quantity + "/",
+    url: `/cart/add-to-cart/${partId}/${quantity}/`,
     data: formData,
     success: (response) => {
-      const newNumOfItems = response.num_items;
-      updateNumOfItems(newNumOfItems);
+      updateNumOfItems(response.num_items);
 
       showNotification(response.part_name);
     },
@@ -60,4 +59,4 @@ const addToCart = (partId, quantity) => {
       console.error(error);
     },
   });
-}
+};

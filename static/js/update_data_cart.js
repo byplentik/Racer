@@ -29,7 +29,7 @@ const addToCart = (partId) => {
 
   $.ajax({
     type: "POST",
-    url: "/cart/add-one-part/" + partId + "/",
+    url: `/cart/add-one-part/${partId}/`,
     data: formData,
     success: (response) => {
       updateNumOfItems(response.num_items);
@@ -43,10 +43,7 @@ const addToCart = (partId) => {
 };
 
 const updateCartUI = (response) => {
-  const quantity = response.quantity;
-  const partId = response.partId;
-  const total_price = response.total_price;
-  const num_items = response.num_items;
+  const { quantity, partId, total_price, num_items } = response;
 
   // Обновляем количество товара в соответствующей ячейке
   const quantityContainer = $("#quantity-" + partId);
@@ -64,13 +61,11 @@ const updateCartUI = (response) => {
   }
 };
 
-// Обработчик клика на кнопке удаления товара
 $("body").on("click", ".button-remove-from-cart", () => {
   const partId = $(this).closest("form").data("part-id");
   removeFromCart(partId);
 });
 
-// Обработчик клика на кнопке добавления товара
 $("body").on("click", ".button-add-to-cart", () => {
   const partId = $(this).closest("form").data("part-id");
   addToCart(partId);

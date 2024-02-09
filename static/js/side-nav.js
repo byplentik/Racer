@@ -2,9 +2,13 @@
 
 document.addEventListener("DOMContentLoaded", () => {
   const sideNav = document.querySelector(".side-nav");
-  
+
   const updateSideNav = () => {
-    sideNav.classList.toggle("fixed");
+    if (window.scrollY > 0) {
+      sideNav.classList.add("fixed");
+    } else {
+      sideNav.classList.remove("fixed");
+    }
   };
 
   window.addEventListener("scroll", updateSideNav);

@@ -2,331 +2,360 @@
 
 <!DOCTYPE html>
 <html lang="ru" class="open-sans js webp-on">
-  <head>
-    <title>
-      {{ motorcycle.name }} | Racer
-    </title>
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-    <meta name="msapplication-tap-highlight" content="no" />
-    <meta name="theme-color" content="#4754C2" />
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-    <link rel="shortcut icon" href="{% static 'favicon.ico' %}" type="image/vnd.microsoft.icon" />
-    <script type="text/javascript" async=""></script>
-    <script async=""></script>
-    <script async="async"></script>
-    <meta name="rating" content="safe for kids" />
-    <link rel="canonical" href="https://racer-parts.ru/vashi-voprosy" />
-    <link rel="shortlink" href="https://racer-parts.ru/vashi-voprosy" />
-    <script></script>
-    <link href="{% static 'css/css.css' %}" rel="stylesheet" />
-    <script></script>
-    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-    <link type="text/css" rel="stylesheet" href="{% static 'css/css__mUwr2m3vjCWDt6bNOZxBgX_kh5nsxBGYBaIxcVSj7vM__s74ROVNvpiw2d-ZgqxO8O1eBEOlxeP2GAKIXEWczN6I__9tFTvjcbZXsmyrrOP2ytdUmEp.css' %}" media="all" />
-    <link type="text/css" rel="stylesheet" href="{% static 'css/css__WRF7jVUOarzJxXhelqhwo5Gpzph52l_WYanZgLwl14Q__AbY1rYZhkrduWtAnhtdmoe6vOx6JEuzQCcgMPpK8gDs__9tFTvjcbZXsmyrrOP2ytdUmEp.css' %}" media="all" />
-    <style>
-      #loader {
-        background: #fff;
-        bottom: 0;
-        height: 100%;
-        left: 0;
-        position: fixed;
-        right: 0;
-        top: 0;
-        width: 100%;
-        z-index: 9999;
-      }
-    </style>
-    <script defer="defer" async="async"></script>
-    <style id="__replain_styles"></style>
-  </head>
 
-  <body class="catalog no-touch"> 
-    <script></script>
-    <header class="header">
-      <div class="header__nav">
-        <div class="header__nav-wrap content-w">
-          <nav class="nav">
-            <div class="nav__shade"></div>
-            <div class="nav__list-wrap animate trs">
-              <ul class="nav__list">
-                <li class="menu-211 first">
-                  <a href="{% url 'home' %}" title="">Главная</a>
-                </li>
-                <li class="menu-2178">
-                  <a href="{% url "catalog" %}">Каталог</a>
-                </li>
-                <li class="menu-1217">
-                  <a href="{% url 'questions' %}" title="">Ваши вопросы</a>
-                </li>
-                <li class="menu-1001">
-                  <a href="{% url 'reviews_view' %}">Отзывы</a>
-                </li>
-                <li class="menu-2481">
-                  <a href="{% url 'video_view' %}" title="">Видео</a>
-                </li>
-                <li class="menu-990">
-                  <a href="{% url 'kontakty_view' %}">Контакты</a>
-                </li>
-                {% if user.is_authenticated %}
-                  <li class="menu-3522 last">
-                    <a href="#" title="">Личный кабинет</a>
-                  </li>
-                {% else %}
-                  <li class="menu-3522 last">
-                    <a href="{% url 'register' %}" title="">Личный кабинет</a>
-                  </li>
-                {% endif %}
-              </ul>
-              <div class="nav__search">
-                <form action="{% url 'part_search_list' %}" method="get" id="search-block-form--2" accept-charset="UTF-8">
-                  <div>
-                    <div class="container-inline">
-                      <div class="form-item form-type-textfield form-item-search-block-form">
-                        <input style="color: black; "title="Введите ключевые слова для поиска." placeholder=" Поиск по каталогу " type="text" id="edit-search-block-form--4" name="text" size="15" maxlength="128" class="form-text" value="" />
-                      </div>
-                      <div class="form-actions form-wrapper" id="edit-actions--2">
-                        <input type="submit" id="edit-submit--2" class="form-submit" value="" />
-                      </div>
-                    </div>
-                  </div>
-                </form>
-              </div>
-              <div class="nav__contacts">
-                <div class="nav__contacts-social">
-                  <a href="viber://add?number=+79193781078"><img src="{% static 'images/viber_mob.webp' %}" loading="auto" decoding="async" alt="" />Viber</a> <a href="whatsapp://send?text=Racer-Parts.ru&amp;abid=+79193781078"><img src="{% static 'images/whatsapp_mob.webp' %}" loading="auto" decoding="async" alt="" />WhatsApp</a>
-                </div> <span class="nav__contacts-phone">+7 (919) 378-10-78</span>
-              </div>
-            </div>
-            <div class="nav__mob-button"></div>
-          </nav>
-          <div class="header__search">
-            <form action="{% url 'part_search_list' %}" method="get" id="search-block-form--2" accept-charset="UTF-8">
-              <div>
-                <div class="container-inline">
-                  <div class="form-item form-type-textfield form-item-search-block-form">
-                    <input style="color: black;" title="Введите ключевые слова для поиска." placeholder=" Поиск по каталогу " type="text" id="edit-search-block-form--4" name="text" size="15" maxlength="128" class="form-text" value="" />
-                  </div>
-                  <div class="form-actions form-wrapper" id="edit-actions--2">
-                    <input type="submit" id="edit-submit--2" class="form-submit" value="" />
-                  </div>
-                </div>
-              </div>
-            </form>
-          </div>
-          <div class="header__social">
-            <a href="https://www.youtube.com/channel/UCzv4GaWT10_7IN0TXwjyl0A" target="_blank"><img src="{% static 'images/soc-youtube.webp' %}" alt="youtube" loading="auto" decoding="async" /></a>
-            <a href="https://vk.com/moto_sib" target="_blank"><img src="{% static 'images/soc-vk.webp' %}" alt="vk" loading="auto" decoding="async" /></a> <a href="https://ok.ru/zapchastir" target="_blank"><img src="{% static 'images/soc-od.webp' %}" alt="odnoklassniki" loading="auto" decoding="async" /></a>
-          </div>
-        </div>
-      </div>
-    </header>
-    <main class="main">
-      <div class="content-w">
-          <section class="side-nav" style="height: 3484px;">
-            <h2 class="side-nav__item-title">{{ motorcycle.name }}</h2>
-            <div class="attachment attachment-before"></div>
-            <ul class="side-nav__list">
-              {% for mainpart in main_parts %}
-                <li>
-                  <a href="{% url 'motorcycle-detail' slug=motorcycle.slug %}#r{{ mainpart.pk }}">{{ mainpart.name }}</a>
-                </li>
-              {% endfor %}
+<head>
+  <title>
+    {{ motorcycle.name }} | Racer
+  </title>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+  <meta name="msapplication-tap-highlight" content="no" />
+  <meta name="theme-color" content="#4754C2" />
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+  <link rel="shortcut icon" href="{% static 'favicon.ico' %}" type="image/vnd.microsoft.icon" />
+  <script type="text/javascript" async=""></script>
+  <script async=""></script>
+  <script async="async"></script>
+  <meta name="rating" content="safe for kids" />
+  <link rel="canonical" href="https://racer-parts.ru/vashi-voprosy" />
+  <link rel="shortlink" href="https://racer-parts.ru/vashi-voprosy" />
+  <script></script>
+  <link href="{% static 'css/css.css' %}" rel="stylesheet" />
+  <script></script>
+  <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+  <link type="text/css" rel="stylesheet"
+    href="{% static 'css/css__mUwr2m3vjCWDt6bNOZxBgX_kh5nsxBGYBaIxcVSj7vM__s74ROVNvpiw2d-ZgqxO8O1eBEOlxeP2GAKIXEWczN6I__9tFTvjcbZXsmyrrOP2ytdUmEp.css' %}"
+    media="all" />
+  <link type="text/css" rel="stylesheet"
+    href="{% static 'css/css__WRF7jVUOarzJxXhelqhwo5Gpzph52l_WYanZgLwl14Q__AbY1rYZhkrduWtAnhtdmoe6vOx6JEuzQCcgMPpK8gDs__9tFTvjcbZXsmyrrOP2ytdUmEp.css' %}"
+    media="all" />
+  <style>
+    #loader {
+      background: #fff;
+      bottom: 0;
+      height: 100%;
+      left: 0;
+      position: fixed;
+      right: 0;
+      top: 0;
+      width: 100%;
+      z-index: 9999;
+    }
+  </style>
+  <script defer="defer" async="async"></script>
+  <style id="__replain_styles"></style>
+</head>
+
+<body class="catalog no-touch">
+  <script></script>
+  <header class="header">
+    <div class="header__nav">
+      <div class="header__nav-wrap content-w">
+        <nav class="nav">
+          <div class="nav__shade"></div>
+          <div class="nav__list-wrap animate trs">
+            <ul class="nav__list">
+              <li class="menu-211 first">
+                <a href="{% url 'home' %}" title="">Главная</a>
+              </li>
+              <li class="menu-2178">
+                <a href="{% url " catalog" %}">Каталог</a>
+              </li>
+              <li class="menu-1217">
+                <a href="{% url 'questions' %}" title="">Ваши вопросы</a>
+              </li>
+              <li class="menu-1001">
+                <a href="{% url 'reviews_view' %}">Отзывы</a>
+              </li>
+              <li class="menu-2481">
+                <a href="{% url 'video_view' %}" title="">Видео</a>
+              </li>
+              <li class="menu-990">
+                <a href="{% url 'kontakty_view' %}">Контакты</a>
+              </li>
+              {% if user.is_authenticated %}
+              <li class="menu-3522 last">
+                <a href="#" title="">Личный кабинет</a>
+              </li>
+              {% else %}
+              <li class="menu-3522 last">
+                <a href="{% url 'register' %}" title="">Личный кабинет</a>
+              </li>
+              {% endif %}
             </ul>
-            <div class="attachment attachment-after"></div>
-          </section>
-        <div class="main-content">
-          <div class="header__top content-w">
-            <div class="nav-mob-button"></div>
-            <div class="logo">
-              <a class="logo__link h6" href="{% url 'home' %}"><img src="{% static 'images/logo.webp' %}" loading="auto" decoding="async" alt="" /></a>
-            </div>
-            <div class="header__contacts hidden-phone">
-              <div class="header__contacts-social">
-                <a href="https://racer-parts.ru/+79193781078"><img src="{% static 'images/soc-viber.webp' %}" loading="auto" decoding="async" alt="" /></a> <a href="https://racer-parts.ru/+79193781078"><img src="{% static 'images/soc-wap.webp' %}" loading="auto" decoding="async" alt="" /></a>
-              </div>
-              <p class="header__phone h7">+7 (919) 378-10-78</p>
-            </div> <a class="autodialog cta-btn autodialog-processed" data-dialog-width="60%" href="{% url "catalog" %}" id="autodialog-7">КАТАЛОГ ЗАПЧАСТЕЙ</a>
-            {% if user.is_authenticated %}
-              <a class="cta-btn light" href="{% url 'user-detail' slug=user.slug %}"><span>КАБИНЕТ</span></a>
-            {% else %}
-              <a class="cta-btn light" href="{% url 'register' %}"><span>КАБИНЕТ</span></a>
-            {% endif %}
-            <div class="block block-uc-ajax-cart block-odd first last block" data-bid="44" id="b44">
-              <div id="ajaxCartUpdate" class="load-on-view ajax-cart-processed">
-                <div class="header__order" id="cart-block-contents-ajax">
-                  <a class="autodialog" href="{% url "cart-session" %}"><span id="cart-count">(<span id="num-of-items">{{get_num_of_items}}</span>)</span></a>
+            <div class="nav__search">
+              <form action="{% url 'part_search_list' %}" method="get" id="search-block-form--2" accept-charset="UTF-8">
+                <div>
+                  <div class="container-inline">
+                    <div class="form-item form-type-textfield form-item-search-block-form">
+                      <input style="color: black; " title="Введите ключевые слова для поиска."
+                        placeholder=" Поиск по каталогу " type="text" id="edit-search-block-form--4" name="text"
+                        size="15" maxlength="128" class="form-text" value="" />
+                    </div>
+                    <div class="form-actions form-wrapper" id="edit-actions--2">
+                      <input type="submit" id="edit-submit--2" class="form-submit" value="" />
+                    </div>
+                  </div>
                 </div>
+              </form>
+            </div>
+            <div class="nav__contacts">
+              <div class="nav__contacts-social">
+                <a href="viber://add?number=+79193781078"><img src="{% static 'images/viber_mob.webp' %}" loading="auto"
+                    decoding="async" alt="" />Viber</a> <a
+                  href="whatsapp://send?text=Racer-Parts.ru&amp;abid=+79193781078"><img
+                    src="{% static 'images/whatsapp_mob.webp' %}" loading="auto" decoding="async" alt="" />WhatsApp</a>
+              </div> <span class="nav__contacts-phone">+7 (919) 378-10-78</span>
+            </div>
+          </div>
+          <div class="nav__mob-button"></div>
+        </nav>
+        <div class="header__search">
+          <form action="{% url 'part_search_list' %}" method="get" id="search-block-form--2" accept-charset="UTF-8">
+            <div>
+              <div class="container-inline">
+                <div class="form-item form-type-textfield form-item-search-block-form">
+                  <input style="color: black;" title="Введите ключевые слова для поиска."
+                    placeholder=" Поиск по каталогу " type="text" id="edit-search-block-form--4" name="text" size="15"
+                    maxlength="128" class="form-text" value="" />
+                </div>
+                <div class="form-actions form-wrapper" id="edit-actions--2">
+                  <input type="submit" id="edit-submit--2" class="form-submit" value="" />
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+        <div class="header__social">
+          <a href="https://www.youtube.com/channel/UCzv4GaWT10_7IN0TXwjyl0A" target="_blank"><img
+              src="{% static 'images/soc-youtube.webp' %}" alt="youtube" loading="auto" decoding="async" /></a>
+          <a href="https://vk.com/moto_sib" target="_blank"><img src="{% static 'images/soc-vk.webp' %}" alt="vk"
+              loading="auto" decoding="async" /></a> <a href="https://ok.ru/zapchastir" target="_blank"><img
+              src="{% static 'images/soc-od.webp' %}" alt="odnoklassniki" loading="auto" decoding="async" /></a>
+        </div>
+      </div>
+    </div>
+  </header>
+  <main class="main">
+    <div class="content-w">
+      <section class="side-nav">
+        <h2 class="side-nav__item-title">{{ motorcycle.name }}</h2>
+        <div class="attachment attachment-before"></div>
+        <ul class="side-nav__list">
+          {% for mainpart in main_parts %}
+          <li>
+            <a href="{% url 'motorcycle-detail' slug=motorcycle.slug %}#r{{ mainpart.pk }}">{{ mainpart.name }}</a>
+          </li>
+          {% endfor %}
+        </ul>
+        <div class="attachment attachment-after"></div>
+      </section>
+      <div class="main-content">
+        <div class="header__top content-w">
+          <div class="nav-mob-button"></div>
+          <div class="logo">
+            <a class="logo__link h6" href="{% url 'home' %}"><img src="{% static 'images/logo.webp' %}" loading="auto"
+                decoding="async" alt="" /></a>
+          </div>
+          <div class="header__contacts hidden-phone">
+            <div class="header__contacts-social">
+              <a href="https://racer-parts.ru/+79193781078"><img src="{% static 'images/soc-viber.webp' %}"
+                  loading="auto" decoding="async" alt="" /></a> <a href="https://racer-parts.ru/+79193781078"><img
+                  src="{% static 'images/soc-wap.webp' %}" loading="auto" decoding="async" alt="" /></a>
+            </div>
+            <p class="header__phone h7">+7 (919) 378-10-78</p>
+          </div> <a class="autodialog cta-btn autodialog-processed" data-dialog-width="60%" href="{% url " catalog" %}"
+            id="autodialog-7">КАТАЛОГ ЗАПЧАСТЕЙ</a>
+          {% if user.is_authenticated %}
+          <a class="cta-btn light" href="{% url 'user-detail' slug=user.slug %}"><span>КАБИНЕТ</span></a>
+          {% else %}
+          <a class="cta-btn light" href="{% url 'register' %}"><span>КАБИНЕТ</span></a>
+          {% endif %}
+          <div class="block block-uc-ajax-cart block-odd first last block" data-bid="44" id="b44">
+            <div id="ajaxCartUpdate" class="load-on-view ajax-cart-processed">
+              <div class="header__order" id="cart-block-contents-ajax">
+                <a class="autodialog" href="{% url " cart-session" %}"><span id="cart-count">(<span
+                      id="num-of-items">{{get_num_of_items}}</span>)</span></a>
               </div>
             </div>
           </div>
+        </div>
 
-          {% block content %}
-            <div class="product">
-              <div class="product__logo">
-                <img src="{% static 'images/logo.webp' %}" />
+        {% block content %}
+        <div class="product">
+          <div class="product__logo">
+            <img src="{% static 'images/logo.webp' %}" />
+          </div>
+          <h3 class="product__name">{{ motorcycle.name }}</h3>
+          <div class="product__items">
+
+            {% for mainpart in main_parts %}
+            <div class="product__item" id="r{{ mainpart.pk }}">
+              <h4 class="product__item-title">{{ mainpart }}</h4>
+              {% if mainpart.image %}
+              <div class="product__item-photo">
+                <img class="img-part" src="{{mainpart.image.url}}" loading="auto" decoding="async" alt="" />
               </div>
-              <h3 class="product__name">{{ motorcycle.name }}</h3>
-              <div class="product__items">
-                
-                {% for mainpart in main_parts %}
-                  <div class="product__item" id="r{{ mainpart.pk }}">
-                    <h4 class="product__item-title">{{ mainpart }}</h4>
-                    {% if mainpart.image %}
-                      <div class="product__item-photo">
-                        <img class="img-part" src="{{mainpart.image.url}}" loading="auto" decoding="async" alt="" />
-                      </div>
+              {% endif %}
+              <div class="product__item">
+                <div class="attachment attachment-before"></div>
+                <table class="product__item-desc">
+                  <tbody>
+                    <tr>
+                      <th align="center">№</th>
+                      <th>Наименование</th>
+                      <th>Цена</th>
+                      <th>К заказу</th>
+                    </tr>
+
+                    {% for part in mainpart.part_set.all %}
+                    {% if part.price > 0 %}
+                    <tr class="tr-table-part">
+                      <td align="left">{{ part.number }}</td>
+                      <td class="name-part-text">{{ part.name }}</td>
+                      <td>
+                        <span class="uc-price">{{ part.price }} р.</span>
+                      </td>
+                      <td class="product__item-add">
+                        <form class="addToCartForm" method="post" accept-charset="UTF-8" data-part-id="{{ part.id }}"
+                          data-quantity="1">
+                          {% csrf_token %}
+                          <div>
+                            <div class="form-actions form-wrapper">
+                              <input class="list-add-to-cart" type="button" value="В корзину"
+                                onclick="addToCart({{ part.id }}, 1)" />
+                            </div>
+                          </div>
+                        </form>
+                      </td>
+                    </tr>
                     {% endif %}
-                    <div class="product__item">
-                      <div class="attachment attachment-before"></div>
-                      <table class="product__item-desc">
-                        <tbody>
-                          <tr>
-                            <th align="center">№</th>
-                            <th>Наименование</th>
-                            <th>Цена</th>
-                            <th>К заказу</th>
-                          </tr>
-                          
-                          {% for part in mainpart.part_set.all %}
-                            {% if part.price > 0 %}
-                              <tr class="tr-table-part">
-                                <td align="left">{{ part.number }}</td>
-                                <td class="name-part-text">{{ part.name }}</td>
-                                <td>
-                                  <span class="uc-price">{{ part.price }} р.</span>
-                                </td>
-                                <td class="product__item-add">
-                                  <form class="addToCartForm" method="post" accept-charset="UTF-8" data-part-id="{{ part.id }}" data-quantity="1">
-                                    {% csrf_token %}
-                                    <div>
-                                        <div class="form-actions form-wrapper">
-                                            <input class="list-add-to-cart" type="button" value="В корзину" onclick="addToCart({{ part.id }}, 1)" />
-                                        </div>
-                                    </div>
-                                </form>                                
-                                </td>
-                              </tr>
-                            {% endif %}
-                          {% endfor %}
-                                                  
-                        </tbody>
-                      </table>
-                      <div class="attachment attachment-after"></div>
-                    </div>
-                  </div>
-                {% endfor %}
+                    {% endfor %}
 
+                  </tbody>
+                </table>
+                <div class="attachment attachment-after"></div>
               </div>
             </div>
-          {% endblock %}
+            {% endfor %}
 
-          <footer class="footer section">
-            <div class="footer__content content-w">
-              <div class="logo footer__logo">
-                <a class="logo__link h6" href="{% url 'home' %}"><img src="{% static 'images/logo.webp' %}" loading="auto" decoding="async" alt="" /></a>
-                <div class="footer__copy">
-                  <p>© 2023 Использование материалов сайта запрещено без письменного согласия владельца сайта</p>
-                  <p>
-                    <br /><a class="confid" href="#">Политика конфиденциальности</a>
-                  </p>
-                </div>
-              </div>
-              <div class="footer__widget">
-                <div class="block block-block block-odd first block" data-bid="64" id="b64">
-                  <div id="ok_group_widget">
-                    <a href="https://ok.ru/zapchastir?st._aid=ExternalGroupWidget_OpenGroup" target="_blank"><img alt="Racer Одноклассники" src="{% static 'images/ok.webp' %}" title="Вступите в нашу группу OK" width="200" loading="auto" decoding="async" /></a>
-                  </div>
-                </div>
-              </div>
-              <div class="footer__widget">
-                <div class="block block-block block-even block" data-bid="65" id="b65">
-                  <a href="https://vk.com/moto_sib" target="_blank"><img alt="Racer Vkontakte" src="{% static 'images/vk.webp' %}" title="Вступите в нашу группу VK" width="200" loading="auto" decoding="async" /></a>
-                </div>
-              </div>
-            </div>
-            <div class="footer__copy content-w">
-              <p>© 2023 Использование материалов сайта запрещено без письменного согласия владельца сайта</p>
-              <p>
-                <a class="confid" href="#">Политика конфиденциальности</a>
-              </p>
-            </div>
-          </footer>
+          </div>
         </div>
-      </div>
+        {% endblock %}
 
-      {% comment %} to top button {% endcomment %}
-      <button style="display: none;" class="to-top to-top_visible" id="to-top"></button>
-      
-      <div class="position-fixed bottom-0 end-0 p-3" style="z-index: 11">
-        <div class="toast-container">
-          <div id="notification-data" data-cart-url="{% url 'cart-session' %}" style="display: none;"></div>
-        </div>
+        <footer class="footer section">
+          <div class="footer__content content-w">
+            <div class="logo footer__logo">
+              <a class="logo__link h6" href="{% url 'home' %}"><img src="{% static 'images/logo.webp' %}" loading="auto"
+                  decoding="async" alt="" /></a>
+              <div class="footer__copy">
+                <p>© 2023 Использование материалов сайта запрещено без письменного согласия владельца сайта</p>
+                <p>
+                  <br /><a class="confid" href="#">Политика конфиденциальности</a>
+                </p>
+              </div>
+            </div>
+            <div class="footer__widget">
+              <div class="block block-block block-odd first block" data-bid="64" id="b64">
+                <div id="ok_group_widget">
+                  <a href="https://ok.ru/zapchastir?st._aid=ExternalGroupWidget_OpenGroup" target="_blank"><img
+                      alt="Racer Одноклассники" src="{% static 'images/ok.webp' %}" title="Вступите в нашу группу OK"
+                      width="200" loading="auto" decoding="async" /></a>
+                </div>
+              </div>
+            </div>
+            <div class="footer__widget">
+              <div class="block block-block block-even block" data-bid="65" id="b65">
+                <a href="https://vk.com/moto_sib" target="_blank"><img alt="Racer Vkontakte"
+                    src="{% static 'images/vk.webp' %}" title="Вступите в нашу группу VK" width="200" loading="auto"
+                    decoding="async" /></a>
+              </div>
+            </div>
+          </div>
+          <div class="footer__copy content-w">
+            <p>© 2023 Использование материалов сайта запрещено без письменного согласия владельца сайта</p>
+            <p>
+              <a class="confid" href="#">Политика конфиденциальности</a>
+            </p>
+          </div>
+        </footer>
       </div>
-      
+    </div>
 
-    </main>
-    <script src="{% static 'js/script.js' %}"></script>
-    <script src="{% static 'js/side-nav.js' %}"></script>
-    <script>
-      document.addEventListener('DOMContentLoaded', function () {
-          var toTopButton = document.getElementById('to-top');
-  
-          toTopButton.addEventListener('click', function () {
-              window.scrollTo({ top: 0, behavior: 'smooth' });
-          });
-  
-          window.addEventListener('scroll', function () {
-              if (document.body.scrollTop > 1270 || document.documentElement.scrollTop > 1270) {
-                  toTopButton.style.display = 'block';
-              } else {
-                  toTopButton.style.display = 'none';
-              }
-          });
+    {% comment %} to top button {% endcomment %}
+    <button style="display: none;" class="to-top to-top_visible" id="to-top"></button>
+
+    <div class="position-fixed bottom-0 end-0 p-3" style="z-index: 11">
+      <div class="toast-container">
+        <div id="notification-data" data-cart-url="{% url 'cart-session' %}" style="display: none;"></div>
+      </div>
+    </div>
+
+
+  </main>
+  <script src="{% static 'js/script.js' %}"></script>
+  <script src="{% static 'js/side-nav.js' %}"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      var toTopButton = document.getElementById('to-top');
+
+      toTopButton.addEventListener('click', function () {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
       });
 
-      document.addEventListener('DOMContentLoaded', function() {
-        var links = document.querySelectorAll('a[href^="#r"]');
-    
-        links.forEach(function(link) {
-          link.addEventListener('click', function(event) {
-            event.preventDefault();
-            var targetId = this.getAttribute('href').substring(1);
-    
-            var targetElement = document.getElementById(targetId);
-    
-            if (targetElement) {
-              targetElement.scrollIntoView({ behavior: 'smooth' });
-            }
-          });
+      window.addEventListener('scroll', function () {
+        if (document.body.scrollTop > 1270 || document.documentElement.scrollTop > 1270) {
+          toTopButton.style.display = 'block';
+        } else {
+          toTopButton.style.display = 'none';
+        }
+      });
+    });
+
+    document.addEventListener('DOMContentLoaded', function () {
+      var links = document.querySelectorAll('a[href^="#r"]');
+
+      links.forEach(function (link) {
+        link.addEventListener('click', function (event) {
+          event.preventDefault();
+          var targetId = this.getAttribute('href').substring(1);
+
+          var targetElement = document.getElementById(targetId);
+
+          if (targetElement) {
+            targetElement.scrollIntoView({ behavior: 'smooth' });
+          }
         });
       });
+    });
   </script>
-  
-    <style>
+
+  <style>
+    .notification {
+      position: fixed;
+      max-width: 350px;
+      bottom: 80px;
+      right: 40px;
+      background-color: #4CAF50;
+      color: #000;
+      padding: 10px;
+      border-radius: 5px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+      z-index: 999;
+      transform: translateY(20px);
+      transition: opacity 0.3s ease-out, transform 0.3s ease-out;
+      border: 1px solid black;
+    }
+
+    @media (max-width: 550px) {
       .notification {
-        position: fixed;
-        max-width: 350px;
-        bottom: 80px;
-        right: 40px;
-        background-color: #4CAF50;
-        color: #000;
-        padding: 10px;
-        border-radius: 5px;
-        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-        z-index: 999;
-        transform: translateY(20px);
-        transition: opacity 0.3s ease-out, transform 0.3s ease-out;
-        border: 1px solid black;
+        max-width: 240px;
+        font-size: 14px;
       }
-      
-      @media (max-width: 550px) {
-        .notification {
-          max-width: 240px;
-          font-size: 14px;        
-        }
-      }
-    </style>
-  </body>
+    }
+  </style>
+</body>
+
 </html>

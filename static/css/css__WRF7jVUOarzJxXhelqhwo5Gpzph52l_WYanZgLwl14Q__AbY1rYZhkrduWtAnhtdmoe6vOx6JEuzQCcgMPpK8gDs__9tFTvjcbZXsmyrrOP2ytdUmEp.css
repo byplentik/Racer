@@ -2318,7 +2318,7 @@ body.no-touch .product__item .basic-cart-cart-form .light.basic-cart-call-to-act
 .slick-prev {
     position: absolute;
     z-index: 100;
-    top: 40%;
+    top: 50%;
     padding: 0;
     -ms-transform: translateY(-50%);
     transform: translateY(-50%);
