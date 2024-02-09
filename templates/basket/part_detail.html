@@ -270,14 +270,14 @@
     <script src="{% static 'js/script.js' %}"></script>
     <script src="{% static 'js/side-nav.js' %}"></script>
     <script>
-      document.addEventListener('DOMContentLoaded', function () {
-          var toTopButton = document.getElementById('to-top');
+      document.addEventListener('DOMContentLoaded', () => {
+          const toTopButton = document.getElementById('to-top');
   
-          toTopButton.addEventListener('click', function () {
+          toTopButton.addEventListener('click', () => {
               window.scrollTo({ top: 0, behavior: 'smooth' });
           });
   
-          window.addEventListener('scroll', function () {
+          window.addEventListener('scroll', () => {
               if (document.body.scrollTop > 1270 || document.documentElement.scrollTop > 1270) {
                   toTopButton.style.display = 'block';
               } else {
@@ -286,15 +286,15 @@
           });
       });
 
-      document.addEventListener('DOMContentLoaded', function() {
-        var links = document.querySelectorAll('a[href^="#r"]');
+      document.addEventListener('DOMContentLoaded', () => {
+        const links = document.querySelectorAll('a[href^="#r"]');
     
-        links.forEach(function(link) {
-          link.addEventListener('click', function(event) {
+        links.forEach((link) => {
+          link.addEventListener('click',(event) => {
             event.preventDefault();
-            var targetId = this.getAttribute('href').substring(1);
+            const targetId = this.getAttribute('href').substring(1);
     
-            var targetElement = document.getElementById(targetId);
+            const targetElement = document.getElementById(targetId);
     
             if (targetElement) {
               targetElement.scrollIntoView({ behavior: 'smooth' });
