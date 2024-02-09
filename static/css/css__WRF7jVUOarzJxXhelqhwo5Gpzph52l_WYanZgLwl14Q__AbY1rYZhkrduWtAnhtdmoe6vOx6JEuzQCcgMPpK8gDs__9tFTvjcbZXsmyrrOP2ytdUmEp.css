@@ -3245,7 +3245,8 @@ body.no-touch .articles__more button:hover {
 }
 
 .main-gallery__link {
-    text-align: center
+    text-align: center;
+    margin-top: 55px;
 }
 
 .main-gallery__link .link-more {
@@ -4621,7 +4622,7 @@ form .form-item textarea {
         flex-flow: column nowrap;
         -ms-flex-pack: justify;
         justify-content: space-between;
-        position: absolute;
+        position: fixed;
         z-index: 1000;
         top: 0;
         left: 0;
@@ -4844,7 +4845,7 @@ form .form-item textarea {
     .nav__list-wrap:after {
         content: '';
         display: block;
-        position: absolute;
+        position: fixed;
         right: -30px;
         bottom: 70px;
         width: 30px;
