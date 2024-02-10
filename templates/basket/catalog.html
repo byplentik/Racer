@@ -2,45 +2,47 @@
 {% load static %}
 
 {% block title %}
-  Каталог | Racer
+Каталог | Racer
 {% endblock %}
 
 {% block content %}
-  <div class="product">
-    <div class="product__logo">
-      <img src="{% static 'images/logo.webp' %}" />
-    </div>
-    <h3 class="product__name">Каталог запчастей</h3>
+<div class="product">
+  <div class="product__logo">
+    <img src="{% static 'images/logo.webp' %}" />
+  </div>
+  <h3 class="product__name">Каталог запчастей</h3>
 
-    <div class="catalog-parts">
-      <div class="accordion" id="accordionExample">
-        {% for category in categories %}
-          <div class="accordion-item">
-            <h2 class="accordion-header" id="heading{{ forloop.counter }}"><button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse{{ forloop.counter }}" aria-expanded="false" aria-controls="collapse{{ forloop.counter }}">{{ category.name }}</button></h2>
-            <div id="collapse{{ forloop.counter }}" class="accordion-collapse collapse" aria-labelledby="heading{{ forloop.counter }}" data-bs-parent="#accordionExample">
-              <div class="accordion-body">
-                {% for motorcycle in category.motorcycle_set.all %}
-                  <a class="link-part" href="{{ motorcycle.get_absolute_url }}"><strong>{{ motorcycle.name }}</strong></a>
-                  <br />
-                {% endfor %}
-              </div>
-            </div>
+  <div class="catalog-parts">
+    <div class="accordion" id="accordionExample">
+      {% for category in categories %}
+      <div class="accordion-item">
+        <h2 class="accordion-header" id="heading{{ forloop.counter }}"><button class="accordion-button collapsed"
+            type="button" data-bs-toggle="collapse" data-bs-target="#collapse{{ forloop.counter }}"
+            aria-expanded="false" aria-controls="collapse{{ forloop.counter }}">{{ category.name }}</button></h2>
+        <div id="collapse{{ forloop.counter }}" class="accordion-collapse collapse"
+          aria-labelledby="heading{{ forloop.counter }}" data-bs-parent="#accordionExample">
+          <div class="accordion-body">
+            {% for motorcycle in category.motorcycle_set.all %}
+            <a class="link-part" href="{{ motorcycle.get_absolute_url }}"><strong>{{ motorcycle.name }}</strong></a>
+            <br />
+            {% endfor %}
           </div>
-        {% endfor %}
+        </div>
       </div>
+      {% endfor %}
     </div>
   </div>
+</div>
 
-  <style>
-  
-    .link-part strong {
-      font-weight: bold;
-      color: #c72f2f; 
-    }
-    .link-part strong:hover {
-      font-weight: bold;
-      color: #ff0000; 
-    }
-  
-  </style>
+<style>
+  .link-part strong {
+    font-weight: bold;
+    color: #c72f2f;
+  }
+
+  .link-part strong:hover {
+    font-weight: bold;
+    color: #ff0000;
+  }
+</style>
 {% endblock %}

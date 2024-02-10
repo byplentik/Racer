@@ -1,5 +1,9 @@
 "use strict";
 
+const updateNumOfItems = (newCount) => {
+  $("#num-of-items").text(newCount);
+};
+
 const removeFromCart = (partId) => {
   const formData = {
     part_id: partId,
@@ -59,4 +63,27 @@ const updateCartUI = (response) => {
   if (num_items === 0) {
     $("table, #total-price, #num-items, .hr, .btn-order").hide();
   }
+};
+
+const addToCart = (partId, quantity) => {
+  const formData = {
+    part_id: partId,
+    quantity: quantity,
+    csrfmiddlewaretoken: $("input[name=csrfmiddlewaretoken]").val(),
+  };
+
+  $.ajax({
+    type: "POST",
+    url: `/cart/add-to-cart/${partId}/${quantity}/`,
+    data: formData,
+    success: (response) => {
+      updateNumOfItems(response.num_items);
+
+      showNotification(response.part_name);
+    },
+    error: function (error) {
+      alert("Ошибка");
+      console.error(error);
+    },
+  });
 };

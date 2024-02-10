@@ -268,41 +268,9 @@
 
     </main>
     <script src="{% static 'js/script.js' %}"></script>
-    <script src="{% static 'js/side-nav.js' %}"></script>
-    <script>
-      document.addEventListener('DOMContentLoaded', () => {
-          const toTopButton = document.getElementById('to-top');
-  
-          toTopButton.addEventListener('click', () => {
-              window.scrollTo({ top: 0, behavior: 'smooth' });
-          });
-  
-          window.addEventListener('scroll', () => {
-              if (document.body.scrollTop > 1270 || document.documentElement.scrollTop > 1270) {
-                  toTopButton.style.display = 'block';
-              } else {
-                  toTopButton.style.display = 'none';
-              }
-          });
-      });
-
-      document.addEventListener('DOMContentLoaded', () => {
-        const links = document.querySelectorAll('a[href^="#r"]');
-    
-        links.forEach((link) => {
-          link.addEventListener('click',(event) => {
-            event.preventDefault();
-            const targetId = this.getAttribute('href').substring(1);
-    
-            const targetElement = document.getElementById(targetId);
-    
-            if (targetElement) {
-              targetElement.scrollIntoView({ behavior: 'smooth' });
-            }
-          });
-        });
-      });
-  </script>
+    <script src="{% static 'js/sideNav.js' %}"></script>
+    <script src="{% static 'js/notifications.js' %}"></script>
+    <script src="{% static 'js/cart.js' %}"></script>
   
     <style>
       .notification {

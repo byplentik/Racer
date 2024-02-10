@@ -35,15 +35,10 @@
         z-index: 9999;
       }
     </style>
-    <script></script>
-    <script></script>
     <script defer="defer" async="async"></script>
-    <script></script>
-    <script></script>
     <style id="__replain_styles"></style>
   </head>
   <body class="form-single-submit-processed no-touch">
-    <script></script>
     <header class="header">
       <div class="header__nav">
         <div class="header__nav-wrap content-w">
@@ -672,71 +667,6 @@
         </div>
       </section>
     </main>
-    <script>
-      document.addEventListener("DOMContentLoaded", function() {
-        var navMobButton = document.querySelector('.nav__mob-button');
-        var navMobButtonMobile = document.querySelector('.nav-mob-button');
-        var navListWrap = document.querySelector('.nav__list-wrap');
-      
-        function toggleAnimateClass() {
-          navListWrap.classList.toggle('animate');
-        }
-      
-        function addAnimateClassIfOutsideNavList(event) {
-          var isClickInsideNavList = navListWrap.contains(event.target) || navMobButton.contains(event.target) || navMobButtonMobile.contains(event.target);
-          
-          if (!isClickInsideNavList) {
-            // Clicked outside, add the 'animate' class
-            navListWrap.classList.add('animate');
-          }
-        }
-      
-        navMobButton.addEventListener('click', toggleAnimateClass);
-        navMobButtonMobile.addEventListener('click', toggleAnimateClass);
-      
-        // Add event listener for clicks outside the 'nav__list-wrap'
-        document.addEventListener('click', addAnimateClassIfOutsideNavList);
-
-
-        $(document).ready(function(){
-  $('.comments__items').slick({
-  speed: 500,
-  slidesToShow: 2,
-  slidesToScroll: 2,
-  infinite: true,
-  autoplay: true,
-  autoplaySpeed: 2000,
-  responsive: [
-    {
-      breakpoint: 900,
-      settings: {
-        slidesToShow: 1,
-        slidesToScroll: 1
-      }
-    }
-  ]
-  });
-  $('.gallery__items').slick({
-  speed: 500,
-  slidesToShow: 4,
-  slidesToScroll: 4,
-  infinite: true,
-  autoplay: true,
-  autoplaySpeed: 2000,
-  responsive: [
-    {
-      breakpoint: 900,
-      settings: {
-        slidesToShow: 1,
-        slidesToScroll: 1
-      }
-    }
-  ]
-  });
-});
-		
-      });
-    </script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 
     <script type="text/javascript" src="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
@@ -746,5 +676,8 @@
         color: white;
     }
     </style>
+    <script type="text/javascript" src="{% static 'js/sideNav.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/comments.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/gallery.js' %}"></script>
   </body>
 </html>
