@@ -264,9 +264,25 @@
           <div id="notification-data" data-cart-url="{% url 'cart-session' %}" style="display: none;"></div>
         </div>
       </div>
-      
-
+  
     </main>
+
+    <script>
+      document.addEventListener('DOMContentLoaded', function() {
+          const sideNav = document.querySelector('.side-nav');
+  
+          window.addEventListener('scroll', function() {
+              let scrollPosition = window.scrollY || document.documentElement.scrollTop;
+  
+              if (scrollPosition > 66) {
+                  sideNav.style.position = 'fixed';
+                  sideNav.style.top = 0 + 'px'
+              } else {
+                sideNav.style.position = 'relative';
+              }
+          });
+      });
+  </script>
     <script src="{% static 'js/script.js' %}"></script>
     <script src="{% static 'js/sideNav.js' %}"></script>
     <script src="{% static 'js/notifications.js' %}"></script>

@@ -3465,6 +3465,7 @@ body.catalog .main>.content-w {
     float: left;
     padding: 35px 30px;
     background: #efefef;
+    position: relative;
 }
 
 .side-nav.fixed {

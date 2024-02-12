@@ -196,15 +196,30 @@
       <div class="custom-overlay" id="custom-overlay">
         <div class="custom-modal">
           <p style="margin-bottom: 15px;">Вы уверены, что хотите выйти?</p>
-          <button class="custom-btn-exit" onclick="exit()">Выйти</button>
+          <button class="custom-btn-exit" onclick="exit()" data-logout-url="{% url 'logout' %}">Выйти</button>
           <button class="custom-btn-close" onclick="closeModal()">Закрыть</button>
         </div>
       </div>
-
-      
-
     {% endif %}
     
+    <script>
+      document.addEventListener('DOMContentLoaded', function() {
+          const sideNav = document.querySelector('.side-nav');
+  
+          window.addEventListener('scroll', function() {
+              let scrollPosition = window.scrollY || document.documentElement.scrollTop;
+  
+              if (scrollPosition > 66) {
+                  sideNav.style.position = 'fixed';
+                  sideNav.style.top = 0 + 'px'
+              } else {
+                sideNav.style.position = 'relative';
+              }
+          });
+      });
+  </script>
+  
+  
     <script type="text/javascript" src="{% static 'js/cookies.js' %}"></script>
     <script type="text/javascript" src="{% static 'js/notifications.js' %}"></script>
     <script type="text/javascript" src="{% static 'js/sideNav.js' %}"></script>

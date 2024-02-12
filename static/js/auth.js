@@ -1,6 +1,6 @@
 const exit = () => {
   const xhr = new XMLHttpRequest();
-  xhr.open("POST", "{% url 'logout' %}", true);
+  xhr.open("POST", "/logout/", true);
   xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
 
   const csrftoken = getCookie("csrftoken");
@@ -9,7 +9,7 @@ const exit = () => {
   xhr.onreadystatechange = function () {
     if (xhr.readyState === 4) {
       if (xhr.status === 200) {
-        window.location.href = "{% url 'home' %}";
+        window.location.href = "/login/";
       } else {
         console.error("Произошла ошибка при выходе:", xhr.statusText);
       }
