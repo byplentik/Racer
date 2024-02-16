@@ -1,0 +1,55 @@
+.email-body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f4f4f4;
+    color: #333;
+    margin: 0;
+    padding: 0;
+  }
+
+  .email-container {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    /* Add the background property with the logo path */
+    background: url('') no-repeat center center;
+    /* Adjust background size and other properties as needed */
+    background-size: contain;
+  }
+
+  .img-logo {
+    max-width: 100%;
+    height: auto;
+  }
+
+  .email-cart-h1 {
+    font-size: 22px;
+    margin-top: 20px;
+  }
+
+  .items-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+  }
+
+  .items-table th, .items-table td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+  }
+
+  .email-total-price {
+    margin-top: 20px;
+    font-weight: bold;
+  }
+
+  .footer-text {
+    margin-top: 20px;
+  }
+
+  .footer-text a {
+    color: #007bff;
+    text-decoration: none;
+  }

@@ -54,6 +54,8 @@ INSTALLED_APPS = [
 
     # 3-rd packages
     'hcaptcha',
+    'django_mail_admin',
+    'django_extensions',
 ]
 
 # django-admin-interface
@@ -177,15 +179,46 @@ EMAIL = os.getenv('EMAIL')
 URL_SMS_AERO = os.getenv('URL_SMS_AERO')
 
 # # SMPT
-# EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-# EMAIL_HOST = 'imap.yandex.ru'
-# EMAIL_PORT = 993
-# EMAIL_USE_SSL = True
-#
-# EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER')
-# EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD')
-#
-# DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
-# SERVER_EMAIL = EMAIL_HOST_USER
-# EMAIL_ADMIN = EMAIL_HOST_USER
+EMAIL_BACKEND = 'django_mail_admin.backends.CustomEmailBackend'
+EMAIL_HOST = 'smtp.yandex.ru'
+EMAIL_PORT = 465
+EMAIL_USE_SSL = True
 
+EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD')
+
+DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+SERVER_EMAIL = EMAIL_HOST_USER
+EMAIL_ADMIN = EMAIL_HOST_USER
+
+"""
+from django.core.mail import send_mail
+
+send_mail(
+    'Сообщение',
+    'Блабалалабалалала короче здесь большое сообщение',
+    'ilyasablin000@yandex.ru',
+    ['ilyasablin3p@gmail.com'],
+    fail_silently=False,
+)
+
+from django_mail_admin import mail, models
+
+mail.send(
+    'ilyasablin000@yandex.ru',
+    'ilyasablin3p@gmail.com',
+    subject='My email',
+    message='Hi there!',
+    priority=models.PRIORITY.now,
+    html_message='Hi <strong>there</strong>!',
+)
+
+mail.send(
+    'ilyasablin000@yandex.ru',
+    'ilyasablin3p@gmail.com',
+    priority=models.PRIORITY.now,
+    template=template,
+)
+
+from django_mail_admin import mail, models
+"""

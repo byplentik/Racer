@@ -1,13 +1,14 @@
 import logging
 import re
 
+from django.conf import settings
 from django.contrib import admin, messages
-from django.contrib.admin.sites import AdminSite
-from django.contrib.admin.views.main import ChangeList
 from openpyxl import load_workbook, Workbook
+from django_mail_admin.models import OutgoingEmail, EmailTemplate, PRIORITY
+from django_mail_admin import mail
 
 from basket import models
-from basket.forms import MotorcycleAdminForm
+from basket.forms import MotorcycleAdminForm, SendInfoEmailForm
 
 
 @admin.register(models.Category)
@@ -114,6 +115,37 @@ class DeliveryMethodInline(admin.TabularInline):
     fields = ['name', 'price']
 
 
+class SendEmailModelInline(admin.TabularInline):
+    model = models.SendEmailModel
+    classes = ['collapse']
+    fields = ['to_email', 'template']
+
+    def get_readonly_fields(self, request, obj=None):
+        if obj and hasattr(obj, 'send_email') and obj.send_email.outgoing_email is None:
+            self.send_email_to_checkout_cart(obj, obj.send_email)
+
+        if request.method == 'GET' and hasattr(obj, 'send_email'):
+            return ['to_email', 'template']
+        return []
+
+    def send_email_to_checkout_cart(self, obj, send_email_model):
+        variable_dict = {
+            'id_cart': obj.pk,
+            'total_price': obj.total_price,
+        }
+
+        mail_send = mail.send(
+            sender=settings.EMAIL_HOST_USER,
+            recipients=send_email_model.to_email,
+            template=send_email_model.template,
+            priority=PRIORITY.now,
+            variable_dict=variable_dict,
+        )
+        send_email_model.outgoing_email = mail_send
+        send_email_model.save()
+        return send_email_model
+
+
 @admin.register(models.CheckoutCart)
 class CheckoutCartAdmin(admin.ModelAdmin):
     list_display = ('id_as_order_number', 'client', 'total_price', 'created_at', 'order_status')
@@ -121,7 +153,7 @@ class CheckoutCartAdmin(admin.ModelAdmin):
     list_filter = ['order_status', 'created_at']
     search_fields = ['id']
     date_hierarchy = 'created_at'
-    inlines = (CommentAdministratorForCheckoutCartInline, DeliveryMethodInline, AdditionalItemInline, OrderedPartInline)
+    inlines = (SendEmailModelInline, CommentAdministratorForCheckoutCartInline, DeliveryMethodInline, AdditionalItemInline, OrderedPartInline)
     change_form_template = 'admin/basket/CheckoutCart/change_form_custom.html'
 
     def changeform_view(self, request, object_id=None, form_url='', extra_context=None):
@@ -180,3 +212,4 @@ class AdminExcelFileCatalog(admin.ModelAdmin):
 @admin.register(models.SpecifiedDeliveryAddressModel)
 class AdminSpecifiedDeliveryAddressModel(admin.ModelAdmin):
     list_display = ['full_name', 'phone_number', 'postal_code', 'country', 'delivery_address', 'user']
+

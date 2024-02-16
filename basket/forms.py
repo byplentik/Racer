@@ -1,5 +1,6 @@
 from django import forms
 from django.contrib.auth import get_user_model
+from django_mail_admin.models import EmailTemplate
 
 from users.models import DeliveryAddressModel
 from basket.models import Motorcycle
@@ -59,3 +60,6 @@ class PartSearchForm(forms.Form):
     )
 
 
+class SendInfoEmailForm(forms.Form):
+    to_email = forms.EmailField()
+    template_email = forms.ModelChoiceField(queryset=EmailTemplate.objects.all(), empty_label=None)

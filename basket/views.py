@@ -29,8 +29,7 @@ class MotorcycleDetailView(CreateSessionKeyMixin, generic.DetailView):
         context = super().get_context_data(**kwargs)
         motorcycle = self.get_object()
 
-        # Фильтруем MainPart, чтобы получить только те, у которых есть связанные Part.price > 0
-        main_parts_with_price = motorcycle.mainpart_set.filter(part__price__gt=0).distinct()
+        main_parts_with_price = motorcycle.mainpart_set.all()
 
         context['main_parts'] = main_parts_with_price
         return context

@@ -188,7 +188,7 @@
                             <th>Цена</th>
                             <th>К заказу</th>
                           </tr>
-                          
+                          <button class="btn-all-part" id="showAllPartsBtn-{{ mainpart.id }}">Показать все запчасти</button>
                           {% for part in mainpart.part_set.all %}
                             {% if part.price > 0 %}
                               <tr class="tr-table-part">
@@ -206,6 +206,18 @@
                                         </div>
                                     </div>
                                 </form>                                
+                                </td>
+                              </tr>
+                            {% endif %}
+                          {% endfor %}
+
+                          {% for part in mainpart.part_set.all %}
+                            {% if part.price == 0 %}
+                              <tr class="tr-table-part {% if part.price == 0 %}hidden-part-{{mainpart.pk}}{% endif %}" {% if part.price == 0 %}style="display: none"{% endif %}>
+                                <td align="left">{{ part.number }}</td>
+                                <td class="name-part-text">{{ part.name }}</td>
+                                <td class="product__item-add">
+                                  <p>Нет в наличии</p>                               
                                 </td>
                               </tr>
                             {% endif %}
@@ -266,6 +278,35 @@
       </div>
   
     </main>
+
+  <script>
+    $(document).ready(function() {
+        $(".btn-all-part").click(function() {
+            // Get the ID of the clicked button
+            var buttonId = $(this).attr("id");
+        
+            // Extract the main part ID from the button ID
+            var mainPartId = buttonId.split("-")[1];
+        
+            // Toggle the 'active' class on the clicked button
+            $(this).toggleClass("active");
+        
+            // Show or hide the parts based on the main part ID
+            $(".tr-table-part").each(function() {
+                if ($(this).hasClass("hidden-part-" + mainPartId)) {
+                    $(this).toggle();
+                }
+            });
+          
+            // Change the text inside the button
+            var buttonText = $(this).hasClass("active") ? "Скрыть запчасти" : "Показать все запчасти";
+            $(this).text(buttonText);
+        });
+    });
+  </script>
+
+    
+  
 
     <script>
       document.addEventListener('DOMContentLoaded', function() {

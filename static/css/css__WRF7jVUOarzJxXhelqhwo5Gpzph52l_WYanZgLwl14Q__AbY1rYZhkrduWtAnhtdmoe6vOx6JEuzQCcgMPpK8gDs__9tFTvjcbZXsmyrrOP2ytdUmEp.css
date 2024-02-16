@@ -6677,3 +6677,29 @@ textarea.form-control {
         height: 70px;
     }
 }
+
+.btn-all-part {
+    padding: 5px 10px;
+    font-size: 14px;
+    cursor: pointer;
+    margin-bottom: 20px;
+    border-radius: 10px;
+    background-color: #ec1827;
+    color: #fff;
+    border: 1px solid #ff0000;
+}
+
+.btn-all-part:hover {
+    background-color: #cc0000;
+    border: 1px solid #cc0000;
+}
+
+.btn-all-part:active {
+    background-color: #990000;
+    border: 1px solid #990000;
+}
+
+.btn-all-part.active {
+    background-color: #990000;
+    border: 1px solid #990000;
+}

@@ -3,6 +3,7 @@ from django.urls import reverse
 from django.contrib.auth import get_user_model
 from django.contrib import admin
 from django.utils.html import format_html
+from django_mail_admin.models import OutgoingEmail, EmailTemplate
 
 from users.models import DeliveryAddressModel
 
@@ -170,3 +171,11 @@ class SpecifiedDeliveryAddressModel(models.Model):
     country = models.CharField(verbose_name='Страна', max_length=20, choices=COUNTRIES_CHOICES, blank=True, null=True)
     delivery_address = models.CharField(verbose_name='Адрес доставки', max_length=455)
     user = models.ForeignKey(get_user_model(), on_delete=models.CASCADE, verbose_name='Пользователь')
+
+
+class SendEmailModel(models.Model):
+    checkout_cart = models.OneToOneField(CheckoutCart, on_delete=models.CASCADE, related_name='send_email', blank=True, null=True)
+    outgoing_email = models.OneToOneField(OutgoingEmail, on_delete=models.CASCADE, blank=True, null=True)
+    template = models.ForeignKey(EmailTemplate, on_delete=models.CASCADE, blank=True, null=True)
+    from_email = models.CharField(max_length=254, null=True)
+    to_email = models.CharField(max_length=254, null=True)
