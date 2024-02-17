@@ -7,12 +7,13 @@ from django.urls import reverse_lazy
 from django.contrib import messages
 from django.contrib.auth.views import PasswordChangeView
 from django.views.decorators.http import require_POST
+from django.contrib.auth.views import PasswordResetView
 
 from basket.mixins import CreateSessionKeyMixin
 
 from users.models import DeliveryAddressModel
 from users.forms import UserCreationForm, DeliveryAddressAddForm, \
-    LoginForm, EditUserForm, UserChangePasswordForm
+    LoginForm, EditUserForm, UserChangePasswordForm, PasswordResetCustomForm
 
 
 class FormViewCustom(CreateSessionKeyMixin, generic.FormView):
@@ -138,3 +139,9 @@ def delete_address(request, address_id):
     address = get_object_or_404(DeliveryAddressModel, id=address_id)
     address.delete()
     return JsonResponse({'success': True})
+
+
+class CustomPasswordResetView(PasswordResetView):
+    template_name = 'users/password_reset/password_reset_form.html'
+    form_class = PasswordResetCustomForm
+    html_email_template_name = 'users/password_reset/password_reset_email.html'

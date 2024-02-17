@@ -1,6 +1,6 @@
 from django import forms
 from django.contrib.auth import authenticate
-from django.contrib.auth.forms import ReadOnlyPasswordHashField
+from django.contrib.auth.forms import ReadOnlyPasswordHashField, PasswordResetForm
 from django.core.exceptions import ValidationError
 from django.contrib.auth.forms import PasswordChangeForm
 
@@ -133,3 +133,13 @@ class DeliveryAddressAddForm(forms.ModelForm):
         if commit:
             instance.save()
         return instance
+
+
+class PasswordResetCustomForm(PasswordResetForm):
+    email = forms.EmailField(
+        label='Email адрес для сброса пароля',
+        widget=forms.EmailInput(attrs={'class': 'form-control', 'placeholder': 'example@email.com'}),
+    )
+
+    class Meta:
+        fields = ['email']
