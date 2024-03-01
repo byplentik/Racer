@@ -9,6 +9,7 @@ from django_mail_admin import mail
 
 from basket import models
 from basket.forms import MotorcycleAdminForm, SendInfoEmailForm
+from basket.models import SendEmailAtCheckoutCartModel
 
 
 @admin.register(models.Category)
@@ -115,35 +116,55 @@ class DeliveryMethodInline(admin.TabularInline):
     fields = ['name', 'price']
 
 
-class SendEmailModelInline(admin.TabularInline):
-    model = models.SendEmailModel
+class SendEmailAtCheckoutCartModelInline(admin.TabularInline):
+    model = models.SendEmailAtCheckoutCartModel
     classes = ['collapse']
-    fields = ['to_email', 'template']
+    fields = ['outgoing_email', 'template']
 
     def get_readonly_fields(self, request, obj=None):
-        if obj and hasattr(obj, 'send_email') and obj.send_email.outgoing_email is None:
-            self.send_email_to_checkout_cart(obj, obj.send_email)
+        if hasattr(obj, 'send_email_cart_order'):
+            send_email_at_checkout_cart_obj = obj.send_email_cart_order
+            if send_email_at_checkout_cart_obj.outgoing_email is None:
 
-        if request.method == 'GET' and hasattr(obj, 'send_email'):
-            return ['to_email', 'template']
+                # Генерируем html код для отображения запчастей в виде таблицы
+                html_list_parts = '<table border="1">\n'
+                html_list_parts += '<tr><th>Наименование</th><th>Цена</th><th>Кол-во</th></tr>\n'
+                for ordered_part in obj.ordered_parts.all():
+                    html_list_parts += f'<tr><td>{ordered_part.part.name}</td><td>{ordered_part.part.price} р.</td><td>{ordered_part.quantity}</td></tr>\n'
+
+                if hasattr(obj, 'additional_item'):
+                    for item in obj.additional_item.all():
+                        html_list_parts += f'<tr><td>{item.name}</td><td>{item.price} р.</td><td>1</td></tr>\n'
+                html_list_parts += '</table>'
+
+                # Переменные, которые будут использоваться в шаблоне
+                variable_dict = {
+                    'order_number': obj.pk,
+                    'order_total_price': obj.total_price,
+                    'order_products': html_list_parts,
+                }
+
+                if hasattr(obj, 'delivery_method'):
+                    variable_dict['total_price_with_delivery'] = obj.delivery_method.total_price_with_delivery
+                    variable_dict['price_delivery'] = obj.delivery_method.price
+
+                # Отправляем письмо
+                outgoing_email = mail.send(
+                    'ilyasablin000@yandex.ru',
+                    obj.user.email,
+                    template=obj.send_email_cart_order.template,
+                    priority=PRIORITY.now,
+                    variable_dict=variable_dict,
+                    )
+
+                # Обновляем и сохраняем объект SendEmailAtCheckoutCartModel
+                send_email_at_checkout_cart_obj.outgoing_email = outgoing_email
+                send_email_at_checkout_cart_obj.from_email = outgoing_email.from_email
+                send_email_at_checkout_cart_obj.to = outgoing_email.to
+                send_email_at_checkout_cart_obj.save()
+
+            return ['outgoing_email', 'template']
         return []
-
-    def send_email_to_checkout_cart(self, obj, send_email_model):
-        variable_dict = {
-            'id_cart': obj.pk,
-            'total_price': obj.total_price,
-        }
-
-        mail_send = mail.send(
-            sender=settings.EMAIL_HOST_USER,
-            recipients=send_email_model.to_email,
-            template=send_email_model.template,
-            priority=PRIORITY.now,
-            variable_dict=variable_dict,
-        )
-        send_email_model.outgoing_email = mail_send
-        send_email_model.save()
-        return send_email_model
 
 
 @admin.register(models.CheckoutCart)
@@ -153,7 +174,7 @@ class CheckoutCartAdmin(admin.ModelAdmin):
     list_filter = ['order_status', 'created_at']
     search_fields = ['id']
     date_hierarchy = 'created_at'
-    inlines = (SendEmailModelInline, CommentAdministratorForCheckoutCartInline, DeliveryMethodInline, AdditionalItemInline, OrderedPartInline)
+    inlines = (SendEmailAtCheckoutCartModelInline, CommentAdministratorForCheckoutCartInline, DeliveryMethodInline, AdditionalItemInline, OrderedPartInline)
     change_form_template = 'admin/basket/CheckoutCart/change_form_custom.html'
 
     def changeform_view(self, request, object_id=None, form_url='', extra_context=None):
@@ -208,8 +229,11 @@ class AdminExcelFileCatalog(admin.ModelAdmin):
                 except FileNotFoundError as ex:
                     logging.error(f'Произошла ошибка при загрузке файла Excel: {ex}')
 
-
-@admin.register(models.SpecifiedDeliveryAddressModel)
-class AdminSpecifiedDeliveryAddressModel(admin.ModelAdmin):
-    list_display = ['full_name', 'phone_number', 'postal_code', 'country', 'delivery_address', 'user']
+"""
+{{ order_number }}
+{{ order_products }}
+{{ order_total_price }}
+{{ total_price_with_delivery }}
+{{ price_delivery }}
+"""
 

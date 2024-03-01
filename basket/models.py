@@ -173,9 +173,16 @@ class SpecifiedDeliveryAddressModel(models.Model):
     user = models.ForeignKey(get_user_model(), on_delete=models.CASCADE, verbose_name='Пользователь')
 
 
-class SendEmailModel(models.Model):
-    checkout_cart = models.OneToOneField(CheckoutCart, on_delete=models.CASCADE, related_name='send_email', blank=True, null=True)
-    outgoing_email = models.OneToOneField(OutgoingEmail, on_delete=models.CASCADE, blank=True, null=True)
+class SendEmailAtCheckoutCartModel(models.Model):
+    checkout_order = models.OneToOneField(CheckoutCart, on_delete=models.CASCADE, related_name='send_email_cart_order')
+    outgoing_email = models.OneToOneField(OutgoingEmail, on_delete=models.CASCADE, related_name='send_email_cart_outgoing_email', blank=True, null=True)
     template = models.ForeignKey(EmailTemplate, on_delete=models.CASCADE, blank=True, null=True)
-    from_email = models.CharField(max_length=254, null=True)
-    to_email = models.CharField(max_length=254, null=True)
+    from_email = models.EmailField(max_length=255, blank=True, null=True)
+    to_email = models.EmailField(max_length=255, blank=True, null=True)
+
+    def __str__(self):
+        return f'{self.pk}'
+
+    class Meta:
+        verbose_name = 'Отправить письмо пользователю'
+        verbose_name_plural = 'Отправить письмо пользователю'
