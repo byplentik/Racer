@@ -5,13 +5,20 @@ from django.contrib import messages
 from django.contrib.auth import get_user_model as User
 from django.http import JsonResponse
 from django.shortcuts import get_object_or_404
-from django.urls import reverse_lazy
+from django.urls import reverse_lazy, reverse
 from django.views import generic
+from django_mail_admin import mail
+from django_mail_admin.models import EmailTemplate, TemplateVariable
+from django_mail_admin.utils import PRIORITY
 
 from users.models import DeliveryAddressModel
 from .forms import CheckoutFromCartForm, PartSearchForm
 from .mixins import CreateSessionKeyMixin
 from .models import Category, Part, CheckoutCart, OrderedPart, Motorcycle, SpecifiedDeliveryAddressModel
+
+from django.contrib.auth.tokens import default_token_generator
+from django.utils.encoding import force_bytes
+from django.utils.http import urlsafe_base64_encode
 
 
 class CatalogListView(CreateSessionKeyMixin, generic.ListView):
@@ -183,15 +190,54 @@ class CheckoutFromCartView(CreateSessionKeyMixin, generic.FormView):
         # Если пользователь не авторизован
         else:
             # Создаем пользователя и адрес
-            user, address = self._create_user_and_address(cleaned_data)
+            user, address, created = self._create_user_and_address(cleaned_data)
             checkout_cart = self._create_checkout_cart(user, total_price, address, cleaned_data)
-
             address.save()
 
         # Добавляем запчасти в корзину
         self._create_ordered_parts(cart, checkout_cart)
+        self.send_email_created_user(user, checkout_cart, created)
+
         messages.success(self.request, f'{checkout_cart.pk}')
         return super().form_valid(form)
+
+    def send_email_created_user(self, user, checkout_cart, created):
+        template = EmailTemplate.objects.get(name="Шаблон при оформлении заказа")
+
+        # Рендер html
+        html_list_parts = '<table border="1">\n'
+        html_list_parts += '<tr><th>Наименование</th><th>Цена</th><th>Кол-во</th></tr>\n'
+        for ordered_part in checkout_cart.ordered_parts.all():
+            html_list_parts += f'<tr><td>{ordered_part.part.name}</td><td>{ordered_part.part.price} р.</td><td>{ordered_part.quantity}</td></tr>\n'
+        html_list_parts += '</table>'
+
+        variable_dict = {
+            'created': created,
+            'number_cart': checkout_cart.pk,
+            'subject': f'Вы создали заказ №{checkout_cart.pk} на сайте racer-parts.ru',
+            'ordered_parts': html_list_parts,
+            'total_price': checkout_cart.total_price,
+        }
+
+        # Генерация ссылки для сброса пароля если пользователь создан
+        if created:
+            uid = urlsafe_base64_encode(force_bytes(user.pk))
+            token = default_token_generator.make_token(user)
+            reset_url = reverse('password_reset_confirm', kwargs={'uidb64': uid, 'token': token})
+            reset_url = self.request.build_absolute_uri(reset_url)
+
+            html_reset_url = '<p>Так как вы впервые оформили заказ на нашем сайте, вы можете сбросить пароль по следующей ссылке и войти в личный кабинет:</p>\n'
+            html_reset_url += f'<p style="color: red;"><strrong>Ваше имя пользователя (на случай, если вы его забыли):</strong> { user.email }<p>\n'
+            html_reset_url += f'{reset_url}\n<hr>'
+
+            variable_dict['html_reset_url'] = html_reset_url
+
+        mail.send('ilyasablin000@yandex.ru',
+                  user.email,
+                  template=template,
+                  priority=PRIORITY.now,
+                  variable_dict=variable_dict
+                  )
 
     def _create_user_and_address(self, cleaned_data):
         email = cleaned_data['email']
@@ -199,7 +245,7 @@ class CheckoutFromCartView(CreateSessionKeyMixin, generic.FormView):
 
         if created:
             user.username = email.split('@')[0]
-            user.set_password('1234')
+            user.set_password(User().objects.make_random_password())
             user.save()
 
         # Добавляем его адрес в бд
@@ -211,7 +257,7 @@ class CheckoutFromCartView(CreateSessionKeyMixin, generic.FormView):
             delivery_address=cleaned_data['delivery_address'],
             user=user,
         )
-        return user, address
+        return user, address, created
 
     def _create_ordered_parts(self, cart, checkout_cart):
         for part_id, cart_item in cart.items():

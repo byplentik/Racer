@@ -191,34 +191,3 @@ DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 SERVER_EMAIL = EMAIL_HOST_USER
 EMAIL_ADMIN = EMAIL_HOST_USER
 
-"""
-from django.core.mail import send_mail
-
-send_mail(
-    'Сообщение',
-    'Блабалалабалалала короче здесь большое сообщение',
-    'ilyasablin000@yandex.ru',
-    ['ilyasablin3p@gmail.com'],
-    fail_silently=False,
-)
-
-from django_mail_admin import mail, models
-
-mail.send(
-    'ilyasablin000@yandex.ru',
-    'ilyasablin3p@gmail.com',
-    subject='My email',
-    message='Hi there!',
-    priority=models.PRIORITY.now,
-    html_message='Hi <strong>there</strong>!',
-)
-
-mail.send(
-    'ilyasablin000@yandex.ru',
-    'ilyasablin3p@gmail.com',
-    priority=models.PRIORITY.now,
-    template=template,
-)
-
-from django_mail_admin import mail, models
-"""
