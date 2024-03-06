@@ -17,10 +17,22 @@ class AdminCategory(admin.ModelAdmin):
     list_display = ['name']
 
 
+class EngineInline(admin.TabularInline):
+    model = models.Engine
+    extra = 1
+    classes = ['collapse']
+
+
+@admin.register(models.NotePartModel)
+class NotePartModelAdmin(admin.ModelAdmin):
+    list_display = ['note', 'part']
+
+
 @admin.register(models.Motorcycle)
 class AdminMotorcycle(admin.ModelAdmin):
     list_display = ['name', 'category']
     prepopulated_fields = {'slug': ['name']}
+    inlines = (EngineInline,)
 
     def get_form(self, request, obj=None, change=False, **kwargs):
         kwargs['form'] = MotorcycleAdminForm
@@ -39,20 +51,33 @@ class AdminMotorcycle(admin.ModelAdmin):
                 previous_value = 0
 
                 # Получаем данные с Excel файла и создаем объект экземпляра MainPart
-                for row in ws.iter_rows(min_row=1, min_col=2, max_col=6):
+                for row in ws.iter_rows(min_row=1, min_col=2, max_col=7):
                     value_mainpart_or_number = str(row[0].value)
                     try:
                         value_number = int(value_mainpart_or_number)
                         code_value = str(row[1].value)
                         name_value = str(row[3].value)
+                        quantity = int(row[4].value)
 
                         if value_number > previous_value and code_value.startswith('R'):
-                            models.Part.objects.create(
+                            part = models.Part.objects.create(
                                 main_part=mainparts[counter_mainparts],
                                 number=value_number,
                                 code=code_value,
                                 name=name_value,
                             )
+
+                            if row[5].value is not None:
+                                models.NotePartModel.objects.create(
+                                    part=part,
+                                    note=str(row[5].value)
+                                )
+
+                            if quantity > 1:
+                                models.NotePartModel.objects.create(
+                                    part=part,
+                                    note=f'Для заказа комплекта необходимо {quantity} шт'
+                                )
 
                             previous_value = value_number
                     except:
@@ -228,6 +253,11 @@ class AdminExcelFileCatalog(admin.ModelAdmin):
                                 logging.error(f'An error occurred while updating the price: {ex}')
                 except FileNotFoundError as ex:
                     logging.error(f'Произошла ошибка при загрузке файла Excel: {ex}')
+
+
+@admin.register(models.Engine)
+class AdminEngine(admin.ModelAdmin):
+    list_display = ['url']
 
 """
 {{ order_number }}

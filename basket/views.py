@@ -35,8 +35,10 @@ class MotorcycleDetailView(CreateSessionKeyMixin, generic.DetailView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         motorcycle = self.get_object()
-
         main_parts_with_price = motorcycle.mainpart_set.all()
+
+        if motorcycle.engines.exists():
+            context['url_engines'] = motorcycle.engines.all()
 
         context['main_parts'] = main_parts_with_price
         return context

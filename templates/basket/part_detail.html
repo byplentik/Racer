@@ -174,9 +174,20 @@
                   <div class="product__item" id="r{{ mainpart.pk }}">
                     <h4 class="product__item-title">{{ mainpart }}</h4>
                     {% if mainpart.image %}
-                      <div class="product__item-photo">
-                        <img class="img-part" src="{{mainpart.image.url}}" loading="auto" decoding="async" alt="" />
-                      </div>
+                    <div class="product__item-photo">
+                      <img class="img-part" src="{{mainpart.image.url}}" loading="auto" decoding="async" alt="" data-toggle="modal" data-target="#fullScreenModal" />
+                    </div>
+                  
+                     <!-- Full-screen modal -->
+                     <div class="modal fade" id="fullScreenModal" tabindex="-1" role="dialog" aria-labelledby="fullScreenModalLabel" aria-hidden="true">
+                         <div class="modal-dialog modal-dialog-centered modal-lg">
+                             <div class="modal-content">
+                                 <div class="modal-body">
+                                     <img class="img-fluid" id="fullScreenImage" src="" alt="" />
+                                 </div>
+                             </div>
+                         </div>
+                     </div>
                     {% endif %}
                     <div class="product__item">
                       <div class="attachment attachment-before"></div>
@@ -193,7 +204,15 @@
                             {% if part.price > 0 %}
                               <tr class="tr-table-part">
                                 <td align="left">{{ part.number }}</td>
-                                <td class="name-part-text">{{ part.name }}</td>
+                                <td class="name-part-text">{{ part.name }}
+                                  {% if part.notes.all %}
+                                  <div class="product__comment-question">? <span class="text-comment">
+                                      {% for note in part.notes.all %}
+                                          {{ note.note }}
+                                      {% endfor %}
+                                  </span></div>
+                                  {% endif %}
+                                </td>
                                 <td>
                                   <span class="uc-price">{{ part.price }} р.</span>
                                 </td>
@@ -267,6 +286,17 @@
           </footer>
         </div>
       </div>
+      {% if url_engines %}
+      {% for url in url_engines %}
+        <div class="card-engine">
+          <div class="engine-card-link" onclick="redirectTo('{{ url }}')">
+            <a href="{{ url }}" class="url-engine">Запчасти для двигателя. Нажмите!</a>
+          </div>
+          <p class="hide-button" onclick="hideCard(this)">Скрыть</p>
+        </div>
+      {% endfor %}
+    {% endif %}
+    
 
       {% comment %} to top button {% endcomment %}
       <button style="display: none;" class="to-top to-top_visible" id="to-top"></button>
@@ -280,6 +310,23 @@
     </main>
 
   <script>
+    $(document).ready(function () {
+      $('.img-part').on('click', function () {
+          var imageUrl = $(this).attr('src');
+          $('#fullScreenImage').attr('src', imageUrl);
+          $('#fullScreenModal').modal('show');
+      });
+    });
+
+    function hideCard(button) {
+      button.closest('.card-engine').style.display = 'none';
+    }
+    
+    function redirectTo(url) {
+      window.location.href = url;
+    }
+    
+
     $(document).ready(function() {
         $(".btn-all-part").click(function() {
             // Get the ID of the clicked button
@@ -353,5 +400,12 @@
         }
       }
     </style>
+
+    <script>
+      window.replainSettings = { id: 'e54a2d38-8ebc-4f83-9110-4fb1f64b134b' };
+      (function(u){var s=document.createElement('script');s.async=true;s.src=u;
+      var x=document.getElementsByTagName('script')[0];x.parentNode.insertBefore(s,x);
+      })('https://widget.replain.cc/dist/client.js');
+    </script>
   </body>
 </html>

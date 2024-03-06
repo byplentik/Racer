@@ -2463,7 +2463,7 @@ body.no-touch .product__item .basic-cart-cart-form .light.basic-cart-call-to-act
     z-index: 100;
     opacity: 0;
     right: 30px;
-    bottom: 45px;
+    bottom: 90px;
     width: 50px;
     height: 50px;
     border-radius: 50%;
@@ -3478,7 +3478,10 @@ body.catalog .main>.content-w {
     font-family: Arial, sans-serif;
     color: #2b2b2b;
     font-style: italic;
-    font-weight: 700
+    font-weight: 700;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
 }
 
 .side-nav__list li {
@@ -6703,3 +6706,74 @@ textarea.form-control {
     background-color: #990000;
     border: 1px solid #990000;
 }
+
+.card-engine {
+    border: 1px solid #ddd;
+    padding: 10px;
+    cursor: pointer;
+    position: fixed;
+    top: 140px;
+    right: 10px;
+    background-color: #2b2b2b;
+    width: 200px;
+    color: white;
+    z-index: 1000;
+  }
+  
+  .engine-card-link {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .url-engine {
+    text-decoration: none;
+    color: white;
+    font-size: 16px;
+  }
+  
+  .hide-button {
+    background-color: red;
+    color: white;
+    padding: 4px 20% 4px 4px;
+    cursor: pointer;
+    margin-top: 8px;
+    position: absolute;
+    left: 0;
+    font-size: 14px;
+}
+  
+  
+.product__comment-question {
+    background: red;
+    border-radius: 5px;
+    float: right;
+    padding: 3px 6px;
+    position: relative;
+    right: 10px;
+    top: 0;
+    width: 20px;
+    cursor: pointer; 
+    transition: background-color 0.3s ease; 
+}
+
+.product__comment-question:hover,
+.product__comment-question:active {
+    background: darkred;
+}
+
+.product__comment-question span.text-comment {
+    display: none;
+    white-space: normal;
+    color: white;
+}
+
+.product__comment-question:hover span.text-comment,
+.product__comment-question:active span.text-comment {
+    display: inline-block; 
+    position: absolute;
+    background: red;  
+    padding: 8px;
+    border-radius: 5px;
+}
+

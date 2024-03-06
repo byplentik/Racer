@@ -36,6 +36,18 @@ class Motorcycle(models.Model):
         return reverse('motorcycle-detail', kwargs={'slug': self.slug})
 
 
+class Engine(models.Model):
+    url = models.URLField(verbose_name='URL двигателя')
+    motorcycle = models.ForeignKey(Motorcycle, on_delete=models.CASCADE, verbose_name='Мото/Двигатель', blank=True, null=True, related_name='engines')
+
+    class Meta:
+        verbose_name = 'Ссылка на двигатели'
+        verbose_name_plural = 'Ссылка на двигатели'
+
+    def __str__(self):
+        return f'{self.url}'
+
+
 class MainPart(models.Model):
     motorcycle = models.ForeignKey(Motorcycle, on_delete=models.CASCADE, verbose_name='Мото/Двигатель')
     name = models.CharField(max_length=255, verbose_name='Основная запчасть')
@@ -65,6 +77,11 @@ class Part(models.Model):
 
     def __str__(self):
         return self.name
+
+
+class NotePartModel(models.Model):
+    note = models.CharField(max_length=255, verbose_name='Примечание')
+    part = models.ForeignKey('Part', on_delete=models.CASCADE, verbose_name='Запчасть', related_name='notes')
 
 
 class OrderStatus(models.TextChoices):
