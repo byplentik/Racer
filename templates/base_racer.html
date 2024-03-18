@@ -23,7 +23,6 @@
     <script></script>
     <link href="{% static 'css/css.css' %}" rel="stylesheet" />
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-    <script></script>
     <link type="text/css" rel="stylesheet" href="{% static 'css/css__mUwr2m3vjCWDt6bNOZxBgX_kh5nsxBGYBaIxcVSj7vM__s74ROVNvpiw2d-ZgqxO8O1eBEOlxeP2GAKIXEWczN6I__9tFTvjcbZXsmyrrOP2ytdUmEp.css' %}" media="all" />
     <link type="text/css" rel="stylesheet" href="{% static 'css/css__WRF7jVUOarzJxXhelqhwo5Gpzph52l_WYanZgLwl14Q__AbY1rYZhkrduWtAnhtdmoe6vOx6JEuzQCcgMPpK8gDs__9tFTvjcbZXsmyrrOP2ytdUmEp.css' %}" media="all" />
     <style>
@@ -226,11 +225,16 @@
     <script type="text/javascript" src="{% static 'js/overlay.js' %}"></script>
     <script type="text/javascript" src="{% static 'js/auth.js' %}"></script>
     
+    <!-- Start of Async Callbell Code -->
     <script>
-      window.replainSettings = { id: 'e54a2d38-8ebc-4f83-9110-4fb1f64b134b' };
-      (function(u){var s=document.createElement('script');s.async=true;s.src=u;
-      var x=document.getElementsByTagName('script')[0];x.parentNode.insertBefore(s,x);
-      })('https://widget.replain.cc/dist/client.js');
+      window.callbellSettings = {
+        token: "Qc1Lk27ifYgBBuxq1yiQ2ysN"
+      };
     </script>
+    <script>
+      (function(){var w=window;var ic=w.callbell;if(typeof ic==="function"){ic('reattach_activator');ic('update',callbellSettings);}else{var d=document;var i=function(){i.c(arguments)};i.q=[];i.c=function(args){i.q.push(args)};w.Callbell=i;var l=function(){var s=d.createElement('script');s.type='text/javascript';s.async=true;s.src='https://dash.callbell.eu/include/'+window.callbellSettings.token+'.js';var x=d.getElementsByTagName('script')[0];x.parentNode.insertBefore(s,x);};if(w.attachEvent){w.attachEvent('onload',l);}else{w.addEventListener('load',l,false);}}})()
+    </script>
+    <!-- End of Async Callbell Code -->
+
   </body>
 </html>

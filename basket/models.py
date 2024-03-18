@@ -64,14 +64,13 @@ class MainPart(models.Model):
 
 
 class Part(models.Model):
-    main_part = models.ForeignKey(MainPart, on_delete=models.CASCADE, verbose_name='Основная запчасть')
-    number = models.IntegerField(verbose_name='№')
+    main_part = models.ForeignKey(MainPart, on_delete=models.CASCADE, verbose_name='Основная запчасть', blank=True, null=True)
+    number = models.CharField(verbose_name='№', max_length=10)
     code = models.CharField(max_length=150, verbose_name='Уникальный код', blank=True)
     name = models.CharField(max_length=300, verbose_name='Наименование')
     price = models.IntegerField(default=0, verbose_name='Цена')
 
     class Meta:
-        ordering = ['number']
         verbose_name = 'Запчасть'
         verbose_name_plural = 'Запчасти'
 

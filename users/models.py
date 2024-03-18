@@ -34,6 +34,8 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
     username = models.CharField(verbose_name='Имя пользователя', max_length=255)
     slug = AutoSlugField(populate_from='username', unique=True, always_update=True)
 
+    old_user_id = models.IntegerField(blank=True, null=True)
+
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(
         ('статус персонала'),

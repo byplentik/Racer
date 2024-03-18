@@ -198,7 +198,7 @@ class CheckoutFromCartView(CreateSessionKeyMixin, generic.FormView):
 
         # Добавляем запчасти в корзину
         self._create_ordered_parts(cart, checkout_cart)
-        self.send_email_created_user(user, checkout_cart, created)
+        self.send_email_created_user(user, checkout_cart, False)
 
         messages.success(self.request, f'{checkout_cart.pk}')
         return super().form_valid(form)

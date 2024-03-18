@@ -26,6 +26,7 @@ class AdminCustomUser(BaseUserAdmin):
     list_filter = ('is_staff', 'is_superuser', 'groups')
     ordering = ('email',)
     filter_horizontal = ('groups', 'user_permissions',)
+    search_fields = ['email']
 
 
 admin.site.register(CustomUser, AdminCustomUser)

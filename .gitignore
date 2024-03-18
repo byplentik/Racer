@@ -8,7 +8,7 @@ media/
 migrations/
 just/
 *.xlsx
-
+sql-script.py
 # C extensions
 *.so
 .vscode/

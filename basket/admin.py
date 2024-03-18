@@ -23,11 +23,6 @@ class EngineInline(admin.TabularInline):
     classes = ['collapse']
 
 
-@admin.register(models.NotePartModel)
-class NotePartModelAdmin(admin.ModelAdmin):
-    list_display = ['note', 'part']
-
-
 @admin.register(models.Motorcycle)
 class AdminMotorcycle(admin.ModelAdmin):
     list_display = ['name', 'category']
@@ -54,12 +49,12 @@ class AdminMotorcycle(admin.ModelAdmin):
                 for row in ws.iter_rows(min_row=1, min_col=2, max_col=7):
                     value_mainpart_or_number = str(row[0].value)
                     try:
-                        value_number = int(value_mainpart_or_number)
+                        value_number = value_mainpart_or_number
                         code_value = str(row[1].value)
                         name_value = str(row[3].value)
                         quantity = int(row[4].value)
 
-                        if value_number > previous_value and code_value.startswith('R'):
+                        if code_value.startswith('R'):
                             part = models.Part.objects.create(
                                 main_part=mainparts[counter_mainparts],
                                 number=value_number,
@@ -79,7 +74,6 @@ class AdminMotorcycle(admin.ModelAdmin):
                                     note=f'Для заказа комплекта необходимо {quantity} шт'
                                 )
 
-                            previous_value = value_number
                     except:
                         mainpart_value = str(value_mainpart_or_number)
                         if mainpart_value != 'None' and any(mainpart_value.startswith(str(i) + '.') for i in range(1, 101)):
@@ -94,7 +88,6 @@ class AdminMotorcycle(admin.ModelAdmin):
                                     ordering=number_mainpart,
                                 )
                                 counter_mainparts += 1
-                                previous_value = 0
                                 mainparts.append(mainpart_obj)
             except Exception as ex:
                 obj.delete()
